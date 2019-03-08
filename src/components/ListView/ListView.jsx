@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Button, Input, List, Dropdown } from 'semantic-ui-react'
-import {getPokemonList} from '../../api/api.js'
 import _ from 'lodash'
 import PokemonContext from '../App/PokemonContext'
 
@@ -52,7 +51,7 @@ export default class ListView extends Component {
 
   handleSortingOrderChange = (event) =>{
       let id = event.target.id
-      this.setState({isSortedDecrease: id== 'decrease'})
+      this.setState({isSortedDecrease: id=== 'decrease'})
   }
 
   render() {

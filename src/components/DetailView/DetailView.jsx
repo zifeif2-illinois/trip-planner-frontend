@@ -16,7 +16,7 @@ export default class DetailView extends Component {
 
   fetchData = (pathname) => {
     let id = parseInt(this.props.match.params.id);
-    let pokemon = this.context.find(pokemon=>pokemon.id==id)
+    let pokemon = this.context.find(pokemon=>pokemon.id===id)
     this.setState(() => ({pokemon, currentId: id}))
   }
 
