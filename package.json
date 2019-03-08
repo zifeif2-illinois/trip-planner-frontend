@@ -2,6 +2,7 @@
   "name": "mp2",
   "version": "0.1.0",
   "private": true,
+  "homepage" : "http://zifeif2-illinois.github.io/sp19-cs498rk-mp2",
   "dependencies": {
     "axios": "^0.18.0",
     "node-sass": "^4.11.0",
