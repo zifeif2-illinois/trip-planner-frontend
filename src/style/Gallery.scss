@@ -1,0 +1,27 @@
+@import './common.scss';
+
+.icon {
+  width: 100%
+}
+.card-header {
+  text-align: center;
+}
+.gallery-container {
+  text-align: center;
+  padding: 0 5%;
+  h1 {
+    margin-bottom: 2%;
+  }
+  .button {
+    color: $primary-color;
+    background: rgba(0, 0, 0, 0);
+    border: 1px solid $primary-color;
+
+    &:hover,
+    &:focus{
+      background: rgba(0, 0, 0, 0);
+      color: $secondary-color;
+      border: 1px solid $secondary-color;
+    }
+  }
+}

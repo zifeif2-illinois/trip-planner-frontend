@@ -1,0 +1,25 @@
+@import './common.scss';
+.container{
+  padding: 0 3%;
+  h1{
+    text-align: center;
+  }
+  span {
+    margin-right: 5%;
+  }
+  .input {
+    width: 40%;
+  }
+  .sortContainer {
+    display: inline-block;
+    float: right;
+
+    .or-btn{
+      color: $primary-color;
+    }
+  }
+}
+
+.list-card-view {
+
+}
