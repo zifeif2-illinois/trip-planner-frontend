@@ -41,7 +41,7 @@ export default class ListView extends Component {
   }
 
   onClickHandler = (event, idx) => {
-    this.props.history.push(`/detail/${idx}`)
+    this.props.history.push(`sp19-cs498rk-mp2/detail/${idx}`)
   }
 
   isMatch = (result) => {

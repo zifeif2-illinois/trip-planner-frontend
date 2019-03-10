@@ -34,7 +34,7 @@ export default class Gallery extends Component {
   }
 
   onClickCardView = (event, idx) => {
-    this.props.history.push(`/detail/${idx}`)
+    this.props.history.push(`sp19-cs498rk-mp2/detail/${idx}`)
   }
 
   render() {
