@@ -18,7 +18,7 @@ export default class PokemonCardView extends Component {
               Pokemon Index{this.props.pokemon.id}
             </Card.Meta>
             <img
-              src={this.props.pokemon.sprites.front_default}
+              src={this.props.pokemon.sprites.front_default?this.props.pokemon.sprites.front_default: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/master-ball.png'}
               alt={`Sprite of ${this.props.pokemon.name}`}
             />
             <TagList label='types' content={this.props.pokemon.types}/>

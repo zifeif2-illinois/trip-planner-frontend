@@ -9,7 +9,7 @@ export default class GalleryCardView extends Component {
   render() {
       return (
         <Card onClick={(e) => this.props.onClick(e, this.props.pokemon.id)}>
-          <Image className='icon' src={this.props.pokemon.sprites.front_default} />
+          <Image className='icon' src={this.props.pokemon.sprites.front_default?this.props.pokemon.sprites.front_default:'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/master-ball.png'} />
           <Card.Content>
             <Card.Header className='card-header'>{this.props.pokemon.name}</Card.Header>
             <Card.Meta><TagList label='types' content={this.props.pokemon.types}/></Card.Meta>

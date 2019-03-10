@@ -41,7 +41,7 @@ export default class ListView extends Component {
   }
 
   onClickHandler = (event, idx) => {
-    this.props.history.push(`sp19-cs498rk-mp2/detail/${idx}`)
+    this.props.history.push(`detail/${idx}`)
   }
 
   isMatch = (result) => {
@@ -54,13 +54,17 @@ export default class ListView extends Component {
       this.setState({isSortedDecrease: id=== 'decrease'})
   }
 
-  render() {
-    let listOfPokemon = this.state.results.filter(this.isMatch)
+  listOfPokemon = (pokemons)=> {
+    let listOfPokemon = pokemons.filter(this.isMatch)
     let sortOrder = this.state.isSortedDecrease? 1: -1
     listOfPokemon.sort((poke1, poke2) => (poke1[this.state.sortedField] - poke2[this.state.sortedField])*sortOrder)
-    listOfPokemon = listOfPokemon.map((result) =>
+    return listOfPokemon.map((result) =>
      ( <CardView key={result['id']} index={result['id']} data={result} onClick={this.onClickHandler} />))
-    let sortingOptions = [{ text: 'id', value: 'id'}, { text: 'height', value: 'height'},{ text: 'weight', value: 'weight'}]
+  }
+
+  render() {
+
+    let sortingOptions = [ { text: 'height', value: 'height'},{ text: 'weight', value: 'weight'}]
     return (
       <div>
         <NavBar active='list'/>
@@ -86,8 +90,12 @@ export default class ListView extends Component {
               </Button>
             </Button.Group>
           </div>
-          <List divided relaxed='very' animated verticalAlign='middle' size='huge' items={listOfPokemon}>
-          </List>
+          { this.state.results.length?
+            <List divided relaxed='very' animated verticalAlign='middle' size='huge' items={this.listOfPokemon(this.state.results)}>
+            </List>
+            : <div> Loading ... </div>
+          }
+
         </div>
       </div>
     )

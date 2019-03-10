@@ -16,8 +16,9 @@ export default class DetailView extends Component {
 
   fetchData = (pathname) => {
     let id = parseInt(this.props.match.params.id);
-    let pokemon = this.context.find(pokemon=>pokemon.id===id)
-    this.setState(() => ({pokemon, currentId: id}))
+    let index = this.context.findIndex(pokemon=>pokemon.id===id)
+    let pokemon = this.context[index]
+    this.setState(() => ({pokemon, currentId: id, currentIndex: index}))
   }
 
   componentDidMount() {
@@ -25,11 +26,13 @@ export default class DetailView extends Component {
   }
 
   switchPokemon = (change) => {
-    let newIndex = this.state.currentId + change
-    if(newIndex < this.context[0].id) newIndex = this.context.length + this.context[0].id-1
-    else if(newIndex  >= this.context.length + this.context[0].id)
-      newIndex = this.context[0].id
-    this.props.history.push(`detail/${newIndex}`)
+    let newIndex = this.state.currentIndex + change
+    let newId;
+    if(newIndex <0 ) newId =  + this.context[this.context.length-1].id
+    else if(newIndex  >= this.context.length)
+      newId = this.context[0].id
+    else newId = this.context[newIndex].id
+    this.props.history.push(`${newId}`)
   }
 
   componentDidUpdate(prevProps) {

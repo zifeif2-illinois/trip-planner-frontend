@@ -17,11 +17,15 @@
     background: rgba(0, 0, 0, 0);
     border: 1px solid $primary-color;
 
-    &:hover,
-    &:focus{
-      background: rgba(0, 0, 0, 0);
-      color: $secondary-color;
+    &:hover{
+      background: $secondary-color;
+      color: $white;
       border: 1px solid $secondary-color;
     }
+  }
+  .ui.active.button{
+    background-color: $secondary-color;
+    color: $white;
+    border: 1px solid $secondary-color;
   }
 }
