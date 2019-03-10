@@ -2,18 +2,19 @@
   "name": "mp2",
   "version": "0.1.0",
   "private": true,
-  "homepage" : "http://zifeif2-illinois.github.io/sp19-cs498rk-mp2/home",
+  "homepage": "http://zifeif2-illinois.github.io/sp19-cs498rk-mp2/home",
   "dependencies": {
     "axios": "^0.18.0",
+    "gh-pages": "^2.0.1",
     "node-sass": "^4.11.0",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.5",
+    "sass-loader": "^7.1.0",
     "semantic-ui": "^2.4.2",
     "semantic-ui-css": "^2.4.1",
-    "semantic-ui-react": "^0.85.0",
-    "sass-loader": "^7.1.0"
+    "semantic-ui-react": "^0.85.0"
   },
   "scripts": {
     "start": "react-scripts start",

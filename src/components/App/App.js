@@ -32,10 +32,10 @@ class App extends Component {
         <Router>
           <PokemonContext.Provider value={this.state.pokemons}>
           <Switch>
-              <Route exact path="/home" component={Home}/>
-              <Route exact path="/list" component={ListView}/>
-              <Route exact path="/gallery" component={Gallery}/>
-              <Route exact path="/detail/:id" component={DetailView}/>
+              <Route exact path="sp19-cs498rk-mp2/home" component={Home}/>
+              <Route exact path="sp19-cs498rk-mp2/list" component={ListView}/>
+              <Route exact path="sp19-cs498rk-mp2/gallery" component={Gallery}/>
+              <Route exact path="sp19-cs498rk-mp2/detail/:id" component={DetailView}/>
           </Switch>
           </PokemonContext.Provider>
         </Router>
