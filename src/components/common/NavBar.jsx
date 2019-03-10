@@ -7,7 +7,7 @@ export default class NavBar extends Component {
   render() {
     return (
       <Menu pointing secondary>
-        <Link to='/sp19-cs498rk-mp2/home'>
+        <Link to='/sp19-cs498rk-mp2'>
           <Menu.Item active={this.props.active==='home'} name='home'>
           </Menu.Item>
         </Link>

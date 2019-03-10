@@ -29,7 +29,7 @@ export default class DetailView extends Component {
     if(newIndex < this.context[0].id) newIndex = this.context.length + this.context[0].id-1
     else if(newIndex  >= this.context.length + this.context[0].id)
       newIndex = this.context[0].id
-    this.props.history.push(`sp19-cs498rk-mp2/detail/${newIndex}`)
+    this.props.history.push(`detail/${newIndex}`)
   }
 
   componentDidUpdate(prevProps) {
