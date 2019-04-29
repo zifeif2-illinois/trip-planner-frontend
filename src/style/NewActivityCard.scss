@@ -1,0 +1,16 @@
+.activity-container{
+  .content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .search-bar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 5% 0;
+  }
+  .personal{
+    margin: 5% 0;
+  }
+}

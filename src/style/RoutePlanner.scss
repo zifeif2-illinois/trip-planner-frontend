@@ -1,0 +1,33 @@
+.hotel-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 2%;
+  justify-content: space-around;
+}
+
+.route-planner-container{
+  overflow: scroll;
+
+  .cards {
+    width: 100%;
+  }
+  .day-container{
+    width: 100% !important;
+    margin: 5% !important;
+  }
+  .new-activity-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 25% !important;
+  }
+  .save-share-buttons {
+    position: fixed;
+    bottom: 2%;
+    margin-left: 18%;
+  }
+  .map-button {
+    margin-left: 5%;
+  }
+}

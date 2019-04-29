@@ -1,0 +1,29 @@
+$primaryColor: #bada55;
+
+.active {
+  button{
+    color:$primaryColor;
+  }
+}
+
+.navbar {
+  margin-bottom: 0 !important;
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal {
+  width: 25% !important;
+}
+
+.login-register-content {
+  display: flex;
+  flex-direction: column;
+  padding: 3%;
+
+  .subButton {
+    text-decoration: underline;
+  }
+}
