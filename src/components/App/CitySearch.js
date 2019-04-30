@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import { Input } from 'semantic-ui-react'
 import '../../style/Home.scss';
-// import {GOOGLE_PLACES_API_KEY} from '../../config.js';
 
 // Import React Scrit Libraray to load Google object
 import Script from 'react-load-script';
