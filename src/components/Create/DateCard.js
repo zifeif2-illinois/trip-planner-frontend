@@ -12,7 +12,7 @@ export default class DateCard extends Component {
 
     constructor(props) {
       super(props)
-      console.log('create new card')
+      
       this.state={
         hotel: {},
         searchHotel: '',
