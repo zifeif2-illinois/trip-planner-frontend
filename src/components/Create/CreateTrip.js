@@ -22,12 +22,15 @@ class CreateTripBody extends Component {
 
 export default class CreateTrip extends Component {
   render() {
+    let startDate = this.props.location.startDate || new Date()
+    let endDate = new Date(startDate)
+    endDate.setDate(endDate.getDate() + this.props.location.duration||3)
     return (<div className='container'>
       <NavBar/>
       <div className='background'>
         <div className='title'>
-          <h2> Chicago </h2>
-          <span> 03/11/2019 - 03/13/2019 </span>
+          <h2> {this.props.location.city || 'Chicago'} </h2>
+          <span> {`${startDate.toDateString()}-${endDate.toDateString()}`} </span>
         </div>
       </div>
       <CreateTripBody/>

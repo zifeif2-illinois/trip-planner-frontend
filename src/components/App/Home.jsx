@@ -4,6 +4,7 @@ import '../../style/Home.scss'
 import NavBar from '../common/NavBar'
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
+import CitySearch from './CitySearch'
 
 
 export default class Home extends Component {
@@ -11,9 +12,10 @@ export default class Home extends Component {
     super(props)
 
     this.state = {
-      destination: '',
       startDate: new Date(),
-      duration: 0
+      duration: 0,
+      city: '',
+      cityQuery: ''
     }
   }
 
@@ -26,23 +28,26 @@ export default class Home extends Component {
   }
 
   createTrip = () => {
-    this.props.history.push('trip-planner/create')
+    this.props.history.push('trip-planner/create', {...this.state})
+  }
+
+  setCitySearchResult = (city, cityQuery) => {
+    this.setState({city, cityQuery})
+  }
+
+  changeCitySearch = event => {
+    this.setState({cityQuery: event.target.value})
   }
 
   render() {
+    console.log(this.state.city)
     return (
       <div className='home-container'>
         <NavBar/>
         <div className ='bg'>
           <div className='ui card basic-info'>
             <h3> Start planning your trip </h3>
-            <Input
-            onChange={this.changeDestination}
-            placeholder='Destination'
-            value={this.state.destination}
-            icon='search'
-            iconPosition='left'
-            />
+            <CitySearch onChange={this.changeCitySearch} onSelect={this.setCitySearchResult} query={this.state.cityQuery}/>
             <div className= "date-container">
               <h3> Start Date </h3>
               <DatePicker className="datepicker"

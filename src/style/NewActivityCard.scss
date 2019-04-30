@@ -1,4 +1,9 @@
-.activity-container{
+.new-activity-container{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 25% !important;
+
   .content {
     display: flex;
     justify-content: center;

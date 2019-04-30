@@ -66,7 +66,7 @@ class DateCard extends Component {
           </Card.Content>
           :null
         }
-        <Card.Content extra className='new-activity-container'>
+        <Card.Content extra className='new-activity-button-container'>
             <Button basic color='teal' onClick={this.openAddActivityCard}>
               Add New Activity
             </Button>

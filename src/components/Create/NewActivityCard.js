@@ -18,7 +18,7 @@ export default class ActivityCard extends Component {
   }
 
   render() {
-    return (<Card className='activity-container' fluid>
+    return (<Card className='new-activity-container' fluid>
       <Card.Content>
         <SelectionButtons option1='Popular Activity' option2='Personal Activity'
         selectOption1={this.state.isSearchingPopular} onToggle={()=>this.setState({isSearchingPopular:!this.state.isSearchingPopular})}/>
