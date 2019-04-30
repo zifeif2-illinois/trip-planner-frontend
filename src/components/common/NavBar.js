@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Menu, Modal, Button, Header, Icon, Input} from 'semantic-ui-react'
+import { Menu, Modal, Button, Input} from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import '../../style/NavBar.scss'
 

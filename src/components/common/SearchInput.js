@@ -7,6 +7,6 @@ export default function SearchInput(props){
   onChange={props.onChange}
   placeholder={props.placeholder||'search...'}
   value={props.value}
-  action={{ color: 'teal', icon: 'search' }}
+  action={{ color: 'teal', icon: 'search', onClick:props.searchOnClick}}
   />
 }
