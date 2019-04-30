@@ -3,13 +3,12 @@ import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import { Input } from 'semantic-ui-react'
 import '../../style/Home.scss';
-import {GOOGLE_PLACES_API_KEY} from '../../config.js';
 
 // Import React Scrit Libraray to load Google object
 import Script from 'react-load-script';
 
 class CitySearch extends Component {
-  handleScriptLoad = ()=> {
+  componentDidMount() {
     // Declare Options For Autocomplete
     var options = {
       types: ['(cities)'],
@@ -41,14 +40,9 @@ class CitySearch extends Component {
   render() {
     return (
       <div className="city-search" >
-        <Script
-          url={`https://maps.googleapis.com/maps/api/js?key=${GOOGLE_PLACES_API_KEY}&libraries=places`}
-          onLoad={this.handleScriptLoad}
-        />
         <Input id="city-search" value={this.props.query} onChange={this.props.onChange} placeholder="Destination" icon='search' iconPosition='left'/>
       </div>
     );
   }
 }
-
 export default CitySearch;

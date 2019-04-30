@@ -1,10 +1,27 @@
+.hotel-value-container,
 .hotel-container {
   display: flex;
   flex-direction: row;
   align-items: center;
   margin-right: 2%;
-  justify-content: space-around;
+  justify-content: unset;
+
+  .hotel-name{
+    margin-left: 1%;
+    min-width: 50%;
+  }
+  .edit-activity {
+    margin-left: 2%;
+  }
 }
+
+.hotel-value-container{
+  .input{
+    margin-right: 2%;
+    margin-left: 1%;
+  }
+}
+
 
 .route-planner-container{
   overflow: scroll;
@@ -18,16 +35,21 @@
   }
   .new-activity-button-container {
     display: flex;
-    justify-content: center;
     flex-direction: column;
-    padding: 0 25% !important;
+    justify-content: center;
+    align-items: center;
+    // padding: 0 25% !important;
+
+    .new-activity-container {
+      align-self: center;
+    }
   }
   .save-share-buttons {
-    position: fixed;
     bottom: 2%;
-    margin-left: 18%;
+    margin-left: 38%;
   }
   .map-button {
-    margin-left: 5%;
+    position: absolute;
+    right: 5%;
   }
 }

@@ -2,11 +2,13 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  padding: 0 25% !important;
+  align-items: center;
+  // padding: 0 25% !important;
 
   .content {
-    display: flex;
+    align-items: center;
     justify-content: center;
+    display: flex;
     flex-direction: column;
   }
   .search-bar{
@@ -14,6 +16,10 @@
     flex-direction: row;
     justify-content: space-between;
     margin: 5% 0;
+
+    .input {
+      margin-right: 2%;
+    }
   }
   .personal{
     margin: 5% 0;

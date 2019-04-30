@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Input, Button } from 'semantic-ui-react'
+import { Input } from 'semantic-ui-react'
 import '../../style/Home.scss'
 import NavBar from '../common/NavBar'
 import DatePicker from 'react-datepicker'
