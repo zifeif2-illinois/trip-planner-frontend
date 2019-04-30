@@ -18,9 +18,14 @@
   }
   .new-activity-button-container {
     display: flex;
-    justify-content: center;
     flex-direction: column;
-    padding: 0 25% !important;
+    justify-content: center;
+    align-items: center;
+    // padding: 0 25% !important;
+
+    .new-activity-container {
+      align-self: center;
+    }
   }
   .save-share-buttons {
     position: fixed;
