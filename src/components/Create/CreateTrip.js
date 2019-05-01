@@ -34,9 +34,20 @@ class CreateTripBody extends Component {
       // TODO: make api call to do search, and set searchResult with results from api
       this.setState({day, type, searchKeyword})
       const city = this.state.city.toLowerCase();
+      let searchType = ''
+      switch (searchType) {
+        case "hotel":
+          searchType = "lodging"
+          break;
+        case "food":
+          searchType = "food"
+          break;
+        default:
+          searchType = "point_of_interest"
+      }
       const request = {query: `${city} ${searchKeyword} ${type}`}
       this.service.textSearch(request, (results, status) => {
-        if (status == google.maps.places.PlacesServiceStatus.OK) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
           // for (var i = 0; i < results.length; i++) {
           //   var place = results[i];
           //   createMarker(results[i]);
@@ -52,8 +63,9 @@ class CreateTripBody extends Component {
     return (
       <div className='create-trip-planner'>
         <RoutePlanner searchThings={this.searchThings} newAddedThing={this.state.newAddedThing} duration={this.props.duration}/>
-        <SearchView addToBoard={this.addToBoard} searchResult={this.state.searchResult}/>
-        <div id='map'></div>
+        <SearchView addToBoard={this.addToBoard} searchResult={this.state.searchResult}
+          keyword={this.state.searchKeyword} day={this.state.day} type={this.state.type}/>
+        <div id='map' display='none'></div>
       </div>
     )
   }

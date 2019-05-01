@@ -8,6 +8,9 @@ import NewActivityCard from './NewActivityCard'
 
 // Contains attractions for each day, receive a list of activities to populate the route
 // parent: RoutePlanner
+// component of DateCard: {
+  // hotel: {}, activities: []
+//}
 export default class DateCard extends Component {
 
     constructor(props) {

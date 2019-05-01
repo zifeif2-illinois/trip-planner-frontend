@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {Card, Button} from 'semantic-ui-react'
 import DateCard from './DateCard'
+import ShareWidget from '../common/ShareWidget'
 import '../../style/RoutePlanner.scss'
 
 // Only contains daily route
@@ -76,7 +77,7 @@ export default class RoutePlanner extends Component {
         <div className='save-share-buttons'>
           <Button content={this.state.isSaved? 'Saved': 'Save Your Trip Before Sharing'} className='save-button' onClick={this.saveTrip} color='teal'/>
           {this.state.isSaved?
-          <Button content='Share Your Trip' className='share-button' onClick={this.shareTrip} color='teal'/>:null
+          <ShareWidget/>:null
           }
         </div>
       </div>)
