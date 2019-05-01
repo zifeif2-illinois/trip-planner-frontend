@@ -16,6 +16,7 @@ export default class ShareWidget extends Component {
     }
   }
   componentDidMount() {
+    //TODO: query all the users here in future
     this.setState({results: dummy.map(dum => ({...dum, title: dum.name, description: dum.email}))})
   }
 
@@ -52,6 +53,10 @@ export default class ShareWidget extends Component {
     this.setState({listOfUsers})
   }
 
+  shareTrip = ()=>{
+    //TODO: add share logic in future
+  }
+
   render() {
     let listOfUsers = this.state.listOfUsers.map((user, idx)=>
       <List.Item  key={idx} onClick={()=>this.deselectUser(user)}>
@@ -76,7 +81,7 @@ export default class ShareWidget extends Component {
              <List divided>
               {listOfUsers}
              </List>
-            <Button className='ui button teal'> Share </Button>
+            <Button className='ui button teal' onClick={this.shareTrip}> Share </Button>
           </div>
         </Modal.Description>
     </Modal.Content>
