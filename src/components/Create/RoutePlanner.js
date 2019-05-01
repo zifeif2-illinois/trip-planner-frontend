@@ -4,6 +4,8 @@ import DateCard from './DateCard'
 import '../../style/RoutePlanner.scss'
 
 // Only contains daily route
+//parent: CreateTripBody
+// The planner store all the routes
 export default class RoutePlanner extends Component {
   constructor(props) {
     super(props)
@@ -42,11 +44,30 @@ export default class RoutePlanner extends Component {
     this.setState({isSaved: true})
   }
 
+  setHotel = (hotel, dateIndex) => {
+    let hotels = this.state.hotels
+    hotels[dateIndex] = {name: hotel}
+    this.setState({hotels})
+  }
+
+  addCustomActicity = (name, day) => {
+    let route = [...this.state.route]
+    route[day].push({name, isPopularActivity: false})
+    this.setState({route, isSaved: false})
+  }
+
+  deleteActivity = (name, day) => {
+    let route = [...this.state.route]
+    route[day] = route[day].filter(acitivity => acitivity.name !== name)
+    this.setState({route, isSaved: false})
+  }
+
   render() {
     // need to set the key like this so that we rerender the new date card everytime there is a new activity added
     let dateCards = this.state.route.map((activities, idx) =>
     <DateCard activities={activities} key={idx} index={idx} hotel={this.state.hotels[idx]}
-     searchThings={this.props.searchThings}/>)
+     searchThings={this.props.searchThings} setHotel={this.setHotel} addCustomActicity={this.addCustomActicity}
+     deleteActivity={this.deleteActivity}/>)
     return (
       <div className='route-planner-container'>
         <Card.Group>

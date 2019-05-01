@@ -20,6 +20,11 @@ export default class NewActivityCard extends Component {
     }
   }
 
+  addCustomActicity = () => {
+    this.setState({isSearchingPopular: false})
+    this.props.addCustomActicity(this.state.customActivity)
+  }
+
   render() {
     return (<Card className='new-activity-container' fluid>
       <Card.Content>
@@ -41,7 +46,7 @@ export default class NewActivityCard extends Component {
           </div>
             :
           <Input className='personal' onChange={event=>this.setState({customActivity: event.target.value})} value={this.state.customActivity}
-            action={{ color: 'teal', icon: 'check'}}/>
+            action={{ color: 'teal', icon: 'check', onClick:this.addCustomActicity}}/>
         }
         <Button onClick={this.props.onCancel}>Cancel</Button>
       </Card.Content>

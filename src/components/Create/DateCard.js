@@ -12,13 +12,14 @@ export default class DateCard extends Component {
 
     constructor(props) {
       super(props)
-      
+
       this.state={
         hotel: {},
         searchHotel: '',
         isSearchingHotel: true,
         activities: this.props.activities,
-        isAddingNewActivity: false
+        isAddingNewActivity: false,
+        customHotel: ''
       }
     }
 
@@ -49,8 +50,22 @@ export default class DateCard extends Component {
       this.setState({hotel, searchHotel: this.state.hotel.name})
     }
 
+    setCustomHotel = () => {
+      let hotelName = this.state.customHotel
+      this.setState({hotel: {name: hotelName}})
+      this.props.setHotel(hotelName, this.props.index)
+    }
+
+    addCustomActicity = name => {
+      this.props.addCustomActicity(name, this.props.index)
+    }
+
+    deleteActivity = name => {
+        this.props.deleteActivity(name, this.props.index)
+    }
+
     render() {
-      let listOfActivities = this.state.activities.map(activity => <ActivityCard key={activity.name} {...activity} />)
+      let listOfActivities = this.state.activities.map(activity => <ActivityCard deleteActivity={this.deleteActivity} key={activity.name} {...activity} />)
       return (<Card className='day-container'>
         <Card.Content>
           <Card.Header>Day {this.props.index+1}</Card.Header>
@@ -67,10 +82,11 @@ export default class DateCard extends Component {
                 <div className='hotel-value-container'>
                 {this.state.isSearchingHotel?
                   <SearchInput onChange={event=>this.setState({searchHotel: event.target.value})}
-                    placeholder='search hotel...' value={this.state.searchHotel}
-                    searchOnClick={()=>this.searchThings(this.state.searchHotel, 'hotel')}/>:
-                  <Input onChange={()=>this.setState({customHotel: this.state.customHotel})} value={this.state.customHotel}
-                    action={{ color: 'teal', icon: 'plus' }}/>
+                    placeholder='popular hotel' value={this.state.searchHotel}
+                    searchOnClick={()=>this.searchThings(this.state.searchHotel, 'hotel')}/>
+                  :
+                  <Input onChange={event=>this.setState({customHotel: event.target.value})} value={this.state.customHotel}
+                    action={{ color: 'teal', icon: 'plus', onClick: this.setCustomHotel}}/>
                 }
                 <SelectionButtons option1='Popular' option2='Personal'
                 selectOption1={this.state.isSearchingHotel} onToggle={this.switchHotel}/>
@@ -91,7 +107,9 @@ export default class DateCard extends Component {
               Add New Activity
             </Button>
             {this.state.isAddingNewActivity?
-              <NewActivityCard onCancel={()=>this.setState({isAddingNewActivity: false})} searchThings={this.searchThings}/>:null
+              <NewActivityCard onCancel={()=>this.setState({isAddingNewActivity: false})}
+              searchThings={this.searchThings} addCustomActicity={this.addCustomActicity}/>
+              : null
             }
         </Card.Content>
       </Card>)
