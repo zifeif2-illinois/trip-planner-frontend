@@ -5,7 +5,7 @@ import RoutePlanner from './RoutePlanner'
 import SearchView from './SearchView'
 import '../../style/CreateTrip.scss'
 /*global google*/
-const DUMMY_RESULT = ['Secret ', 'Horror ', 'Mary\'s ', 'Fancy ', 'Comfy ', 'Royal ']
+
 // This component only contains route planner and search view
 class CreateTripBody extends Component {
   constructor(props) {

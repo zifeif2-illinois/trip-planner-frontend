@@ -4,9 +4,6 @@ import 'semantic-ui-css/semantic.min.css';
 import { Input } from 'semantic-ui-react'
 import '../../style/Home.scss';
 
-// Import React Scrit Libraray to load Google object
-import Script from 'react-load-script';
-
 class CitySearch extends Component {
   componentDidMount() {
     // Declare Options For Autocomplete

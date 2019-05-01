@@ -11,47 +11,52 @@ export default class ActivityCard extends Component {
       name: '',
       location: '',
       isPopularActivity: true,
-      isEditing: false
+      isEditing: false,
     }
   }
 
   componentDidMount() {
+    console.log(this.props)
     this.setState({name: this.props.name, location: this.props.location, isPopularActivity: this.props.isPopularActivity})
   }
 
   toggleEditView = () => {
     this.setState({isEditing: !this.state.isEditing})
   }
-
+  deleteActivity=()=>{
+    this.props.deleteActivity(this.props.name) //use the name as teh id
+  }
 
   render() {
     let personalActivity = null
     if(!this.state.isPopularActivity) {
-      personalActivity = (!this.state.isEditing?
-         <Card.Content>
-          <Card.Header>{this.state.name}</Card.Header>
-          <Card.Meta>{this.state.location? `Location: ${this.state.location}`: 'wherever'}</Card.Meta>
-          <a className='edit-activity' onClick={this.toggleEditView}>edit</a>
-          <a className='delete-activity'>delete</a>
+      return (!this.state.isEditing?
+          <Card className='activity-container'>
+           <Card.Content>
+            <Card.Header>{this.state.name}</Card.Header>
+            <Card.Meta>{this.state.location? `Location: ${this.state.location}`: 'Personal Activity'}</Card.Meta>
+            <a className='edit-activity' onClick={this.toggleEditView}>edit</a>
+            <a className='delete-activity' onClick={this.deleteActivity}>delete</a>
+            </Card.Content>
+          </Card>
+        :<Card className='activity-container'>
+          <Card.Content>
+            <Input placeholder='name' value={this.state.name} onChange={event=>this.setState({name: event.target.value})}/>
+            <Button onClick={this.toggleEditView}>Save</Button>
           </Card.Content>
-        : <Card.Content>
-          <Input placeholder='name' value={this.state.name} onChange={event=>this.setState({name: event.target.value})}/>
-          <Input placeholder='wherever' value={this.state.location} onChange={event=>this.setState({location: event.target.value})}/>
-          <Button onClick={this.toggleEditView}>Save</Button>
-        </Card.Content>)
+          </Card>)
+
     }
     return (
-        this.state.isPopularActivity?
           <Card className='activity-container'>
             <Card.Content>
               <Image floated='right' size='mini' src='https://react.semantic-ui.com/images/avatar/large/steve.jpg'/>
                <Card.Header>{this.state.name}</Card.Header>
                <Card.Meta>Location: {this.state.location}</Card.Meta>
                <a className='view-detail' href='#'>view detail</a>
-               <a className='delete-activity'>delete</a>
+               <a className='delete-activity' onClick={this.deleteActivity}>delete</a>
              </Card.Content>
           </Card>
-           : <Card className='activity-container'> {personalActivity} </Card>
     )
   }
 }
