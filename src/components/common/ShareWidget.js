@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Button, Modal, List, Input, Search} from 'semantic-ui-react'
+import {Button, Modal, List, Input, Search, Icon} from 'semantic-ui-react'
 import '../../style/ShareWidget.scss'
 import _ from 'lodash'
 
@@ -59,7 +59,8 @@ export default class ShareWidget extends Component {
 
   render() {
     let listOfUsers = this.state.listOfUsers.map((user, idx)=>
-      <List.Item  key={idx} onClick={()=>this.deselectUser(user)}>
+      <List.Item  key={idx}>
+        <Icon name='close'onClick={()=>this.deselectUser(user)} />
         <List.Content>
           <List.Header>{user.name}</List.Header>
           <List.Description>
