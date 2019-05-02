@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Card, Button, Image, Segment, Icon, Header} from 'semantic-ui-react';
 import '../../style/SearchView.scss';
+/*global google*/
 
 // Parent: CreateTripBody
 export default class SearchView extends Component {
@@ -20,7 +21,7 @@ export default class SearchView extends Component {
     }
     let listOfResults = this.props.searchResult.map(result=>
       <SearchResultCard addToBoard={result=>this.props.addToBoard(result)}
-    result={result} key={result.id}/>)
+    result={result} key={result.id} service={this.props.service}/>)
 
     return (<div className='search-view-container'>
         <h2>
@@ -41,7 +42,7 @@ class SearchResultCard extends Component {
       <Card className='search-result'>
         <Card.Content>
           <Image floated='right' size='mini' src={this.props.result.photos[0].getUrl({maxWidth: 400, maxHeight: 400})}/>
-          <Card.Header>{this.props.result.name}</Card.Header>
+          <Card.Header><a href={this.props.result.url} target="_blank">{this.props.result.name}</a></Card.Header>
           <Card.Meta>Location: {this.props.result.formatted_address}</Card.Meta>
           <Button color='teal' onClick={()=>this.props.addToBoard(this.props.result)}> Add </Button>
         </Card.Content>

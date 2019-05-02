@@ -45,7 +45,7 @@ class CreateTripBody extends Component {
         default:
           searchType = "point_of_interest"
       }
-      const request = {query: `${city} ${searchKeyword} ${type}`}
+      const request = {query: `${city}+${searchKeyword}+${type}`}
       this.service.textSearch(request, (results, status) => {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
           // for (var i = 0; i < results.length; i++) {
@@ -53,7 +53,8 @@ class CreateTripBody extends Component {
           //   createMarker(results[i]);
           // }
           // response format: [geometry, plus_code, html_attributions, icon, name, opening_hours, place_id, rating, types]
-          this.setState({searchResult: results.map(result=>({...result, id: result.place_id}))})
+          this.setState({searchResult: results.map(result=>({...result, id: result.place_id,
+             url: `https://www.google.com/maps/search/?api=1&query=${result.formatted_address}&query_place_id=${result.place_id}`}))})
         }
       });
   }
@@ -63,7 +64,7 @@ class CreateTripBody extends Component {
     return (
       <div className='create-trip-planner'>
         <RoutePlanner searchThings={this.searchThings} newAddedThing={this.state.newAddedThing} duration={this.props.duration}/>
-        <SearchView addToBoard={this.addToBoard} searchResult={this.state.searchResult}
+        <SearchView addToBoard={this.addToBoard} searchResult={this.state.searchResult} service={this.service}
           keyword={this.state.searchKeyword} day={this.state.day} type={this.state.type}/>
         <div id='map' display='none'></div>
       </div>
