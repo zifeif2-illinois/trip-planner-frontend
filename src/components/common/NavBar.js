@@ -28,7 +28,7 @@ class ModelLoginAndRegister extends Component {
     }
   }
   render() {
-      return (<Modal trigger={<span>{this.state.status}</span>}>
+      return (<Modal trigger={<span>{this.props.status}</span>} closeIcon>
       <Modal.Header>Trip Planner -{this.state.status}</Modal.Header>
       <Modal.Content>
           {

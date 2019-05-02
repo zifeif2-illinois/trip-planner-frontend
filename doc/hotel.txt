@@ -1,0 +1,15 @@
+{
+  formatted_address: "1501 S Neil St, Champaign, IL 61820, USA"
+  geometry: {location: _.P, viewport: _.Q}
+  html_attributions: []
+  icon: "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png"
+  id: "ChIJ6bOXKC3XDIgRWAFeRkeBdy8"
+  name: "Hilton Garden Inn Champaign/ Urbana"
+  opening_hours: {open_now: true}
+  photos: [{…}]
+  place_id: "ChIJ6bOXKC3XDIgRWAFeRkeBdy8"
+  plus_code: {compound_code: "3QX3+MG Champaign, Champaign City Township, IL, USA", global_code: "86GH3QX3+MG"}
+  rating: 4.4
+  reference: "ChIJ6bOXKC3XDIgRWAFeRkeBdy8"
+  types: (3) ["lodging", "point_of_interest", "establishment"]
+}
