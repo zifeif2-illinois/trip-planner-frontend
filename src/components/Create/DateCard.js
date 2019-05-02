@@ -79,6 +79,7 @@ export default class DateCard extends Component {
               {this.state.hotel.name?
                 <div className='hotel-name'>
                   <span> {this.state.hotel.name} </span>
+                  {this.state.hotel.url? <a className='edit-activity' href={this.state.hotel.url} target='_blank'> view detail </a>:null}
                   <a className='edit-activity' onClick={this.editHotel}>edit</a>
                 </div>
                 :
