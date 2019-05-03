@@ -3,6 +3,8 @@ import {Card, Button} from 'semantic-ui-react'
 import DateCard from './DateCard'
 import ShareWidget from '../common/ShareWidget'
 import '../../style/RoutePlanner.scss'
+import ActivityCard from './ActivityCard'
+import { render } from 'react-dom';
 
 // Only contains daily route
 //parent: CreateTripBody
@@ -16,7 +18,9 @@ export default class RoutePlanner extends Component {
     this.state = {
       isSaved : false,
       route: originalPlans,
-      hotels: originalHotels
+      hotels: originalHotels,
+      markers: [],
+      mapDay: -1
     }
   }
 
@@ -30,7 +34,12 @@ export default class RoutePlanner extends Component {
       if (newAddedThing.type !== 'hotel'){
         let route = [...this.state.route]
         route[newAddedThing.day].push(newAddedThing.thing)
-        this.setState({route, isSaved: false})
+        if (newAddedThing.day == this.state.mapDay) {
+          let newMarkers = this.refreshMarkers(route[newAddedThing.day]);
+          this.setState({route, isSaved: false, markers: newMarkers})
+        } else {
+          this.setState({route, isSaved: false})
+        }
       }
       else {
         let hotels = [...this.state.hotels]
@@ -60,7 +69,46 @@ export default class RoutePlanner extends Component {
   deleteActivity = (name, day) => {
     let route = [...this.state.route]
     route[day] = route[day].filter(acitivity => acitivity.name !== name)
-    this.setState({route, isSaved: false})
+    if (day == this.state.mapDay) {
+      let newMarkers = this.refreshMarkers(route[day]);
+      this.setState({route, isSaved: false, markers: newMarkers})
+    } else {
+      this.setState({route, isSaved: false})
+    }
+  }
+
+  updateMap = (day) => {
+    let newMarkers = this.refreshMarkers(this.state.route[day]);
+    this.setState({markers: newMarkers, mapDay: day});
+  }
+  
+  refreshMarkers = (activities) => {
+    let markers = [...this.state.markers];
+    markers.forEach(marker => {
+      marker.setMap(null);
+    });
+
+    let newMarkers = activities.filter(activity => activity.geometry)
+      .map(activity => {
+        const marker = new window.google.maps.Marker({
+          position: activity.geometry.location,
+          map: this.props.map,
+          title: activity.name
+        });
+        marker.addListener('click', e => {
+          this.createInfoWindow(e, this.props.map, activity);
+        });
+        return marker;
+      });
+    return newMarkers;
+  }
+
+  createInfoWindow(e, map, activity) {
+    const infoWindow = new window.google.maps.InfoWindow({
+        content: activity.name,
+        position: { lat: e.latLng.lat(), lng: e.latLng.lng() }
+    });
+    infoWindow.open(map);
   }
 
   render() {
@@ -68,7 +116,7 @@ export default class RoutePlanner extends Component {
     let dateCards = this.state.route.map((activities, idx) =>
     <DateCard activities={activities} key={idx} index={idx} hotel={this.state.hotels[idx]}
      searchThings={this.props.searchThings} setHotel={this.setHotel} addCustomActicity={this.addCustomActicity}
-     deleteActivity={this.deleteActivity}/>)
+     deleteActivity={this.deleteActivity} updateMap={this.updateMap}/>)
     return (
       <div className='route-planner-container'>
         <Card.Group>

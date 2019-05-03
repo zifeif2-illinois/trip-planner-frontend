@@ -67,6 +67,10 @@ export default class DateCard extends Component {
         this.props.deleteActivity(name, this.props.index)
     }
 
+    updateMap = () => {
+      this.props.updateMap(this.props.index);
+    }
+
     render() {
       let listOfActivities = this.state.activities.map(activity => <ActivityCard deleteActivity={this.deleteActivity} key={activity.name} {...activity} />)
       return (<Card className='day-container'>
@@ -95,7 +99,7 @@ export default class DateCard extends Component {
                 selectOption1={this.state.isSearchingHotel} onToggle={this.switchHotel}/>
                 </div>
               }
-              <Button className='map-button' icon='map marker alternate' color='teal' content='View on map' />
+              <Button className='map-button' icon='map marker alternate' color='teal' content='View on map' onClick={this.updateMap}/>
             </div>
           </Header.Content>
         </Card.Content>

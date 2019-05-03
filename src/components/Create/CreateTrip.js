@@ -22,7 +22,11 @@ class CreateTripBody extends Component {
   }
 
   componentDidMount() {
-    this.service = new google.maps.places.PlacesService(document.getElementById('map'));
+    this.map = new google.maps.Map(document.getElementById('map'), {
+      center: this.props.cityLocation,
+      zoom: 10
+    });
+    this.service = new google.maps.places.PlacesService(this.map);
   }
 
   addToBoard = newActivity => {
@@ -62,10 +66,11 @@ class CreateTripBody extends Component {
   render() {
     return (
       <div className='create-trip-planner'>
-        <RoutePlanner searchThings={this.searchThings} newAddedThing={this.state.newAddedThing} duration={this.props.duration}/>
+        <RoutePlanner searchThings={this.searchThings} newAddedThing={this.state.newAddedThing}
+          duration={this.props.duration} map={this.map}/>
         <SearchView addToBoard={this.addToBoard} searchResult={this.state.searchResult}
           keyword={this.state.searchKeyword} day={this.state.day} type={this.state.type}/>
-        <div id='map' display='none'></div>
+        <div id='map'></div>
       </div>
     )
   }
@@ -88,7 +93,11 @@ export default class CreateTrip extends Component {
           <span> {`${startDate.toDateString()}-${endDate.toDateString()}`} </span>
         </div>
       </div>
-      <CreateTripBody duration={duration} city={this.props.location.state.cityQuery || 'Chicago'}/>
+      <CreateTripBody 
+        duration={duration}
+        city={this.props.location.state.cityQuery || 'Chicago'} 
+        cityLocation={this.props.location.state.cityLocation}
+      />
     </div>)
   }
 }
