@@ -25,7 +25,6 @@ class CreateTripBody extends Component {
 
   componentDidMount() {
     let mapElement = document.getElementById('map')
-    console.log(mapElement)
     this.map = new google.maps.Map(mapElement, {
       center: this.props.cityLocation,
       zoom: 10

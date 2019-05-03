@@ -3,9 +3,6 @@ import {Card, Button, Icon} from 'semantic-ui-react'
 import DateCard from './DateCard'
 import '../../style/RoutePlanner.scss'
 
-// Only contains daily route
-//parent: CreateTripBody
-// The planner store all the routes
 export default class RouteDetail extends Component {
   constructor(props) {
     super(props)
@@ -28,7 +25,6 @@ export default class RouteDetail extends Component {
 
   componentDidMount() {
     let trip = this.props.trip;
-    console.log(trip)
     this.setState({
       ...trip,
       ready: true
@@ -41,12 +37,12 @@ export default class RouteDetail extends Component {
       let dateCards = this.state.route.map((day, idx) =>
       <DateCard activities={day.activities} key={idx} index={day.day} hotel={day.hotel}/>)
       return (
-        <div className={"route-planner"}>
-        <div className={"title"}>
+        <div className="route-planner">
+        <div className="title">
           <h1> Route Details </h1>
-          <Icon className={"icon"} name="edit" color='teal' size="large" onClick={this.jumpEdit()}/>
+          <Icon className="icon" name="edit" color='teal' size="large" onClick={this.jumpEdit()}/>
         </div>
-          <div className='route-planner-container'>
+          <div className='review-route-planner-container'>
             <Card.Group>
               {dateCards}
             </Card.Group>
@@ -56,6 +52,6 @@ export default class RouteDetail extends Component {
     } else {
       return (<div>Loading...</div>)
     }
-    
+
   }
 }
