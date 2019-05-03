@@ -85,7 +85,7 @@ class CreateTripBody extends Component {
           keyword={this.state.searchKeyword} day={this.state.day} type={this.state.type}/>
         <div className={`${this.state.isModalOpen? "openModal": "closeModal"} map-modal`}>
           <div className="modal-content">
-            <Icon className="close-btn" name='cross' onClick={()=>this.setState({isModalOpen: false})}>&times;</Icon>
+            <Icon className="close-btn" name='close' onClick={()=>this.setState({isModalOpen: false})}>&times;</Icon>
             <div id="map"></div>
           </div>
         </div>
