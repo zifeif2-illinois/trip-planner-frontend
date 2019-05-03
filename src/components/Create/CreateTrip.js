@@ -4,6 +4,7 @@ import NavBar from '../common/NavBar'
 import RoutePlanner from './RoutePlanner'
 import SearchView from './SearchView'
 import '../../style/CreateTrip.scss'
+import { Redirect, Link } from 'react-router-dom'
 
 /*global google*/
 
@@ -79,7 +80,7 @@ class CreateTripBody extends Component {
     return (
       <div className='create-trip-planner'>
         <RoutePlanner searchThings={this.searchThings} newAddedThing={this.state.newAddedThing}
-          duration={this.props.duration} map={this.map} openModal={this.openModal}/>
+          duration={this.props.duration} map={this.map} openModal={this.openModal} jumpReview={this.props.jumpReview}/>
         <SearchView addToBoard={this.addToBoard} searchResult={this.state.searchResult} service={this.service}
           keyword={this.state.searchKeyword} day={this.state.day} type={this.state.type}/>
         <div className={`${this.state.isModalOpen? "openModal": "closeModal"} map-modal`}>
@@ -113,6 +114,7 @@ export default class CreateTrip extends Component {
         duration={duration}
         city={this.props.location.state.cityQuery || 'Chicago'}
         cityLocation={this.props.location.state.cityLocation}
+        jumpReview={(tripid)=>{this.props.history.push(`/trip-planner/review/${tripid}`)}}
       />
     </div>)
   }

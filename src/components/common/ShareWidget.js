@@ -70,7 +70,7 @@ export default class ShareWidget extends Component {
       </List.Item>
     )
     return (<Modal closeIcon
-      trigger={<Button content='Share Your Trip' className='share-button' onClick={this.shareTrip} color='teal'/>}>
+      trigger={this.props.trigger}>
     <Modal.Header>Share Your Trip!</Modal.Header>
     <Modal.Content>
       <Modal.Description>

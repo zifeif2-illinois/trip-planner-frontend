@@ -20,7 +20,8 @@ export default class RoutePlanner extends Component {
       hotels: originalHotels,
       markers: [],
       mapDay: -1,
-      openModal: false
+      openLoginModal: false,
+      openSaveModel:false
     }
   }
 
@@ -51,10 +52,12 @@ export default class RoutePlanner extends Component {
 
   saveTrip = () => {
     if(!firebaseApi.getCurrentUser()) {
-      this.setState({openModal: true})
-    }
-    else {
-      this.setState({isSaved: true})
+      this.setState({openLoginModal: true})
+    } else {
+      // this.setState({openSaveModel: true})
+      // this.props.history.push("/review")
+      // createNewTrip()
+      this.props.jumpReview(1);
     }
   }
 
@@ -130,18 +133,24 @@ export default class RoutePlanner extends Component {
     <DateCard activities={activities} key={idx} index={idx} hotel={this.state.hotels[idx]}
      searchThings={this.props.searchThings} setHotel={this.setHotel} addCustomActicity={this.addCustomActicity}
      deleteActivity={this.deleteActivity} updateMap={this.updateMap}/>)
+    
+    let triggerButton = (<Button content='Share Your Trip' className='share-button' color='teal'/>);
+
+
     return (
       <div className='route-planner-container'>
         <Card.Group>
           {dateCards}
         </Card.Group>
         <div className='save-share-buttons'>
-          <Button content={this.state.isSaved? 'Saved': 'Save Your Trip Before Sharing'} className='save-button' onClick={this.saveTrip} color='teal'/>
-          {this.state.isSaved?
-          <ShareWidget/>:null
-          }
+          <Button content="Save" className='save-button' onClick={this.saveTrip} color='teal'/>
         </div>
-        <Modal open={this.state.openModal} onClose={()=>this.setState({openModal: false})}closeIcon>
+        <Modal open={this.state.openLoginModal} onClose={()=>this.setState({openLoginModal: false})}closeIcon>
+          <Modal.Description>
+            <div className='model-content'>Login before you share!</div>
+          </Modal.Description>
+        </Modal>
+        <Modal open={this.state.openSaveModal} onClose={()=>this.setState({openSaveModal: false})}closeIcon>
           <Modal.Description>
             <div className='model-content'>Login before you share!</div>
           </Modal.Description>
