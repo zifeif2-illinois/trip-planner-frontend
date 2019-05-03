@@ -29,7 +29,6 @@ export default class ActivityCard extends Component {
   }
 
   render() {
-    let personalActivity = null
     if(!this.props.formatted_address) {
       return (!this.state.isEditing?
           <Card className='activity-container'>

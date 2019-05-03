@@ -1,4 +1,4 @@
-import {fire, fbAuth} from '../firebase.js'
+import { fbAuth} from '../firebase.js'
 
 export function getCurrentUser() {
   return fbAuth.currentUser;
