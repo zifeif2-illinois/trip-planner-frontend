@@ -103,7 +103,7 @@ export default class CreateTrip extends Component {
     endDate.setDate(endDate.getDate() + duration)
 
     return (<div className='container'>
-      <NavBar/>
+      <NavBar history={this.props.history}/>
       <div className='background'>
         <div className='title'>
           <h2> {this.props.location.state.cityQuery || 'Chicago'} </h2>

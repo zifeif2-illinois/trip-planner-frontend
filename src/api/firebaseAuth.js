@@ -29,3 +29,7 @@ export function register( userEmail, userPassword ) {
 export function logout() {
   return fbAuth.signOut()
 }
+
+export function resetPassword(email) {
+  return fbAuth.sendPasswordResetEmail(email)
+}
