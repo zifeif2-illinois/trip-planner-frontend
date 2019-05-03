@@ -41,7 +41,10 @@ class SearchResultCard extends Component {
     return (
       <Card className='search-result'>
         <Card.Content>
-          <Image floated='right' size='mini' src={this.props.result.photos[0].getUrl({maxWidth: 400, maxHeight: 400})}/>
+          {this.props.result.photos ?
+            <Image floated='right' size='mini' src={this.props.result.photos[0].getUrl({maxWidth: 400, maxHeight: 400})}/> :
+            <Icon name='image'/>
+          }
           <Card.Header><a href={this.props.result.url} target="_blank">{this.props.result.name}</a></Card.Header>
           <Card.Meta>Location: {this.props.result.formatted_address}</Card.Meta>
           <Button color='teal' onClick={()=>this.props.addToBoard(this.props.result)}> Add </Button>

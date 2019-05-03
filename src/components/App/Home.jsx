@@ -15,7 +15,8 @@ export default class Home extends Component {
       startDate: new Date(),
       duration: 0,
       city: '',
-      cityQuery: ''
+      cityQuery: '',
+      cityLocation: {lat: 41.8781, lng: -87.6298}
     }
   }
 
@@ -28,11 +29,11 @@ export default class Home extends Component {
   }
 
   createTrip = () => {
-    this.props.history.push('trip-planner/create', {...this.state})
+    this.props.history.push('/trip-planner/create', {...this.state})
   }
 
-  setCitySearchResult = (city, cityQuery) => {
-    this.setState({city, cityQuery})
+  setCitySearchResult = (city, cityQuery, cityLocation) => {
+    this.setState({city, cityQuery, cityLocation})
   }
 
   changeCitySearch = event => {
