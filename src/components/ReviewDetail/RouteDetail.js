@@ -5,9 +5,6 @@ import '../../style/RoutePlanner.scss'
 import * as firebaseApi from '../../api/firebaseAuth'
 import ShareWidget from '../common/ShareWidget'
 
-// Only contains daily route
-//parent: CreateTripBody
-// The planner store all the routes
 export default class RouteDetail extends Component {
   constructor(props) {
     super(props)
@@ -35,7 +32,6 @@ export default class RouteDetail extends Component {
 
   componentDidMount() {
     let trip = this.props.trip;
-    console.log(trip)
     this.setState({
       ...trip,
       ready: true
@@ -49,14 +45,14 @@ export default class RouteDetail extends Component {
       let shareIcon =  (<Icon className="icon" name="share square" color='teal' size="large" />)
       return (
         <div className="route-planner">
-        <div className="title" >
+        <div className="title">
           <h1> Route Details </h1>
           <div className="icon-group">
             <Icon className="icon" name="edit" color='teal' size="large" onClick={this.jumpEdit}/>
            <ShareWidget trigger={shareIcon}/>
           </div>
         </div>
-          <div className='route-planner-container'>
+          <div className='review-route-planner-container'>
             <Card.Group>
               {dateCards}
             </Card.Group>
@@ -73,6 +69,6 @@ export default class RouteDetail extends Component {
     else {
       return (<div>Loading...</div>)
     }
-    
+
   }
 }

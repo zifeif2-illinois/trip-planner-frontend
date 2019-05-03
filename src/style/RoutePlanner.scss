@@ -36,7 +36,7 @@
     }
   }
 }
-
+.review-route-planner-container,
 .route-planner-container{
   overflow: auto;
 
@@ -67,7 +67,9 @@
     right: 5%;
   }
 }
-
+.review-route-planner-container {
+  height: 100%;
+}
 .modal{
   height: 40%;
 

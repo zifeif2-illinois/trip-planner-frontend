@@ -36,7 +36,7 @@ export default class RoutePlanner extends Component {
         let route = [...this.state.route]
         route[newAddedThing.day].push(newAddedThing.thing)
         if (newAddedThing.day === this.state.mapDay) {
-          let newMarkers = this.refreshMarkers(route[newAddedThing.day]);
+          let newMarkers = this.refreshMarkers(route[newAddedThing.day], this.state.hotels[newAddedThing.day]);
           this.setState({route, isSaved: false, markers: newMarkers})
         } else {
           this.setState({route, isSaved: false})
@@ -45,7 +45,6 @@ export default class RoutePlanner extends Component {
       else {
         let hotels = [...this.state.hotels]
         hotels[newAddedThing.day] = newAddedThing.thing
-        console.log(hotels)
         this.setState({hotels, isSaved: false})
       }
     }
@@ -78,7 +77,7 @@ export default class RoutePlanner extends Component {
     let route = [...this.state.route]
     route[day] = route[day].filter(acitivity => acitivity.name !== name)
     if (day === this.state.mapDay) {
-      let newMarkers = this.refreshMarkers(route[day]);
+      let newMarkers = this.refreshMarkers(route[day], this.state.hotels[day]);
       this.setState({route, isSaved: false, markers: newMarkers})
     } else {
       this.setState({route, isSaved: false})
@@ -99,6 +98,7 @@ export default class RoutePlanner extends Component {
 
     let newMarkers = activities.filter(activity => activity.geometry)
       .map(activity => {
+        console.log(activity.geometry.location)
         const marker = new window.google.maps.Marker({
           position: activity.geometry.location,
           map: this.props.map,

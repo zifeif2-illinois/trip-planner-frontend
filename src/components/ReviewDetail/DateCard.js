@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Header, Input, Icon, Button} from 'semantic-ui-react'
+import { Card, Header, Icon} from 'semantic-ui-react'
 import '../../style/RoutePlanner.scss'
 import ActivityCard from './ActivityCard'
 
@@ -49,7 +49,6 @@ export default class DateCard extends Component {
                 <div className='hotel-name'>
                   <span> {this.state.hotel.name} </span>
                 </div>
-              <Button className='map-button' icon='map marker alternate' color='teal' content='View on map' />
             </div>
           </Header.Content>
         </Card.Content>
