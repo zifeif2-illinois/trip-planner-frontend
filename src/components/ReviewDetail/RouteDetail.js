@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Card, Button} from 'semantic-ui-react'
+import {Card, Button, Icon} from 'semantic-ui-react'
 import DateCard from './DateCard'
 import '../../style/RoutePlanner.scss'
 
@@ -22,6 +22,10 @@ export default class RouteDetail extends Component {
   //   }
   // }
 
+  jumpEdit = () => {
+
+  }
+
   componentDidMount() {
     let trip = this.props.trip;
     console.log(trip)
@@ -37,10 +41,16 @@ export default class RouteDetail extends Component {
       let dateCards = this.state.route.map((day, idx) =>
       <DateCard activities={day.activities} key={idx} index={day.day} hotel={day.hotel}/>)
       return (
-        <div className='route-planner-container'>
-          <Card.Group>
-            {dateCards}
-          </Card.Group>
+        <div className={"route-planner"}>
+        <div className={"title"}>
+          <h1> Route Details </h1>
+          <Icon className={"icon"} name="edit" color='teal' size="large" onClick={this.jumpEdit()}/>
+        </div>
+          <div className='route-planner-container'>
+            <Card.Group>
+              {dateCards}
+            </Card.Group>
+          </div>
         </div>
       )
     } else {

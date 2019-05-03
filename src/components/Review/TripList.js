@@ -30,7 +30,7 @@ export default class TripList extends Component {
 
 	render(){
 		if(this.state.ready){
-			let detailViewLink = `/trip-planner/review/${this.state.detailViewType}`
+			let detailViewLink = `/trip-planner/review`
 			let tripCards = this.state.trips.map((trip) => (
 				<TripCard 
 				key={trip.id}

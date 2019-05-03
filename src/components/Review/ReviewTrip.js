@@ -79,7 +79,7 @@ class ReviewTripBody extends Component {
 
   render() {
     return (
-      <div className='review-trip-planner'>
+      <div className='review-trip-body'>
         <ReviewView trips={this.state.trips}/>
       </div>
     )
