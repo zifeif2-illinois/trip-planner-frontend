@@ -24,7 +24,7 @@
 
 
 .route-planner-container{
-  overflow: scroll;
+  overflow: auto;
 
   .cards {
     width: 100%;
@@ -51,5 +51,17 @@
   .map-button {
     position: absolute;
     right: 5%;
+  }
+}
+
+.modal{
+  height: 40%;
+
+  .model-content{
+    font-size: 2em;
+    margin-top: 28%;
+    text-align: center;
+    color: teal;
+    font-weight: bold;
   }
 }

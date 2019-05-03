@@ -8,6 +8,9 @@ import NewActivityCard from './NewActivityCard'
 
 // Contains attractions for each day, receive a list of activities to populate the route
 // parent: RoutePlanner
+// component of DateCard: {
+  // hotel: {}, activities: []
+//}
 export default class DateCard extends Component {
 
     constructor(props) {
@@ -64,6 +67,10 @@ export default class DateCard extends Component {
         this.props.deleteActivity(name, this.props.index)
     }
 
+    updateMap = () => {
+      this.props.updateMap(this.props.index);
+    }
+
     render() {
       let listOfActivities = this.state.activities.map(activity => <ActivityCard deleteActivity={this.deleteActivity} key={activity.name} {...activity} />)
       return (<Card className='day-container'>
@@ -76,6 +83,7 @@ export default class DateCard extends Component {
               {this.state.hotel.name?
                 <div className='hotel-name'>
                   <span> {this.state.hotel.name} </span>
+                  {this.state.hotel.url? <a className='edit-activity' href={this.state.hotel.url} target='_blank'> view detail </a>:null}
                   <a className='edit-activity' onClick={this.editHotel}>edit</a>
                 </div>
                 :
@@ -92,7 +100,7 @@ export default class DateCard extends Component {
                 selectOption1={this.state.isSearchingHotel} onToggle={this.switchHotel}/>
                 </div>
               }
-              <Button className='map-button' icon='map marker alternate' color='teal' content='View on map' />
+              <Button className='map-button' icon='map marker alternate' color='teal' content='View on map' onClick={this.updateMap}/>
             </div>
           </Header.Content>
         </Card.Content>

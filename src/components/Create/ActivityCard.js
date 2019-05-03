@@ -3,6 +3,7 @@ import { Card, Image, Input, Button} from 'semantic-ui-react'
 import '../../style/ActivityCard.scss'
 
 // This component contains activities added to route planner
+//parent: datecard
 export default class ActivityCard extends Component {
   constructor(props) {
     super(props)
@@ -17,7 +18,7 @@ export default class ActivityCard extends Component {
 
   componentDidMount() {
     console.log(this.props)
-    this.setState({name: this.props.name, location: this.props.location, isPopularActivity: this.props.isPopularActivity})
+    this.setState({name: this.props.name, isPopularActivity: this.props.isPopularActivity})
   }
 
   toggleEditView = () => {
@@ -28,13 +29,12 @@ export default class ActivityCard extends Component {
   }
 
   render() {
-    let personalActivity = null
-    if(!this.state.isPopularActivity) {
+    if(!this.props.formatted_address) {
       return (!this.state.isEditing?
           <Card className='activity-container'>
            <Card.Content>
             <Card.Header>{this.state.name}</Card.Header>
-            <Card.Meta>{this.state.location? `Location: ${this.state.location}`: 'Personal Activity'}</Card.Meta>
+            <Card.Meta>Personal Activity</Card.Meta>
             <a className='edit-activity' onClick={this.toggleEditView}>edit</a>
             <a className='delete-activity' onClick={this.deleteActivity}>delete</a>
             </Card.Content>
@@ -50,10 +50,10 @@ export default class ActivityCard extends Component {
     return (
           <Card className='activity-container'>
             <Card.Content>
-              <Image floated='right' size='mini' src='https://react.semantic-ui.com/images/avatar/large/steve.jpg'/>
-               <Card.Header>{this.state.name}</Card.Header>
-               <Card.Meta>Location: {this.state.location}</Card.Meta>
-               <a className='view-detail' href='#'>view detail</a>
+              <Image floated='right' size='mini' src={this.props.icon}/>
+               <Card.Header>{this.props.name}</Card.Header>
+               <Card.Meta>Location: {this.props.formatted_address}</Card.Meta>
+               <a className='view-detail' href={this.props.url} target='_blank'>view detail</a>
                <a className='delete-activity' onClick={this.deleteActivity}>delete</a>
              </Card.Content>
           </Card>

@@ -1,0 +1,18 @@
+.input{
+  width: 80%;
+}
+
+.item{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .icon{
+    color: #ff00008c
+  }
+}
+
+.share-list {
+  height: 100px;
+  overflow: auto;
+}

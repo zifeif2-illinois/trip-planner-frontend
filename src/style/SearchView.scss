@@ -4,9 +4,12 @@
   }
   .search-view-container{
     padding: 5%;
-    overflow: scroll;
+    overflow: auto;
     display: inline-block;
   }
   .search-result {
     margin: auto !important;
+  }
+  .keywords{
+    margin-right: 5%
   }

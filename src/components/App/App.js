@@ -7,6 +7,8 @@ import Home from './Home.jsx';
 import CreateTrip from '../Create/CreateTrip.js'
 import ReviewTrip from '../Review/ReviewTrip.js'
 import TripDetail from '../ReviewDetail/TripDetail.js'
+import Profile from '../Profile/Profile.js'
+
 import '../../style/App.module.scss'
 
 class App extends Component {
@@ -18,6 +20,7 @@ class App extends Component {
               <Route exact path="/trip-planner/create" component={CreateTrip} />
               <Route exact path="/trip-planner/review" component={ReviewTrip} />
               <Route exact path="/trip-planner/review/:id" component={TripDetail} />
+              <Route exact path="/trip-planner/profile" component={Profile} />
           </Switch>
         </Router>
     );

@@ -30,7 +30,14 @@ class CitySearch extends Component {
     // Check if address is valid
     if (address) {
       // Set State
-      this.props.onSelect(address[0].long_name, addressObject.formatted_address)
+      this.props.onSelect(
+        address[0].long_name, 
+        addressObject.formatted_address, 
+        {
+          lat: addressObject.geometry.location.lat(),
+          lng: addressObject.geometry.location.lng()
+        }
+      );
     }
   }
 
