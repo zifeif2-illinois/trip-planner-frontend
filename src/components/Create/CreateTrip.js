@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Modal, Icon} from 'semantic-ui-react'
+import { Icon} from 'semantic-ui-react'
 import NavBar from '../common/NavBar'
 import RoutePlanner from './RoutePlanner'
 import SearchView from './SearchView'
@@ -36,7 +36,7 @@ class CreateTripBody extends Component {
 
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
-      if (event.target == modal) {
+      if (event.target === modal) {
         this.state.setState({isModalOpen: false})
       }
     }
@@ -97,7 +97,6 @@ class CreateTripBody extends Component {
 // This is the whole screen of adding trip including navbar and background
 export default class CreateTrip extends Component {
   render() {
-    console.log(this.props.location.state)
     let startDate = this.props.location.state.startDate || new Date()
     let endDate = new Date(startDate)
     let duration = parseInt(this.props.location.state.duration)||3

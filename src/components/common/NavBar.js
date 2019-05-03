@@ -24,7 +24,6 @@ export default class NavBar extends Component {
   }
 
   render() {
-    console.log(this.state.currentUser)
     // TODO: add link to dropdown.item
     return (
       <Menu className='navbar' fixed='top'>

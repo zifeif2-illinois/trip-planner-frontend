@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import {Card, Button} from 'semantic-ui-react'
+import {Card, Button, Modal} from 'semantic-ui-react'
 import DateCard from './DateCard'
 import ShareWidget from '../common/ShareWidget'
 import '../../style/RoutePlanner.scss'
-import ActivityCard from './ActivityCard'
-import { render } from 'react-dom';
+import * as firebaseApi from '../../api/firebaseAuth'
 
 // Only contains daily route
 //parent: CreateTripBody
@@ -20,7 +19,8 @@ export default class RoutePlanner extends Component {
       route: originalPlans,
       hotels: originalHotels,
       markers: [],
-      mapDay: -1
+      mapDay: -1,
+      openModal: false
     }
   }
 
@@ -34,7 +34,7 @@ export default class RoutePlanner extends Component {
       if (newAddedThing.type !== 'hotel'){
         let route = [...this.state.route]
         route[newAddedThing.day].push(newAddedThing.thing)
-        if (newAddedThing.day == this.state.mapDay) {
+        if (newAddedThing.day === this.state.mapDay) {
           let newMarkers = this.refreshMarkers(route[newAddedThing.day]);
           this.setState({route, isSaved: false, markers: newMarkers})
         } else {
@@ -51,7 +51,12 @@ export default class RoutePlanner extends Component {
   }
 
   saveTrip = () => {
-    this.setState({isSaved: true})
+    if(!firebaseApi.getCurrentUser()) {
+      this.setState({openModal: true})
+    }
+    else {
+      this.setState({isSaved: true})
+    }
   }
 
   setHotel = (hotel, dateIndex) => {
@@ -69,7 +74,7 @@ export default class RoutePlanner extends Component {
   deleteActivity = (name, day) => {
     let route = [...this.state.route]
     route[day] = route[day].filter(acitivity => acitivity.name !== name)
-    if (day == this.state.mapDay) {
+    if (day === this.state.mapDay) {
       let newMarkers = this.refreshMarkers(route[day]);
       this.setState({route, isSaved: false, markers: newMarkers})
     } else {
@@ -136,6 +141,11 @@ export default class RoutePlanner extends Component {
           <ShareWidget/>:null
           }
         </div>
+        <Modal open={this.state.openModal} onClose={()=>this.setState({openModal: false})}closeIcon>
+          <Modal.Description>
+            <div className='model-content'>Login before you share!</div>
+          </Modal.Description>
+        </Modal>
       </div>)
   }
 }

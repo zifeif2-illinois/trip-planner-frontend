@@ -1,4 +1,5 @@
-import firebase from 'firebase'
+import firebase from 'firebase/app';
+import 'firebase/auth';
 var config = { /* COPY THE ACTUAL CONFIG FROM FIREBASE CONSOLE */
   apiKey: "AIzaSyA6GoLwhUzLcRguPqu8S2KLROMg67w4eT0",
   authDomain: "cs498rk-239014.firebaseapp.com",

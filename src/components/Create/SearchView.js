@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import { Card, Button, Image, Segment, Icon, Header} from 'semantic-ui-react';
 import '../../style/SearchView.scss';
-/*global google*/
 
 // Parent: CreateTripBody
 export default class SearchView extends Component {
