@@ -44,7 +44,7 @@ export default class Home extends Component {
     console.log(this.state.city)
     return (
       <div className='home-container'>
-        <NavBar/>
+        <NavBar history={this.props.history}/>
         <div className ='bg'>
           <div className='ui card basic-info'>
             <h3> Start planning your trip </h3>

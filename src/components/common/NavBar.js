@@ -13,6 +13,13 @@ export default class NavBar extends Component {
     }
   }
 
+  componentDidMount() {
+    let currentUser = firebaseApi.getCurrentUser()
+    if(currentUser) {
+      this.setState({currentUser: {...currentUser, name:'Zifei'}})
+    }
+  }
+
   hasLogin = () => {
     this.setState({currentUser: {...firebaseApi.getCurrentUser(), name: 'Zifei'}}) // TODO: call backend api to get user basic information
   }
@@ -20,6 +27,7 @@ export default class NavBar extends Component {
   logout = () => {
     firebaseApi.logout().then(() => {
       this.setState({currentUser: null})
+      this.props.history.push(`/trip-planner`)
     })
   }
 
@@ -27,14 +35,14 @@ export default class NavBar extends Component {
     // TODO: add link to dropdown.item
     return (
       <Menu className='navbar' fixed='top'>
-        <Menu.Item link position='left'> <Link to='/trip-planner/myTrip'>Trip Planner</Link></Menu.Item>
+        <Menu.Item link position='left'> <Link to='/trip-planner'>Trip Planner</Link></Menu.Item>
         {!this.state.currentUser?null
         :
         <Menu.Menu position='right'>
           <Dropdown text={`Hi, ${this.state.currentUser.name}`}item>
             <Dropdown.Menu>
               <Dropdown.Item>My Trips</Dropdown.Item>
-              <Dropdown.Item>Profile</Dropdown.Item>
+              <Dropdown.Item><Link to='/trip-planner/profile'>Profile</Link></Dropdown.Item>
               <Dropdown.Item onClick={this.logout}>Logout</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
