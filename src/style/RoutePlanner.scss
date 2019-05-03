@@ -22,6 +22,16 @@
   }
 }
 
+.route-planner{
+  .title{
+    display: flex;
+    justify-content: space-between;
+    flow-direction: row;
+    .icon{
+      cursor: pointer;
+    }
+  }
+}
 
 .route-planner-container{
   overflow: auto;

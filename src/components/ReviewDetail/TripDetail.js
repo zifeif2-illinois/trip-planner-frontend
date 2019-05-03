@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import RouteDetail from './RouteDetail'
 import NavBar from '../common/NavBar'
-import '../../style/ReviewTrip.scss'
+// import '../../style/ReviewTrip.scss'
 
-export default class TripDetail extends Component {
-
+export class TripDetailBody extends Component {
 	constructor(props) {
 		super(props)
 		this.state={
@@ -12,7 +11,30 @@ export default class TripDetail extends Component {
 		}
 	}
 
-	getTrip = (id) => {
+	componentDidMount() {
+		this.setState({
+			trip: this.props.trip,
+			ready: true,
+		})
+	}
+	
+
+	render() {
+		if(this.state.ready)
+			return (
+	        	<div className='trip-detail-body'>
+	        		<RouteDetail className='trip-detail-component' trip={this.state.trip} />
+	      		</div>
+			)
+		else 
+			return (<div>Loading......</div>)
+	}
+}
+
+
+export default class TripDetail extends Component {	
+
+getTrip = (id) => {
 		return {
 	       id: 2,
 	       startDate: "2019-12-16T03:24:00",
@@ -64,6 +86,12 @@ export default class TripDetail extends Component {
 	       name: 'Christmas Trip'
 	      }
 	}
+	constructor(props){
+		super(props)
+		this.state = {
+			ready: false
+		}
+	}
 
 	componentDidMount() {
 		let { id } = this.props.match.params
@@ -75,14 +103,26 @@ export default class TripDetail extends Component {
 	}
 
 	render() {
-		if(this.state.ready)
+		if(this.state.ready){
+			let trip = this.state.trip;
+			let startDate = new Date(Date.parse(trip.startDate));
+    		let endDate = new Date(startDate.setDate(startDate.getDate() + trip.duration));
 			return (
 			<div className='container'>
 	        	<NavBar/>
-	        	<RouteDetail trip={this.state.trip} />
+	        	<div className='background'>
+			        <div className='title'>
+			          <h2> {trip.name} </h2>
+			          <span> {`${startDate.toLocaleDateString()}-${endDate.toLocaleDateString()}`} </span>
+			          <span> {`${trip.location}`}</span>
+			          <h6><i>{trip.description}</i></h6>
+			        </div>
+				</div>
+	        		<TripDetailBody trip={this.state.trip}/>
 	      	</div>
 			)
-		else 
-			return (<div>Loading......</div>)
+		} else {
+			return (<div> Loading... </div>)
+		}
 	}
 }
