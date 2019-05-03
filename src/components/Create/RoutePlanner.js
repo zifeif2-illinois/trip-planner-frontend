@@ -78,11 +78,12 @@ export default class RoutePlanner extends Component {
   }
 
   updateMap = (day) => {
-    let newMarkers = this.refreshMarkers(this.state.route[day]);
+    let newMarkers = this.refreshMarkers(this.state.route[day], this.state.hotels[day]);
     this.setState({markers: newMarkers, mapDay: day});
+    this.props.openModal()
   }
-  
-  refreshMarkers = (activities) => {
+
+  refreshMarkers = (activities, hotel) => {
     let markers = [...this.state.markers];
     markers.forEach(marker => {
       marker.setMap(null);
@@ -100,6 +101,13 @@ export default class RoutePlanner extends Component {
         });
         return marker;
       });
+    if(hotel.geometry) {
+      newMarkers.push(new window.google.maps.Marker({
+        position: hotel.geometry.location,
+        map: this.props.map,
+        title: hotel.name
+      }))
+    }
     return newMarkers;
   }
 
