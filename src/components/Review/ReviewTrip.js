@@ -75,7 +75,7 @@ class ReviewTripBody extends Component {
         ready: true
       })
   }
-//         
+//
 
   render() {
     return (
@@ -90,7 +90,7 @@ class ReviewTripBody extends Component {
 export default class ReviewTrip extends Component {
   render() {
     return (
-      <div className='container'>
+      <div className='review-trip-container'>
         <NavBar/>
         <ReviewTripBody/>
       </div>
