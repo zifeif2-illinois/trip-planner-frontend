@@ -41,7 +41,7 @@ export default class Profile extends Component {
   render() {
     return (<div>
       <NavBar history={this.props.history}/>
-      <div className='container'>
+      <div className='profile-container'>
       <Header> Profile </Header>
       <div>Name</div>
       <Input value={this.state.editName} disabled={!this.state.isEditing} onChange={this.onNameChange}
