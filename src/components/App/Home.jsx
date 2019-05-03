@@ -29,7 +29,7 @@ export default class Home extends Component {
   }
 
   createTrip = () => {
-    this.props.history.push('trip-planner/create', {...this.state})
+    this.props.history.push('/trip-planner/create', {...this.state})
   }
 
   setCitySearchResult = (city, cityQuery, cityLocation) => {
