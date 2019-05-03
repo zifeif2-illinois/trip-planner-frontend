@@ -62,7 +62,6 @@ class CreateTripBody extends Component {
 // This is the whole screen of adding trip including navbar and background
 export default class CreateTrip extends Component {
   render() {
-    console.log(this.props.location.state)
     let startDate = this.props.location.state.startDate || new Date()
     let endDate = new Date(startDate)
     let duration = parseInt(this.props.location.state.duration)||3

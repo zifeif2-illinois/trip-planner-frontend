@@ -1,0 +1,12 @@
+.container{
+  height: 100%;
+}
+
+.review-trip-planner{
+  position: relative;
+  background: white;
+  padding: 5%;
+  top: 10%;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
