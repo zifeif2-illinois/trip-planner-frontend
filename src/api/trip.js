@@ -1,11 +1,13 @@
 import axios from 'axios'
 import {sharedDummyTrip} from './dummy-for-shared'
 
-const tripUrl = "https://us-central1-cs498rk-239014.cloudfunctions.net/trip/"
+// const tripUrl = "https://us-central1-cs498rk-239014.cloudfunctions.net/trip"
+// const userUrl = "https://us-central1-cs498rk-239014.cloudfunctions.net/user"
+const tripUrl = "http://localhost:5000/cs498rk-239014/us-central1/trip"
+const userUrl = "http://localhost:5000/cs498rk-239014/us-central1/user"
 export function createNewTrip(trip) {
 	dummyTrips.push(trip)
-	console.log(trip.toString())
-       return axios.post(tripUrl,{description: JSON.stringify(trip)})
+       return axios.post(tripUrl,{data:JSON.stringify(trip)})
               .then((data) => {
                      console.log(data.data)
                      return data.data.id
@@ -22,17 +24,21 @@ export function shareTrip(tripId, listOfUsers) {
 
 
 export function updateTrip(tripId, updatedTrip) {
-	return axios.put(`${tripUrl}${tripId}`,{description: JSON.stringify(updatedTrip)})
+	return axios.put(`${tripUrl}/${tripId}`,{data:JSON.stringify(updatedTrip)})
               .then((data) => {
                      console.log(data.data)
                      return data.data.id
               })
 }
 
-export function getTrips(){
-	return new Promise((resolve) => {
-		resolve(dummyTrips)
-	})
+export function getTripsByUserId(userId){
+       console.log(`${userUrl}/gettrip/${userId}`)
+	return axios.get(`${userUrl}/gettrip/${userId}`)
+              .then((data)=>{
+                     let allTrips = data.data.data
+                     return allTrips
+                     
+              })
 }
 
 export function getSharedTrips() {
@@ -43,14 +49,10 @@ export function getSharedTrips() {
 
 
 export function getTripById(tripId) {
-       // return axios.get(`${tripUrl}${tripId}`)
-       //        .then((data)=>{
-       //               console.log(data.data.data)
-       //               return JSON.parse(data.data.data.description)
-       //        })
-			 return new Promise((resolve) => {
-		 		resolve(dummyTrips.find(trip=>trip.id==tripId))
-		 	})
+       return axios.get(`${tripUrl}/${tripId}`)
+              .then((data)=>{
+                     return data.data.data
+              })
 
 }
 
