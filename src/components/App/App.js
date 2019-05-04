@@ -16,7 +16,7 @@ class App extends Component {
     return (
         <Router>
           <Switch>
-              <Route exact path="/trip-planner" component={Home}/>
+              <Route exact path="/" component={Home}/>
               <Route exact path="/trip-planner/create" component={CreateTrip} />
               <Route exact path="/trip-planner/review" component={ReviewTrip} />
               <Route exact path="/trip-planner/review/:id" component={TripDetail} />

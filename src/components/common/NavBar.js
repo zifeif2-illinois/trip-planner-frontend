@@ -27,7 +27,7 @@ export default class NavBar extends Component {
   logout = () => {
     firebaseApi.logout().then(() => {
       this.setState({currentUser: null})
-      this.props.history.push(`/trip-planner`)
+      this.props.history.push(`/`)
     })
   }
 
@@ -35,7 +35,7 @@ export default class NavBar extends Component {
     // TODO: add link to dropdown.item
     return (
       <Menu className='navbar' fixed='top'>
-        <Menu.Item link position='left'> <Link to='/trip-planner'>Trip Planner</Link></Menu.Item>
+        <Menu.Item link position='left'> <Link to='/'>Trip Planner</Link></Menu.Item>
         {!this.state.currentUser?null
         :
         <Menu.Menu position='right'>
