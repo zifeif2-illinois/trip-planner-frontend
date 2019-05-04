@@ -1,12 +1,15 @@
 import axios from 'axios'
 
-
+const tripUrl = "https://us-central1-cs498rk-239014.cloudfunctions.net/trip/"
 export function createNewTrip(trip) {
 	dummyTrips.push(trip)
-	console.log(trip)
-	return new Promise((resolve) => {
-		resolve(dummyTrips.length-1)
-	})
+	console.log(trip.toString())
+       return axios.post(tripUrl,{description: JSON.stringify(trip)})
+              .then((data) => {
+                     console.log(data.data)
+                     return data.data.id
+              })
+
 }
 
 export function getTrips(){
@@ -17,10 +20,12 @@ export function getTrips(){
 
 
 export function getTripById(tripId) {
-	let tripIndex = 0
-	return new Promise((resolve) => {
-		resolve(dummyTrips[tripId])
-	})
+       return axios.get(`${tripUrl}${tripId}`)
+              .then((data)=>{
+                     console.log(data.data.data)
+                     return JSON.parse(data.data.data.description)
+              })
+
 }
 
 var dummyTrips = [

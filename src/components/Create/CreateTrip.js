@@ -6,7 +6,7 @@ import SearchView from './SearchView'
 import '../../style/CreateTrip.scss'
 import { Redirect, Link } from 'react-router-dom'
 import { createNewTrip } from '../../api/trip'
-import { getCurrentUserId } from '../../api/user'
+import { getCurrentUser } from '../../api/firebaseAuth'
 /*global google*/
 
 // This component only contains route planner and search view
@@ -82,7 +82,7 @@ class CreateTripBody extends Component {
       startDate: this.props.startDate,
       duration: this.props.duration,
       city: {name: this.props.city, location: this.props.cityLocation},
-      owner: getCurrentUserId(),
+      owner: getCurrentUser().email,
       shared: []
     })
     createNewTrip(newTrip)
