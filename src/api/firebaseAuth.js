@@ -1,6 +1,7 @@
 import { fbAuth} from '../firebase.js'
 import axios from 'axios';
-const USER_URL = 'https://us-central1-cs498rk-239014.cloudfunctions.net/user/'
+// const USER_URL = 'https://us-central1-cs498rk-239014.cloudfunctions.net/user/'
+const USER_URL = "http://localhost:5000/cs498rk-239014/us-central1/user"
 
 
 export function getCurrentUser() {
@@ -21,11 +22,11 @@ export function register( userEmail, userPassword, name ) {
   return fbAuth.createUserWithEmailAndPassword(userEmail, userPassword)
       .then(function(data) {
         let user = data['user']
-        axios.post(USER_URL, {
+        return axios.post(USER_URL, {
           name: name,
           email: userEmail
         }).then(response => {
-          return response.data
+          return {user:response.data.data}
         });
       })
       .catch(function(error) {
