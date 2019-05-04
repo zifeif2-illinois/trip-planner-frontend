@@ -17,7 +17,6 @@ export default class ActivityCard extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props)
     this.setState({name: this.props.name, isPopularActivity: this.props.isPopularActivity})
   }
 

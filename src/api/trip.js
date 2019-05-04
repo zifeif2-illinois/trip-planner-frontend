@@ -9,6 +9,10 @@ export function createNewTrip(trip) {
 	})
 }
 
+export function updateTrip(tripId, updatedTrip) {
+	
+}
+
 export function getTrips(){
 	return new Promise((resolve) => {
 		resolve(dummyTrips)
@@ -41,12 +45,13 @@ var dummyTrips = [
        		       		name: 'walk',
        		       		location: 'quad',
        		       		isPopularActivity: true,
-						geometry:{location: {lat: 40.107677, lng: -88.227220}}
+										geometry:{location: {lat: 40.107677, lng: -88.227220}}
        		       	},
        		       ],
        		       hotel: {
-       		       	name: 'home'
-       		       }
+       		       	name: 'home',
+       		             isPublicHotel: false,
+                            }
 	       		},
 	       		{
 	       		   day: 1,
@@ -65,8 +70,9 @@ var dummyTrips = [
        		       	},
        		       ],
        		       hotel: {
-       		       	name: 'union'
-       		       }
+       		       	name: 'union',
+       		             isPublicHotel: false,
+                            }
 	       		}],
        owner: 1,
        shared: [2,3],
@@ -76,7 +82,7 @@ var dummyTrips = [
        		lat: 40.1164204,
        		lng: -88.24338290000003
        	}
-       }, 
+       },
        description: "A trip with family and dogs and cats and birds and bananas!!!",
        name: 'Thanksgiving Trip'
       },
@@ -101,8 +107,9 @@ var dummyTrips = [
        		       	},
        		       ],
        		       hotel: {
-       		       	name: 'home'
-       		       }
+       		       	name: 'home',
+       		             isPublicHotel: false,
+                            }
 	       		},
 	       		{
 	       		   day: 1,
@@ -121,8 +128,9 @@ var dummyTrips = [
        		       	},
        		       ],
        		       hotel: {
-       		       	name: 'union'
-       		       }
+       		       	name: 'union',
+       		             isPublicHotel: false,
+                            }
 	       		}
        ],
        owner: 1,
@@ -158,8 +166,9 @@ var dummyTrips = [
        		       	},
        		       ],
        		       hotel: {
-       		       	name: 'home'
-       		       }
+       		       	name: 'home',
+       		             isPublicHotel: false,
+                            }
 	       		},
 	       		{
 	       		   day: 1,
@@ -178,8 +187,9 @@ var dummyTrips = [
        		       	},
        		       ],
        		       hotel: {
-       		       	name: 'union'
-       		       }
+       		       	name: 'union',
+       		             isPublicHotel: false,
+                            }
 	       		}
        ],
        owner: 1,
@@ -205,18 +215,19 @@ var dummyTrips = [
        		       		name: 'sleep',
        		       		location: 'union',
        		       		isPopularActivity: false,
-										geometry:{location: {lat: 40.119661, lng: -88.242426}}
+						geometry:{location: {lat: 40.119661, lng: -88.242426}}
        		       	},
        		       	{
        		       		name: 'walk',
        		       		location: 'quad',
        		       		isPopularActivity: true,
-										geometry:{location: {lat: 40.107677, lng: -88.227220}}
+						geometry:{location: {lat: 40.107677, lng: -88.227220}}
        		       	},
        		       ],
        		       hotel: {
-       		       	name: 'home'
-       		       }
+       		       	name: 'home',
+       		             isPublicHotel: false,
+                            }
 	       		},
 	       		{
 	       		   day: 1,
@@ -225,18 +236,20 @@ var dummyTrips = [
        		       		name: 'eat',
        		       		location: 'black dog',
        		       		isPopularActivity: true,
-										geometry:{location: {lat: 40.118222, lng: -88.240011}}
+						geometry:{location: {lat: 40.118222, lng: -88.240011}}
        		       	},
        		       	{
        		       		name: 'play frisbee',
        		       		location: 'japan house',
        		       		isPopularActivity: true,
-										geometry:{location: {lat: 40.093110, lng: -88.217941}}
+					       geometry:{location: {lat: 40.093110, lng: -88.217941}}
        		       	},
        		       ],
        		       hotel: {
-       		       	name: 'union'
-       		       }
+       		       	name: 'union',
+       		             isPublicHotel: false,
+                                  // 
+                            }
 	       		}
        ],
        owner: 1,

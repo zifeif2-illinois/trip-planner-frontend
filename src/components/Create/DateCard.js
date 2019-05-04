@@ -17,12 +17,12 @@ export default class DateCard extends Component {
       super(props)
 
       this.state={
-        hotel: {},
-        searchHotel: '',
-        isSearchingHotel: true,
+        hotel: this.props.hotel||{},
+        searchHotel: this.props.hotel?this.props.hotel.name:'',
+        isSearchingHotel: !(this.props.hotel&&!this.props.hotel.place_id),
         activities: this.props.activities,
         isAddingNewActivity: false,
-        customHotel: ''
+        customHotel: this.props.hotel?this.props.hotel.name:''
       }
     }
 

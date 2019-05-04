@@ -2,8 +2,8 @@ import React, {Component} from 'react'
 import {Button, Modal, List, Search, Icon} from 'semantic-ui-react'
 import '../../style/ShareWidget.scss'
 import _ from 'lodash'
+import {getAllUsers, shareTrip} from '../../api/user.js'
 
-const dummy = [{name: 'Jack', email: 'jacky@example.com'},{name: 'Mary', email: 'mary@example.com'},{name: 'Amy', email: 'amy@example.com'}]
 export default class ShareWidget extends Component {
   constructor(props) {
     super(props)
@@ -11,13 +11,18 @@ export default class ShareWidget extends Component {
     this.state = {
       value: '',
       results: [],
+      open: false,
       listOfUsers: [],
-      matchedResult:[]
+      message: '',
+      matchedResult:[],
+      tripId: this.props.tripId
     }
   }
   componentDidMount() {
     //TODO: query all the users here in future
-    this.setState({results: dummy.map(dum => ({...dum, title: dum.name, description: dum.email}))})
+    getAllUsers().then(users =>
+        this.setState({results: users.map(user => ({...user, title: user.name, description: user.email}))})
+    )
   }
 
   handleResultSelect = (e, { result }) => {
@@ -55,6 +60,9 @@ export default class ShareWidget extends Component {
 
   shareTrip = ()=>{
     //TODO: add share logic in future
+    this.setState({ message: 'Trip has been shared' })
+    shareTrip(this.state.tripId, this.state.listOfUsers.map(user=>user.email))
+
   }
 
   render() {
@@ -82,6 +90,7 @@ export default class ShareWidget extends Component {
              <List divided className='share-list'>
               {listOfUsers}
              </List>
+             <div>{this.state.message}</div>
             <Button className='ui button teal' onClick={this.shareTrip}> Share </Button>
           </div>
         </Modal.Description>

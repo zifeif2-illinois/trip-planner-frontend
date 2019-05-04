@@ -36,15 +36,15 @@ export default class RoutePlanner extends Component {
       let newAddedThing = this.props.newAddedThing
       if (newAddedThing.type !== 'hotel'){
         let route = [...this.state.route]
-        const {name, geometry, place_id, url} = newAddedThing.thing
+        const {name, geometry, place_id, url, formatted_address} = newAddedThing.thing
         let geometry_number = {
           location: {
             lat: geometry.location.lat(),
             lng: geometry.location.lng()
           }
         }
-        console.log(geometry_number)
-        route[newAddedThing.day].push({name,  place_id, url, location: name, geometry: geometry_number,isPopularActivity: true})
+        route[newAddedThing.day].push(
+          {name,  place_id, url, location: name, geometry: geometry_number,isPopularActivity: true, formatted_address})
         if (newAddedThing.day === this.state.mapDay) {
           let newMarkers = this.refreshMarkers(route[newAddedThing.day], this.state.hotels[newAddedThing.day]);
           this.setState({route, isSaved: false, markers: newMarkers})
@@ -55,14 +55,14 @@ export default class RoutePlanner extends Component {
       else {
         let hotels = [...this.state.hotels]
 
-        const {place_id, name, url, geometry} = newAddedThing.thing
+        const {place_id, name, url, geometry, formatted_address} = newAddedThing.thing
         let geometry_number = {
           location: {
             lat: geometry.location.lat(),
             lng: geometry.location.lng()
           }
         }
-        hotels[newAddedThing.day] = {place_id, name, url,geometry: geometry_number, isPublicHotel: true}
+        hotels[newAddedThing.day] = {place_id, name, url,geometry: geometry_number, isPublicHotel: true, formatted_address}
         this.setState({hotels, isSaved: false})
       }
     }
@@ -73,7 +73,7 @@ export default class RoutePlanner extends Component {
       this.setState({openLoginModal: true})
     } else {
       this.setState({openSaveModal: true})
-      
+
     }
   }
 
@@ -130,7 +130,6 @@ export default class RoutePlanner extends Component {
 
     let newMarkers = activities.filter(activity => activity.geometry)
       .map(activity => {
-        console.log(activity.geometry.location)
         const marker = new window.google.maps.Marker({
           position: activity.geometry.location,
           map: this.props.map,
@@ -167,7 +166,7 @@ export default class RoutePlanner extends Component {
     <DateCard activities={activities} key={idx} index={idx} hotel={this.state.hotels[idx]}
      searchThings={this.props.searchThings} setHotel={this.setHotel} addCustomActicity={this.addCustomActicity}
      deleteActivity={this.deleteActivity} updateMap={this.updateMap}/>)
-    
+
     let triggerButton = (<Button content='Share Your Trip' className='share-button' color='teal'/>);
 
 
@@ -184,21 +183,24 @@ export default class RoutePlanner extends Component {
             <div className='model-content'>Login before you share!</div>
           </Modal.Description>
         </Modal>
-        <Modal open={this.state.openSaveModal} onClose={()=>this.setState({openSaveModal: false})}closeIcon>
-          <Modal.Description>
+        <Modal  open={this.state.openSaveModal} onClose={()=>this.setState({openSaveModal: false})} closeIcon>
+          <Modal.Header content="Complete the information before saving the trip!"/>
+          <Modal.Description className="save-modal">
             <Form onSubmit={this.saveTrip}>
-              <Form.Input required fluid label='Trip name' placeholder='My Awesome Trip' 
+              <Form.Input required fluid label='Trip name' placeholder='My Awesome Trip'
                 onChange={this.handleTripAttrsChange}
                 name="name"
                 value={this.state.name}
               />
-              <Form.TextArea label='Description' placeholder='The trip with family...' 
+              <Form.TextArea label='Description' placeholder='The trip with family...'
                 onChange={this.handleTripAttrsChange}
                 name="description"
                 value={this.state.description}
               />
+              <div className="button-group">
               <Form.Button onClick={()=>this.setState({openSaveModal: false})} >Cancel</Form.Button>
-              <Form.Button>Submit</Form.Button>
+              <Form.Button color="teal" >Submit</Form.Button>
+              </div>
             </Form>
           </Modal.Description>
         </Modal>

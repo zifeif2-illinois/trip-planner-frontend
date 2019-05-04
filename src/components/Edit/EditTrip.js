@@ -2,15 +2,17 @@ import React, { Component } from 'react'
 import { Icon} from 'semantic-ui-react'
 import NavBar from '../common/NavBar'
 import RoutePlanner from './RoutePlanner'
-import SearchView from './SearchView'
-import '../../style/CreateTrip.scss'
+import SearchView from '../Create/SearchView'
+import '../../style/EditTrip.scss'
 import { Redirect, Link } from 'react-router-dom'
-import { createNewTrip } from '../../api/trip'
-import { getCurrentUserId } from '../../api/user'
+import {getCurrentUser} from '../../api/firebaseAuth'
+import {getTripById, updateTrip} from '../../api/trip.js'
+import {getCurrentUserId} from '../../api/user'
+
 /*global google*/
 
 // This component only contains route planner and search view
-class CreateTripBody extends Component {
+class EditTripBody extends Component {
   constructor(props) {
     super(props)
 
@@ -75,32 +77,30 @@ class CreateTripBody extends Component {
     this.setState({isModalOpen: true})
   }
 
-
-  saveTrip = (newTrip) => {
-    newTrip = Object.assign(newTrip, {
+  updateTrip = (tripWithHotelAndRoute) => {
+    let updatedTrip = Object.assign(tripWithHotelAndRoute, {
       startDate: this.props.startDate,
+      name: this.props.name,
+      description: this.props.description,
       duration: this.props.duration,
       city: {name: this.props.city, location: this.props.cityLocation},
       owner: getCurrentUserId(),
       shared: []
     })
-    createNewTrip(newTrip)
-      .then((newTripId) => {
-        this.props.jumpReview(newTripId)
-      })
-
+    updateTrip(this.props.trip.id, updatedTrip)
   }
 
   render() {
     return (
-      <div className='create-trip-planner'>
-        <RoutePlanner searchThings={this.searchThings} newAddedThing={this.state.newAddedThing}
-          duration={this.props.duration} map={this.map} openModal={this.openModal} saveTrip={this.saveTrip}/>
+      <div className='edit-trip-planner'>
+        <RoutePlanner searchThings={this.searchThings} newAddedThing={this.state.newAddedThing} trip={this.props.trip}
+        updateTrip = {this.updateTrip}
+          duration={this.props.duration} map={this.map} openModal={this.openModal} jumpReview={this.props.jumpReview}/>
         <SearchView addToBoard={this.addToBoard} searchResult={this.state.searchResult} service={this.service}
           keyword={this.state.searchKeyword} day={this.state.day} type={this.state.type}/>
         <div className={`${this.state.isModalOpen? "openModal": "closeModal"} map-modal`}>
           <div className="modal-content">
-            <Icon className="close-btn" name='close' onClick={()=>this.setState({isModalOpen: false})} />
+            <Icon className="close-btn" name='close' onClick={()=>this.setState({isModalOpen: false})}/>
             <div id="map"></div>
           </div>
         </div>
@@ -109,31 +109,46 @@ class CreateTripBody extends Component {
   }
 }
 
-
-
 // This is the whole screen of adding trip including navbar and background
-export default class CreateTrip extends Component {
+export default class EditTrip extends Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      trip: null
+    }
+  }
+
+
+  componentDidMount() {
+    if(!getCurrentUser()) return this.props.history.push('/trip-planner')
+    let tripId = this.props.match.params.id
+    getTripById(tripId).then(trip => {
+      this.setState({trip})
+    })
+  }
+
+  jumpReview = () => this.props.history.push(`/trip-planner/review/${this.props.match.params.id}`)
 
   render() {
-    let startDate = this.props.location.state.startDate || new Date()
-    let endDate = new Date(startDate)
-    let duration = parseInt(this.props.location.state.duration)||3
-    endDate.setDate(endDate.getDate() + duration)
-
+    if(!this.state.trip) return <div> Loading... </div>
+    let trip = this.state.trip;
+    let startDate = new Date(Date.parse(trip.startDate));
+    let endDate = new Date(startDate.setDate(startDate.getDate() + trip.duration));
     return (<div className='container'>
       <NavBar history={this.props.history}/>
       <div className='background'>
         <div className='title'>
-          <h2> {this.props.location.state.cityQuery || 'Chicago'} </h2>
-          <span> {`${startDate.toDateString()}-${endDate.toDateString()}`} </span>
+            <h2> {trip.name} </h2>
+            <span> {`${startDate.toLocaleDateString()}-${endDate.toLocaleDateString()}`} </span>
+            <span> {`${trip.location}`}</span>
+            <h6><i>{trip.description}</i></h6>
         </div>
       </div>
-      <CreateTripBody
-        startDate={startDate}
-        duration={duration}
-        city={this.props.location.state.cityQuery || 'Chicago'}
-        cityLocation={this.props.location.state.cityLocation}
-        jumpReview={(tripId) => {this.props.history.push(`/trip-planner/review/${tripId}`)}}
+      <EditTripBody trip={trip} jumpReview={this.jumpReview}
+        duration={this.state.trip.duration}
+        city={this.state.trip.location || 'Chicago'}
+        cityLocation={this.state.trip.cityLocation}
       />
     </div>)
   }
