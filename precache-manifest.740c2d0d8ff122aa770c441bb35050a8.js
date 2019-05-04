@@ -4,7 +4,7 @@ self.__precacheManifest = [
     "url": "/trip-planner-frontend/static/media/brand-icons.e8c322de.woff2"
   },
   {
-    "revision": "da109facc165595f244a",
+    "revision": "935072896ddd4bcd6cdd",
     "url": "/trip-planner-frontend/static/css/main.82421926.chunk.css"
   },
   {
@@ -48,8 +48,8 @@ self.__precacheManifest = [
     "url": "/trip-planner-frontend/static/media/icons.faff9214.woff"
   },
   {
-    "revision": "da109facc165595f244a",
-    "url": "/trip-planner-frontend/static/js/main.da109fac.chunk.js"
+    "revision": "935072896ddd4bcd6cdd",
+    "url": "/trip-planner-frontend/static/js/main.93507289.chunk.js"
   },
   {
     "revision": "a046592bac8f2fd96e994733faf3858c",
@@ -92,7 +92,7 @@ self.__precacheManifest = [
     "url": "/trip-planner-frontend/static/css/2.c8a055cd.chunk.css"
   },
   {
-    "revision": "ad7ade47ea2cfd396dcfea52bf619c57",
+    "revision": "ec397f5bcec0d2c98b4672f724bc63bb",
     "url": "/trip-planner-frontend/index.html"
   }
 ];
