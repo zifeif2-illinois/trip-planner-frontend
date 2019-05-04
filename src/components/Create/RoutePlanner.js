@@ -130,7 +130,6 @@ export default class RoutePlanner extends Component {
 
     let newMarkers = activities.filter(activity => activity.geometry)
       .map(activity => {
-        console.log(activity.geometry.location)
         const marker = new window.google.maps.Marker({
           position: activity.geometry.location,
           map: this.props.map,
@@ -184,8 +183,9 @@ export default class RoutePlanner extends Component {
             <div className='model-content'>Login before you share!</div>
           </Modal.Description>
         </Modal>
-        <Modal open={this.state.openSaveModal} onClose={()=>this.setState({openSaveModal: false})}closeIcon>
-          <Modal.Description>
+        <Modal  open={this.state.openSaveModal} onClose={()=>this.setState({openSaveModal: false})} closeIcon>
+          <Modal.Header content="Complete the information before saving the trip!"/>
+          <Modal.Description className="save-modal">
             <Form onSubmit={this.saveTrip}>
               <Form.Input required fluid label='Trip name' placeholder='My Awesome Trip'
                 onChange={this.handleTripAttrsChange}
@@ -197,8 +197,10 @@ export default class RoutePlanner extends Component {
                 name="description"
                 value={this.state.description}
               />
+              <div className="button-group">
               <Form.Button onClick={()=>this.setState({openSaveModal: false})} >Cancel</Form.Button>
-              <Form.Button>Submit</Form.Button>
+              <Form.Button color="teal" >Submit</Form.Button>
+              </div>
             </Form>
           </Modal.Description>
         </Modal>
