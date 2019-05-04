@@ -43,23 +43,27 @@ export default class RouteDetail extends Component {
     // need to set the key like this so that we rerender the new date card everytime there is a new activity added
     if(this.state.ready){
       let listOfSharedUsers = this.props.trip.shared.map(user=><List.Item key={user} content={user}/>)
-      let sharedUsers = (<Popup trigger={<Icon name='address book outline' color='teal' size="large"/>}>
-                  <Popup.Header> Shared with... </Popup.Header>
-                  <Popup.Content>
-                    <List>{listOfSharedUsers}</List>
-                  </Popup.Content>
-                </Popup>)
       let dateCards = this.state.routes.map((day, idx) => (<DateCard activities={day.activities} key={idx} index={day.day} hotel={day.hotel}/>))
       let shareIcon =  (<Icon className="icon" name="share square" color='teal' size="large" />)
       return (
         <div className="route-planner">
         <div className="title">
           <h1> Route Details </h1>
-          {this.props.trip.isShared? {sharedUsers}:
+          {this.props.trip.isShared? <Popup trigger={<Icon name='address book outline' color='teal' size="large"/>}>
+                      <Popup.Header> Shared with... </Popup.Header>
+                      <Popup.Content>
+                        <List>{listOfSharedUsers}</List>
+                      </Popup.Content>
+                    </Popup>:
             <div className="icon-group">
               <Icon className="icon" name="edit" color='teal' size="large" onClick={this.jumpEdit}/>
               <ShareWidget trigger={shareIcon} tripId={this.props.trip.id} sharedUsers={this.props.trip.shared}/>
-              {sharedUsers}
+              <Popup trigger={<Icon name='address book outline' color='teal' size="large"/>}>
+                          <Popup.Header> Shared with... </Popup.Header>
+                          <Popup.Content>
+                            <List>{listOfSharedUsers}</List>
+                          </Popup.Content>
+                        </Popup>
             </div>
           }
 

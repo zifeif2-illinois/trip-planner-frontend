@@ -35,7 +35,7 @@ export default class TripList extends Component {
 				<TripCard
 				key={`${trip.id}-${trip.isShared}`}
 				{...trip}
-				detailViewLink={`${detailViewLink}/${trip.id}`}
+				onClick={()=>this.props.history.push(`${detailViewLink}/${trip.id}`)}
 				onDeleteTrip={()=>{this.deleteTrip(trip.id)}}
 				/>))
 			return (
