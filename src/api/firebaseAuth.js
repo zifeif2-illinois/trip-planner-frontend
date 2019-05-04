@@ -1,4 +1,7 @@
 import { fbAuth} from '../firebase.js'
+import axios from 'axios';
+const USER_URL = 'https://us-central1-cs498rk-239014.cloudfunctions.net/user/'
+
 
 export function getCurrentUser() {
   return fbAuth.currentUser;
@@ -14,12 +17,16 @@ export function login(userEmail, userPassword) {
 }
 
 
-export function register( userEmail, userPassword ) {
+export function register( userEmail, userPassword, name ) {
   return fbAuth.createUserWithEmailAndPassword(userEmail, userPassword)
       .then(function(data) {
-        if(data['user']) {
-          return {user: data['user']}
-        }
+        let user = data['user']
+        axios.post(USER_URL, {
+          name: name,
+          email: userEmail
+        }).then(response => {
+          return response.data
+        });
       })
       .catch(function(error) {
         return {user: null, error: error.toString()};

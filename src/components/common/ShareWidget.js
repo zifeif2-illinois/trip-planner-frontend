@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 import {Button, Modal, List, Search, Icon} from 'semantic-ui-react'
 import '../../style/ShareWidget.scss'
 import _ from 'lodash'
-import {getAllUsers, shareTrip} from '../../api/user.js'
+import { shareTrip} from '../../api/trip.js'
+import {getAllUsers} from '../../api/user.js'
 
 export default class ShareWidget extends Component {
   constructor(props) {
@@ -12,7 +13,7 @@ export default class ShareWidget extends Component {
       value: '',
       results: [],
       open: false,
-      listOfUsers: [],
+      listOfUsers: this.props.sharedUsers.map(user=>({email: user})),
       message: '',
       matchedResult:[],
       tripId: this.props.tripId
@@ -21,7 +22,7 @@ export default class ShareWidget extends Component {
   componentDidMount() {
     //TODO: query all the users here in future
     getAllUsers().then(users =>
-        this.setState({results: users.map(user => ({...user, title: user.name, description: user.email}))})
+        this.setState({results: users.map(user => ({...user, title: user.email}))})
     )
   }
 
@@ -70,10 +71,7 @@ export default class ShareWidget extends Component {
       <List.Item key={idx}>
         <Icon name='close'onClick={()=>this.deselectUser(user)} />
         <List.Content>
-          <List.Header>{user.name}</List.Header>
-          <List.Description>
-            {user.email}
-          </List.Description>
+          <List.Header>{user.email}</List.Header>
         </List.Content>
       </List.Item>
     )

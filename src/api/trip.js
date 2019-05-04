@@ -13,6 +13,14 @@ export function createNewTrip(trip) {
 
 }
 
+export function shareTrip(tripId, listOfUsers) {
+	axios.put(`${tripUrl}${tripId}`,{shared: listOfUsers})
+							.then((data) => {
+										 return data.data.id
+							})
+}
+
+
 export function updateTrip(tripId, updatedTrip) {
 	return axios.put(`${tripUrl}${tripId}`,{description: JSON.stringify(updatedTrip)})
               .then((data) => {
@@ -35,14 +43,14 @@ export function getSharedTrips() {
 
 
 export function getTripById(tripId) {
-       return axios.get(`${tripUrl}${tripId}`)
-              .then((data)=>{
-                     console.log(data.data.data)
-                     return JSON.parse(data.data.data.description)
-              })
-			//  return new Promise((resolve) => {
-		 	// 	resolve(sharedDummyTrip[tripId])
-		 	// })
+       // return axios.get(`${tripUrl}${tripId}`)
+       //        .then((data)=>{
+       //               console.log(data.data.data)
+       //               return JSON.parse(data.data.data.description)
+       //        })
+			 return new Promise((resolve) => {
+		 		resolve(dummyTrips.find(trip=>trip.id==tripId))
+		 	})
 
 }
 
@@ -152,8 +160,8 @@ var dummyTrips = [
                             }
 	       		}
        ],
-       owner: 1,
-       shared: [2,3],
+       owner: 2,
+       shared: [1,3],
        city:{
        	name: "city",
        	location: {
