@@ -41,7 +41,6 @@ export default class Home extends Component {
   }
 
   render() {
-    console.log(this.state.city)
     return (
       <div className='home-container'>
         <NavBar history={this.props.history}/>

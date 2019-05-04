@@ -5,7 +5,8 @@ import RoutePlanner from './RoutePlanner'
 import SearchView from './SearchView'
 import '../../style/CreateTrip.scss'
 import { Redirect, Link } from 'react-router-dom'
-
+import { createNewTrip } from '../../api/trip'
+import { getCurrentUserId } from '../../api/user'
 /*global google*/
 
 // This component only contains route planner and search view
@@ -76,16 +77,31 @@ class CreateTripBody extends Component {
   }
 
 
+  saveTrip = (newTrip) => {
+    newTrip = Object.assign(newTrip, {
+      startDate: this.props.startDate,
+      duration: this.props.duration,
+      city: {name: this.props.city, location: this.props.cityLocation},
+      owner: getCurrentUserId(),
+      shared: []
+    })
+    createNewTrip(newTrip)
+      .then((newTripId) => {
+        this.props.jumpReview(newTripId)
+      })
+    
+  }
+
   render() {
     return (
       <div className='create-trip-planner'>
         <RoutePlanner searchThings={this.searchThings} newAddedThing={this.state.newAddedThing}
-          duration={this.props.duration} map={this.map} openModal={this.openModal} jumpReview={this.props.jumpReview}/>
+          duration={this.props.duration} map={this.map} openModal={this.openModal} saveTrip={this.saveTrip}/>
         <SearchView addToBoard={this.addToBoard} searchResult={this.state.searchResult} service={this.service}
           keyword={this.state.searchKeyword} day={this.state.day} type={this.state.type}/>
         <div className={`${this.state.isModalOpen? "openModal": "closeModal"} map-modal`}>
           <div className="modal-content">
-            <Icon className="close-btn" name='close' onClick={()=>this.setState({isModalOpen: false})}>&times;</Icon>
+            <Icon className="close-btn" name='close' onClick={()=>this.setState({isModalOpen: false})} />
             <div id="map"></div>
           </div>
         </div>
@@ -94,8 +110,11 @@ class CreateTripBody extends Component {
   }
 }
 
+
+
 // This is the whole screen of adding trip including navbar and background
 export default class CreateTrip extends Component {
+
   render() {
     let startDate = this.props.location.state.startDate || new Date()
     let endDate = new Date(startDate)
@@ -111,10 +130,11 @@ export default class CreateTrip extends Component {
         </div>
       </div>
       <CreateTripBody
+        startDate={startDate}
         duration={duration}
         city={this.props.location.state.cityQuery || 'Chicago'}
         cityLocation={this.props.location.state.cityLocation}
-        jumpReview={(tripid)=>{this.props.history.push(`/trip-planner/review/${tripid}`)}}
+        jumpReview={(tripId) => {this.props.history.push(`/trip-planner/review/${tripId}`)}}
       />
     </div>)
   }

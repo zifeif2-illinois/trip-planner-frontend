@@ -3,6 +3,7 @@ import RouteDetail from './RouteDetail'
 import NavBar from '../common/NavBar'
 import {Divider, Dropdown, Label} from 'semantic-ui-react'
 import '../../style/ReviewTrip.scss'
+import { getTripById } from '../../api/trip'
 /*global google*/
 
 export class TripDetailBody extends Component {
@@ -19,7 +20,7 @@ export class TripDetailBody extends Component {
 		let trip = this.state.trip
 		let mapElement = document.getElementById('map')
 		this.map = new google.maps.Map(mapElement, {
-			center: trip.cityLocation,
+			center: trip.city.location,
 			zoom: 10
 		});
 		this.service = new google.maps.places.PlacesService(this.map);
@@ -30,7 +31,7 @@ export class TripDetailBody extends Component {
 	}
 
 	getListOfMarkers = (trip) => {
-		return trip.route.map((dateRoute, idx)=> dateRoute.activities.map(
+		return trip.routes.map((dateRoute, idx)=> dateRoute.activities.map(
 			activity=> {
 				let marker = new window.google.maps.Marker({
 					position: activity.geometry.location,
@@ -83,7 +84,7 @@ export class TripDetailBody extends Component {
 	render() {
 			let dayOptions = [{ key: 'all',  text: 'All dates', value: -1}]
 			var i;
-			for(i=0; i < this.state.trip.route.length; i++) {
+			for(i=0; i < this.state.trip.routes.length; i++) {
 				let realDay = i+1
 				dayOptions.push({ key: `${i}`,  text: `Day ${realDay}`, value: i})
 			}
@@ -106,62 +107,62 @@ export class TripDetailBody extends Component {
 
 export default class TripDetail extends Component {
 
-getTrip = (id) => {
-		return {
-	       id: 2,
-	       startDate: "2019-12-16T03:24:00",
-	       duration: 2,
-	       route: [
-	       		{
-	       		   day: 0,
-       		       activities:[
-       		       {
-       		       		name: 'sleep',
-       		       		location: 'union',
-       		       		isPopularActivity: false,
-										geometry:{location: {lat: 40.119661, lng: -88.242426}}
-       		       	},
-       		       	{
-       		       		name: 'walk',
-       		       		location: 'quad',
-       		       		isPopularActivity: true,
-										geometry:{location: {lat: 40.107677, lng: -88.227220}}
-       		       	},
-       		       ],
-       		       hotel: {
-       		       	name: 'home'
-       		       }
-	       		},
-	       		{
-	       		   day: 1,
-       		       activities:[
-       		       {
-       		       		name: 'eat',
-       		       		location: 'black dog',
-       		       		isPopularActivity: true,
-										geometry:{location: {lat: 40.118222, lng: -88.240011}}
-       		       	},
-       		       	{
-       		       		name: 'play frisbee',
-       		       		location: 'japan house',
-       		       		isPopularActivity: true,
-										geometry:{location: {lat: 40.093110, lng: -88.217941}}
-       		       	},
-       		       ],
-       		       hotel: {
-       		       	name: 'union'
-       		       }
-	       		}
+// getTrip = (id) => {
+// 		return {
+// 	       id: 2,
+// 	       startDate: "2019-12-16T03:24:00",
+// 	       duration: 2,
+// 	       route: [
+// 	       		{
+// 	       		   day: 0,
+//        		       activities:[
+//        		       {
+//        		       		name: 'sleep',
+//        		       		location: 'union',
+//        		       		isPopularActivity: false,
+// 										geometry:{location: {lat: 40.119661, lng: -88.242426}}
+//        		       	},
+//        		       	{
+//        		       		name: 'walk',
+//        		       		location: 'quad',
+//        		       		isPopularActivity: true,
+// 										geometry:{location: {lat: 40.107677, lng: -88.227220}}
+//        		       	},
+//        		       ],
+//        		       hotel: {
+//        		       	name: 'home'
+//        		       }
+// 	       		},
+// 	       		{
+// 	       		   day: 1,
+//        		       activities:[
+//        		       {
+//        		       		name: 'eat',
+//        		       		location: 'black dog',
+//        		       		isPopularActivity: true,
+// 										geometry:{location: {lat: 40.118222, lng: -88.240011}}
+//        		       	},
+//        		       	{
+//        		       		name: 'play frisbee',
+//        		       		location: 'japan house',
+//        		       		isPopularActivity: true,
+// 										geometry:{location: {lat: 40.093110, lng: -88.217941}}
+//        		       	},
+//        		       ],
+//        		       hotel: {
+//        		       	name: 'union'
+//        		       }
+// 	       		}
 
-	       ],
-	       owner: 1,
-	       shared: [2,3],
-	       location: 'Champaign',
-				 cityLocation: {lat: 40.1179, lng:-88.2293},
-	       description: "A trip with family and dogs and cats and birds and bananas!!!",
-	       name: 'Christmas Trip'
-	      }
-	}
+// 	       ],
+// 	       owner: 1,
+// 	       shared: [2,3],
+// 	       location: 'Champaign',
+// 				 cityLocation: {lat: 40.1179, lng:-88.2293},
+// 	       description: "A trip with family and dogs and cats and birds and bananas!!!",
+// 	       name: 'Christmas Trip'
+// 	      }
+// 	}
 	constructor(props){
 		super(props)
 		this.state = {
@@ -171,11 +172,14 @@ getTrip = (id) => {
 
 	componentDidMount() {
 		let { id } = this.props.match.params
-		let trip = this.getTrip(id)
-		this.setState({
-			trip,
-			ready: true
-		})
+		getTripById(id)
+			.then((trip) => {
+				this.setState({
+					trip,
+					ready: true
+				})
+			})
+		
 	}
 
 
@@ -191,7 +195,7 @@ getTrip = (id) => {
 			        <div className='title'>
 			          <h2> {trip.name} </h2>
 			          <span> {`${startDate.toLocaleDateString()}-${endDate.toLocaleDateString()}`} </span>
-			          <span> {`${trip.location}`}</span>
+			          <span> {`${trip.city.name}`}</span>
 			          <h6><i>{trip.description}</i></h6>
 			        </div>
 						</div>
