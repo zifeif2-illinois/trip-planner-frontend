@@ -41,7 +41,7 @@ export default class NavBar extends Component {
         <Menu.Menu position='right'>
           <Dropdown text={`Hi, ${this.state.currentUser.name}`}item>
             <Dropdown.Menu>
-              <Dropdown.Item>My Trips</Dropdown.Item>
+              <Dropdown.Item><Link to='/trip-planner/review'>My Trips</Link></Dropdown.Item>
               <Dropdown.Item><Link to='/trip-planner/profile'>Profile</Link></Dropdown.Item>
               <Dropdown.Item onClick={this.logout}>Logout</Dropdown.Item>
             </Dropdown.Menu>

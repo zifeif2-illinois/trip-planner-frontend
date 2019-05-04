@@ -23,7 +23,7 @@ export default class RouteDetail extends Component {
   // }
 
   jumpEdit = () => {
-
+    this.props.editTrip()
   }
 
   openShare = () => {
@@ -32,6 +32,8 @@ export default class RouteDetail extends Component {
 
   componentDidMount() {
     let trip = this.props.trip;
+    console.log('In component did mount ')
+    console.log(this.props.trip)
     this.setState({
       ...trip,
       ready: true
@@ -41,7 +43,7 @@ export default class RouteDetail extends Component {
   render() {
     // need to set the key like this so that we rerender the new date card everytime there is a new activity added
     if(this.state.ready){
-      let dateCards = this.state.route.map((day, idx) => (<DateCard activities={day.activities} key={idx} index={day.day} hotel={day.hotel}/>))
+      let dateCards = this.state.route.map((day, idx) => (<DateCard activities={day.activities} key={`${idx}-view`} index={day.day} hotel={day.hotel}/>))
       let shareIcon =  (<Icon className="icon" name="share square" color='teal' size="large" />)
       return (
         <div className="route-planner">
@@ -65,7 +67,7 @@ export default class RouteDetail extends Component {
         </div>
       )
     }
-     
+
     else {
       return (<div>Loading...</div>)
     }

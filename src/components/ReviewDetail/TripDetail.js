@@ -3,6 +3,8 @@ import RouteDetail from './RouteDetail'
 import NavBar from '../common/NavBar'
 import {Divider, Dropdown, Label} from 'semantic-ui-react'
 import '../../style/ReviewTrip.scss'
+import {DUMMY_TRIP} from '../common/dummy-trip.js'
+import {getCurrentUser} from '../../api/firebaseAuth'
 /*global google*/
 
 export class TripDetailBody extends Component {
@@ -16,6 +18,7 @@ export class TripDetailBody extends Component {
 	}
 
 	componentDidMount() {
+		if(!getCurrentUser()) return this.props.history.push('/trip-planner')
 		let trip = this.state.trip
 		let mapElement = document.getElementById('map')
 		this.map = new google.maps.Map(mapElement, {
@@ -30,7 +33,7 @@ export class TripDetailBody extends Component {
 	}
 
 	getListOfMarkers = (trip) => {
-		return trip.route.map((dateRoute, idx)=> dateRoute.activities.map(
+		return trip.route.map((dateRoute, idx)=> dateRoute.activities.filter(activity=>activity.geometry).map(
 			activity=> {
 				let marker = new window.google.maps.Marker({
 					position: activity.geometry.location,
@@ -60,7 +63,6 @@ export class TripDetailBody extends Component {
 	}
 
 	onChangeSelectedDay = (e, data) => {
-		console.log(data.value)
 		let selectedDate = data.value
 		let markers = [...this.state.markers]
 		if(selectedDate < 0) {
@@ -89,7 +91,8 @@ export class TripDetailBody extends Component {
 			}
 			return (
 	        	<div className='trip-detail-body'>
-	        		<RouteDetail className='trip-detail-component' trip={this.state.trip} />
+	        		<RouteDetail className='trip-detail-component' trip={this.state.trip}
+							editTrip={() => this.props.history.push(`/trip-planner/edit/${this.state.trip.id}`)}/>
 							<Divider vertical/>
 							<div className='map-container'>
 								<div id='map'></div>
@@ -104,64 +107,18 @@ export class TripDetailBody extends Component {
 }
 
 
+
+
+
+
 export default class TripDetail extends Component {
 
-getTrip = (id) => {
-		return {
-	       id: 2,
-	       startDate: "2019-12-16T03:24:00",
-	       duration: 2,
-	       route: [
-	       		{
-	       		   day: 0,
-       		       activities:[
-       		       {
-       		       		name: 'sleep',
-       		       		location: 'union',
-       		       		isPopularActivity: false,
-										geometry:{location: {lat: 40.119661, lng: -88.242426}}
-       		       	},
-       		       	{
-       		       		name: 'walk',
-       		       		location: 'quad',
-       		       		isPopularActivity: true,
-										geometry:{location: {lat: 40.107677, lng: -88.227220}}
-       		       	},
-       		       ],
-       		       hotel: {
-       		       	name: 'home'
-       		       }
-	       		},
-	       		{
-	       		   day: 1,
-       		       activities:[
-       		       {
-       		       		name: 'eat',
-       		       		location: 'black dog',
-       		       		isPopularActivity: true,
-										geometry:{location: {lat: 40.118222, lng: -88.240011}}
-       		       	},
-       		       	{
-       		       		name: 'play frisbee',
-       		       		location: 'japan house',
-       		       		isPopularActivity: true,
-										geometry:{location: {lat: 40.093110, lng: -88.217941}}
-       		       	},
-       		       ],
-       		       hotel: {
-       		       	name: 'union'
-       		       }
-	       		}
-
-	       ],
-	       owner: 1,
-	       shared: [2,3],
-	       location: 'Champaign',
-				 cityLocation: {lat: 40.1179, lng:-88.2293},
-	       description: "A trip with family and dogs and cats and birds and bananas!!!",
-	       name: 'Christmas Trip'
-	      }
-	}
+	getTrip = (id) => {
+			//TODO: call api function to get trip by id
+			console.log('DUMMY_TRIP is ')
+			console.log(DUMMY_TRIP)
+			return DUMMY_TRIP
+		}
 	constructor(props){
 		super(props)
 		this.state = {
@@ -195,7 +152,7 @@ getTrip = (id) => {
 			          <h6><i>{trip.description}</i></h6>
 			        </div>
 						</div>
-	        	<TripDetailBody trip={this.state.trip}/>
+	        	<TripDetailBody trip={this.state.trip} history={this.props.history}/>
 	     </div>
 			)
 		} else {
