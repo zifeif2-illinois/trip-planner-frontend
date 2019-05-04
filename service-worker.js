@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/trip-planner-frontend/precache-manifest.8f7c1841368d9f362e5dc246cb668ecf.js"
+  "/trip-planner-frontend/precache-manifest.10963790cc2f040225be1d918de28cab.js"
 );
 
 workbox.clientsClaim();
