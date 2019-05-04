@@ -1,11 +1,10 @@
 import { fbAuth, firebase} from '../firebase.js'
 import axios from 'axios';
-// const USER_URL = 'https://us-central1-cs498rk-239014.cloudfunctions.net/user/'
-const USER_URL = "http://localhost:5000/cs498rk-239014/us-central1/user"
+const USER_URL = 'https://us-central1-cs498rk-239014.cloudfunctions.net/user/'
+// const USER_URL = "http://localhost:5000/cs498rk-239014/us-central1/user"
 
 
 export function getCurrentUser() {
-  console.log(fbAuth.currentUser)
   return fbAuth.currentUser;
 }
 

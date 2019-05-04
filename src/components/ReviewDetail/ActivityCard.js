@@ -15,7 +15,7 @@ export default class ActivityCard extends Component {
   }
 
   componentDidMount() {
-    this.setState({name: this.props.name, location: this.props.location, isPopularActivity: this.props.isPopularActivity})
+    this.setState({name: this.props.name, location: this.props.formatted_address, isPopularActivity: this.props.isPopularActivity})
   }
 
   render() {
@@ -23,7 +23,7 @@ export default class ActivityCard extends Component {
       <Card className='activity-container'>
         <Card.Content>
           <Card.Header>{this.props.name}</Card.Header>
-          <Card.Meta>{this.props.location? `Location: ${this.props.location}`: 'Personal Activity'}</Card.Meta>
+          <Card.Meta>{this.props.formatted_address? `Location: ${this.props.formatted_address}`: 'Personal Activity'}</Card.Meta>
         </Card.Content>
       </Card>
     )

@@ -1,7 +1,8 @@
 import { getCurrentUser } from './firebaseAuth.js'
 import axios from 'axios'
 
-const userUrl = "http://localhost:5000/cs498rk-239014/us-central1/user"
+// const userUrl = "http://localhost:5000/cs498rk-239014/us-central1/user"
+const userUrl = "https://us-central1-cs498rk-239014.cloudfunctions.net/user"
 
 export function getCurrentUserId() {
 	return getCurrentUser().email;

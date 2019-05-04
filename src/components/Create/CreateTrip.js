@@ -85,8 +85,8 @@ class CreateTripBody extends Component {
       shared: []
     })
     createNewTrip(newTrip)
-      .then((newTripId) => {
-        this.props.jumpReview(newTripId)
+      .then((newTripId) => { 
+        setTimeout(()=>this.props.jumpReview(newTripId), 3000)
       })
 
   }

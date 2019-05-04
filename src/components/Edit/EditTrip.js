@@ -87,7 +87,7 @@ class EditTripBody extends Component {
       owner: getCurrentUserId(),
       shared: []
     })
-    updateTrip(this.props.trip.id, updatedTrip)
+    return updateTrip(this.props.trip.id, updatedTrip)
   }
 
   render() {

@@ -1,10 +1,10 @@
 import axios from 'axios'
 // import {sharedDummyTrip} from './dummy-for-shared'
 import {getCurrentUserId} from './user'
-// const tripUrl = "https://us-central1-cs498rk-239014.cloudfunctions.net/trip"
-// const userUrl = "https://us-central1-cs498rk-239014.cloudfunctions.net/user"
-const tripUrl = "http://localhost:5000/cs498rk-239014/us-central1/trip"
-const userUrl = "http://localhost:5000/cs498rk-239014/us-central1/user"
+const tripUrl = "https://us-central1-cs498rk-239014.cloudfunctions.net/trip"
+const userUrl = "https://us-central1-cs498rk-239014.cloudfunctions.net/user"
+// const tripUrl = "http://localhost:5000/cs498rk-239014/us-central1/trip"
+// const userUrl = "http://localhost:5000/cs498rk-239014/us-central1/user"
 export function createNewTrip(trip) {
 	dummyTrips.push(trip)
        return axios.post(tripUrl,{data:JSON.stringify(trip)})
@@ -13,13 +13,6 @@ export function createNewTrip(trip) {
                      return data.data.id
               })
 
-}
-
-export function shareTrip(tripId, listOfUsers) {
-	axios.put(`${tripUrl}${tripId}`,{shared: listOfUsers})
-							.then((data) => {
-										 return data.data.id
-							})
 }
 
 
@@ -40,6 +33,16 @@ export function getTripsByUserId(userId){
               })
 }
 
+
+export function shareTrip(tripId, listOfUsers) {
+       // axios.put(`${tripUrl}/${tripId}`,{data: {shared: listOfUsers}})
+       //                                        .then((data) => {
+       //                                                              return data.data.id
+       //                                        })
+       return updateTrip(tripId, {shared: listOfUsers})
+}
+
+
 export function getTrips(){
        return axios.get(`${userUrl}/gettrip/${getCurrentUserId()}`)
                      .then((data)=>{
@@ -49,9 +52,11 @@ export function getTrips(){
 }
 
 export function getSharedTrips() {
-	return new Promise((resolve) => {
-		resolve(dummyTrips)
-	})
+	return axios.get(`${tripUrl}/shared/${getCurrentUserId()}`)
+              .then((data)=>{
+                     console.log(data.data.data)
+                     return data.data.data
+              })
 }
 
 
