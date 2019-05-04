@@ -5,6 +5,7 @@ import {Divider, Dropdown, Label} from 'semantic-ui-react'
 import '../../style/ReviewTrip.scss'
 import { getTripById } from '../../api/trip'
 import {getCurrentUser} from '../../api/firebaseAuth'
+import {getCurrentUserId} from '../../api/user'
 /*global google*/
 
 export class TripDetailBody extends Component {
@@ -123,7 +124,7 @@ export default class TripDetail extends Component {
 		let { id } = this.props.match.params
 		getTripById(id)
 			.then((trip) => {
-				trip = Object.assign(trip, {id: id})
+				trip = Object.assign(trip, {id: id, isShared: trip.owner === getCurrentUserId()})
 				this.setState({
 					id,
 					trip,

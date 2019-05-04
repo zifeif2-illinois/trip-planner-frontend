@@ -18,15 +18,16 @@ export default class TripCard extends Component {
   }
 
   componentDidMount(){
-    this.setState({location: this.props.city.name, startDate: this.props.startDate, description: this.props.description, 
-      isDeleting: this.props.isDeleting, detailViewLink: this.props.detailViewLink, name: this.props.name,
-      duration: this.props.duration
-    })
+    // this.setState({location: this.props.city.name, startDate: this.props.startDate, description: this.props.description,
+    //   isDeleting: this.props.isDeleting, detailViewLink: this.props.detailViewLink, name: this.props.name,
+    //   duration: this.props.duration, isShared: this.props.isShared, ow
+    // })
+    this.setState({location: this.props.city.name, ...this.props})
   }
 
   componentDidUpdate(prevProps) {
     if(prevProps != this.props){
-      this.setState({location: this.props.city.name, startDate: this.props.startDate, description: this.props.description, 
+      this.setState({location: this.props.city.name, startDate: this.props.startDate, description: this.props.description,
       isDeleting: this.props.isDeleting, detailViewLink: this.props.detailViewLink, name: this.props.name,
       duration: this.props.duration
     })
@@ -39,21 +40,21 @@ export default class TripCard extends Component {
   render() {
     let startDate = new Date(Date.parse(this.state.startDate));
     let endDate = new Date(startDate.setDate(startDate.getDate() + this.state.duration));
-    
+
     return (
           <Card className='trip-card-container' href={this.state.detailViewLink}>
             <Card.Content>
-              <Card.Header>{this.state.location}</Card.Header>
-              <Card.Meta>{`${startDate.toLocaleDateString()}-${endDate.toLocaleDateString()}\tDuration: ${this.state.duration}`}</Card.Meta>
+              <Card.Header>{this.state.location}{this.state.isShared? ' - shared by'+this.state.owner: ''}</Card.Header>
+              <Card.Meta>{`${startDate.toLocaleDateString()}-${endDate.toLocaleDateString()}\t\t${this.state.duration} days in total`}</Card.Meta>
               <Card.Description>{this.state.description}</Card.Description>
              </Card.Content>
-             {this.state.isDeleting ? 
+             {this.state.isDeleting ?
               <Card.Content extra>
                 <Button onClick={this.deleteTrip} color='red'>Delete Trip</Button>
               </Card.Content> :
               null
              }
-              
+
           </Card>
     )
   }
