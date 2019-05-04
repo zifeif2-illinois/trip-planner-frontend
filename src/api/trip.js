@@ -1,11 +1,12 @@
 import axios from 'axios'
 
-const tripUrl = "https://us-central1-cs498rk-239014.cloudfunctions.net/trip"
-const userUrl = "https://us-central1-cs498rk-239014.cloudfunctions.net/user"
+// const tripUrl = "https://us-central1-cs498rk-239014.cloudfunctions.net/trip"
+// const userUrl = "https://us-central1-cs498rk-239014.cloudfunctions.net/user"
+const tripUrl = "http://localhost:5000/cs498rk-239014/us-central1/trip"
+const userUrl = "http://localhost:5000/cs498rk-239014/us-central1/user"
 export function createNewTrip(trip) {
 	dummyTrips.push(trip)
-	console.log(trip.toString())
-       return axios.post(tripUrl,{description: JSON.stringify(trip)})
+       return axios.post(tripUrl,{data:JSON.stringify(trip)})
               .then((data) => {
                      console.log(data.data)
                      return data.data.id
@@ -14,7 +15,7 @@ export function createNewTrip(trip) {
 }
 
 export function updateTrip(tripId, updatedTrip) {
-	return axios.put(`${tripUrl}/${tripId}`,{description: JSON.stringify(updatedTrip)})
+	return axios.put(`${tripUrl}/${tripId}`,{data:JSON.stringify(updatedTrip)})
               .then((data) => {
                      console.log(data.data)
                      return data.data.id
@@ -22,9 +23,12 @@ export function updateTrip(tripId, updatedTrip) {
 }
 
 export function getTripsByUserId(userId){
+       console.log(`${userUrl}/gettrip/${userId}`)
 	return axios.get(`${userUrl}/gettrip/${userId}`)
-              .then|((data) => {
-                     return JSON.parse(data.data.data.description)
+              .then((data)=>{
+                     let allTrips = data.data.data
+                     return allTrips
+                     
               })
 }
 
@@ -32,8 +36,7 @@ export function getTripsByUserId(userId){
 export function getTripById(tripId) {
        return axios.get(`${tripUrl}/${tripId}`)
               .then((data)=>{
-                     console.log(data.data.data)
-                     return JSON.parse(data.data.data.description)
+                     return data.data.data
               })
 
 }
