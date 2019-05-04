@@ -81,3 +81,12 @@
     font-weight: bold;
   }
 }
+
+.save-modal{
+  padding: 5% 3%;
+  .button-group{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+}
