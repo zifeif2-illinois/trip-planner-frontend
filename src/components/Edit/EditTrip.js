@@ -52,7 +52,7 @@ class EditTripBody extends Component {
 
   searchThings = (searchKeyword, type, day) => {
       this.setState({day, type, searchKeyword})
-      const city = this.state.city.toLowerCase();
+      const city = this.state.city.name.toLowerCase();
       let searchType = ''
       switch (searchType) {
         case "hotel":
@@ -83,7 +83,7 @@ class EditTripBody extends Component {
       name: this.props.name,
       description: this.props.description,
       duration: this.props.duration,
-      city: {name: this.props.city, location: this.props.cityLocation},
+      city: {name: this.props.city.name, location: this.props.city.location},
       owner: getCurrentUserId(),
       shared: []
     })
@@ -152,7 +152,7 @@ export default class EditTrip extends Component {
         duration={this.state.trip.duration}
         city={this.state.trip.city.name || 'Chicago'}
         cityLocation={this.state.trip.city.location}
-        id={this.state.id}
+        id={this.state.id} {...trip}
       />
     </div>)
   }

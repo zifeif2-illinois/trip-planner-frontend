@@ -1,7 +1,8 @@
-var currentUserId = 1; // need to populate from data base
+import { getCurrentUser } from './firebaseAuth.js'
+
 
 export function getCurrentUserId() {
-	return currentUserId;
+	return getCurrentUser().email;
 }
 const dummyUsers = [{name: 'Jack', email: 'jacky@example.com'},{name: 'Mary', email: 'mary@example.com'},{name: 'Amy', email: 'amy@example.com'}]
 export function getAllUsers() {

@@ -3,8 +3,9 @@ import React, { Component } from 'react'
 import NavBar from '../common/NavBar'
 import ReviewView from './ReviewView'
 import '../../style/ReviewTrip.scss'
-import {getCurrentUser} from '../../api/firebaseAuth'
-import { getTrips } from '../../api/trip'
+import { getCurrentUser } from '../../api/firebaseAuth'
+import { getTripsByUserId } from '../../api/trip'
+import { getCurrentUserId } from '../../api/user'
 /*global google*/
 
 // This component only contains route planner and search view
@@ -19,7 +20,7 @@ class ReviewTripBody extends Component {
 
 
   componentDidMount() {
-    getTrips()
+    getTripsByUserId(getCurrentUserId())
     .then((trips) => {
        this.setState({
         trips,
