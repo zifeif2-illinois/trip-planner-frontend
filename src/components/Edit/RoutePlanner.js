@@ -5,17 +5,17 @@ import ShareWidget from '../common/ShareWidget'
 import '../../style/RoutePlanner.scss'
 import * as firebaseApi from '../../api/firebaseAuth'
 
-// Only contains daily route
+// Only contains daily routes
 //parent: CreateTripBody
 // The planner store all the routes
 export default class RoutePlanner extends Component {
   constructor(props) {
     super(props)
 
-    let route = props.trip.route.map(dayRoute=>dayRoute.activities)
-    let hotels = props.trip.route.map(dayRoute=>dayRoute.hotel)
+    let routes = props.trip.routes.map(dayRoute=>dayRoute.activities)
+    let hotels = props.trip.routes.map(dayRoute=>dayRoute.hotel)
     this.state = {
-      route,
+      routes,
       hotels,
       markers: [],
       mapDay: -1,
@@ -32,13 +32,13 @@ export default class RoutePlanner extends Component {
           prevProps.newAddedThing.id !== this.props.newAddedThing.id)) {
       let newAddedThing = this.props.newAddedThing
       if (newAddedThing.type !== 'hotel'){
-        let route = [...this.state.route]
-        route[newAddedThing.day].push(newAddedThing.thing)
+        let routes = [...this.state.routes]
+        routes[newAddedThing.day].push(newAddedThing.thing)
         if (newAddedThing.day === this.state.mapDay) {
-          let newMarkers = this.refreshMarkers(route[newAddedThing.day], this.state.hotels[newAddedThing.day]);
-          this.setState({route, markers: newMarkers})
+          let newMarkers = this.refreshMarkers(routes[newAddedThing.day], this.state.hotels[newAddedThing.day]);
+          this.setState({routes, markers: newMarkers})
         } else {
-          this.setState({route})
+          this.setState({routes})
         }
       }
       else {
@@ -50,7 +50,7 @@ export default class RoutePlanner extends Component {
   }
 
   saveTrip = () => {
-    console.log(this.state.route)
+    console.log(this.state.routes)
     console.log(this.state.hotels)
     this.props.jumpReview();
     // TODO: call api function to save the trip. Before saving the trip, transform the trip structure to the backend one
@@ -63,29 +63,29 @@ export default class RoutePlanner extends Component {
   }
 
   addCustomActicity = (name, day) => {
-    let route = [...this.state.route]
-    route[day].push({name, isPopularActivity: false})
-    this.setState({route})
+    let routes = [...this.state.routes]
+    routes[day].push({name, isPopularActivity: false})
+    this.setState({routes})
   }
 
   deleteActivity = (name, day) => {
-    let route = new Array(this.state.route.length)
+    let routes = new Array(this.state.routes.length)
     var i =0;
-    for(;i<this.state.route.length; i++) {
-        route[i] = [...this.state.route[i]]
+    for(;i<this.state.routes.length; i++) {
+        routes[i] = [...this.state.routes[i]]
     }
-    route[day] = route[day].filter(acitivity => acitivity.name !== name)
-    console.log(route)
+    routes[day] = routes[day].filter(acitivity => acitivity.name !== name)
+    console.log(routes)
     if (day === this.state.mapDay) {
-      let newMarkers = this.refreshMarkers(route[day], this.state.hotels[day]);
-      this.setState({route, markers: newMarkers})
+      let newMarkers = this.refreshMarkers(routes[day], this.state.hotels[day]);
+      this.setState({routes, markers: newMarkers})
     } else {
-      this.setState({route})
+      this.setState({routes})
     }
   }
 
   updateMap = (day) => {
-    let newMarkers = this.refreshMarkers(this.state.route[day], this.state.hotels[day]);
+    let newMarkers = this.refreshMarkers(this.state.routes[day], this.state.hotels[day]);
     this.setState({markers: newMarkers, mapDay: day});
     this.props.openModal()
   }
@@ -98,7 +98,6 @@ export default class RoutePlanner extends Component {
 
     let newMarkers = activities.filter(activity => activity.geometry)
       .map(activity => {
-        console.log(activity.geometry.location)
         const marker = new window.google.maps.Marker({
           position: activity.geometry.location,
           map: this.props.map,
@@ -128,15 +127,15 @@ export default class RoutePlanner extends Component {
   }
 
   render() {
-    console.log(this.state.route)
+    console.log(this.state.routes)
     // need to set the key like this so that we rerender the new date card everytime there is a new activity added
-    let dateCards = this.state.route.map((activities, idx) =>
+    let dateCards = this.state.routes.map((activities, idx) =>
     <DateCard activities={activities} key={`${idx}-edit`} index={idx} hotel={this.state.hotels[idx]}
      searchThings={this.props.searchThings} setHotel={this.setHotel} addCustomActicity={this.addCustomActicity}
      deleteActivity={this.deleteActivity} updateMap={this.updateMap}/>)
 
     return (
-      <div className='route-planner-container'>
+      <div className='routes-planner-container'>
         <Card.Group>
           {dateCards}
         </Card.Group>

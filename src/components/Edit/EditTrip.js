@@ -5,8 +5,8 @@ import RoutePlanner from './RoutePlanner'
 import SearchView from '../Create/SearchView'
 import '../../style/EditTrip.scss'
 import { Redirect, Link } from 'react-router-dom'
-import {DUMMY_TRIP} from '../common/dummy-trip.js'
 import {getCurrentUser} from '../../api/firebaseAuth'
+import {getTripById} from '../../api/trip.js'
 
 /*global google*/
 
@@ -104,16 +104,14 @@ export default class EditTrip extends Component {
       trip: null
     }
   }
-  getTripById = (id) => {
-    return new Promise((resolve, reject) =>resolve(DUMMY_TRIP))
-  }
+
 
   componentDidMount() {
     // TODO: get trip by ID using API call
 
     if(!getCurrentUser()) return this.props.history.push('/trip-planner')
     let tripId = this.props.match.params.id
-    this.getTripById(tripId).then(trip => {
+    getTripById(tripId).then(trip => {
       this.setState({trip})
     })
   }

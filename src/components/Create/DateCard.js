@@ -42,8 +42,8 @@ export default class DateCard extends Component {
     componentDidUpdate(prevProps, prevState) {
       if(prevProps.hotel.name !== this.props.hotel.name) {
         this.setState({hotel: this.props.hotel})
-      } else if(this.state.isAddingNewActivity && this.props.activities.length !== prevProps.activities.length) {
-        this.setState({isAddingNewActivity: false, activities: this.props.activities})
+      } else if(this.props.activities.length !== prevProps.activities.length) {
+        this.setState({activities: this.props.activities})
       }
     }
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Card, Button, Modal} from 'semantic-ui-react'
+import {Card, Button, Modal, Form} from 'semantic-ui-react'
 import DateCard from './DateCard'
 import ShareWidget from '../common/ShareWidget'
 import '../../style/RoutePlanner.scss'
@@ -21,7 +21,9 @@ export default class RoutePlanner extends Component {
       markers: [],
       mapDay: -1,
       openLoginModal: false,
-      openSaveModel:false
+      openSaveModal:false,
+      name: '',
+      description: ''
     }
   }
 
@@ -34,7 +36,15 @@ export default class RoutePlanner extends Component {
       let newAddedThing = this.props.newAddedThing
       if (newAddedThing.type !== 'hotel'){
         let route = [...this.state.route]
-        route[newAddedThing.day].push(newAddedThing.thing)
+        const {name, geometry, place_id, url, formatted_address} = newAddedThing.thing
+        let geometry_number = {
+          location: {
+            lat: geometry.location.lat(),
+            lng: geometry.location.lng()
+          }
+        }
+        route[newAddedThing.day].push(
+          {name,  place_id, url, location: name, geometry: geometry_number,isPopularActivity: true, formatted_address})
         if (newAddedThing.day === this.state.mapDay) {
           let newMarkers = this.refreshMarkers(route[newAddedThing.day], this.state.hotels[newAddedThing.day]);
           this.setState({route, isSaved: false, markers: newMarkers})
@@ -44,26 +54,48 @@ export default class RoutePlanner extends Component {
       }
       else {
         let hotels = [...this.state.hotels]
-        hotels[newAddedThing.day] = newAddedThing.thing
+
+        const {place_id, name, url, geometry, formatted_address} = newAddedThing.thing
+        let geometry_number = {
+          location: {
+            lat: geometry.location.lat(),
+            lng: geometry.location.lng()
+          }
+        }
+        hotels[newAddedThing.day] = {place_id, name, url,geometry: geometry_number, isPublicHotel: true, formatted_address}
         this.setState({hotels, isSaved: false})
       }
     }
   }
 
-  saveTrip = () => {
+  attemptToSaveTrip = () => {
     if(!firebaseApi.getCurrentUser()) {
       this.setState({openLoginModal: true})
     } else {
-      // this.setState({openSaveModel: true})
-      // this.props.history.push("/review")
-      // createNewTrip()
-      this.props.jumpReview(1);
+      this.setState({openSaveModal: true})
+
     }
+  }
+
+  saveTrip = () => {
+    let dailyRoutes = this.state.route.map((route, index) => (
+        {
+          day: index,
+          hotel: this.state.hotels[index],
+          activities: route,
+        }
+      ))
+    let newTrip = {
+      name: this.state.name,
+      description: this.state.description,
+      routes: dailyRoutes,
+    }
+    this.props.saveTrip(newTrip);
   }
 
   setHotel = (hotel, dateIndex) => {
     let hotels = this.state.hotels
-    hotels[dateIndex] = {name: hotel}
+    hotels[dateIndex] = {name: hotel, isPublicHotel: false}
     this.setState({hotels})
   }
 
@@ -127,13 +159,15 @@ export default class RoutePlanner extends Component {
     infoWindow.open(map);
   }
 
+  handleTripAttrsChange = (e, {name, value}) => this.setState({ [name]: value })
+
   render() {
     // need to set the key like this so that we rerender the new date card everytime there is a new activity added
     let dateCards = this.state.route.map((activities, idx) =>
     <DateCard activities={activities} key={idx} index={idx} hotel={this.state.hotels[idx]}
      searchThings={this.props.searchThings} setHotel={this.setHotel} addCustomActicity={this.addCustomActicity}
      deleteActivity={this.deleteActivity} updateMap={this.updateMap}/>)
-    
+
     let triggerButton = (<Button content='Share Your Trip' className='share-button' color='teal'/>);
 
 
@@ -143,7 +177,7 @@ export default class RoutePlanner extends Component {
           {dateCards}
         </Card.Group>
         <div className='save-share-buttons'>
-          <Button content="Save" className='save-button' onClick={this.saveTrip} color='teal'/>
+          <Button content="Save" className='save-button' onClick={this.attemptToSaveTrip} color='teal'/>
         </div>
         <Modal open={this.state.openLoginModal} onClose={()=>this.setState({openLoginModal: false})}closeIcon>
           <Modal.Description>
@@ -152,7 +186,20 @@ export default class RoutePlanner extends Component {
         </Modal>
         <Modal open={this.state.openSaveModal} onClose={()=>this.setState({openSaveModal: false})}closeIcon>
           <Modal.Description>
-            <div className='model-content'>Login before you share!</div>
+            <Form onSubmit={this.saveTrip}>
+              <Form.Input required fluid label='Trip name' placeholder='My Awesome Trip'
+                onChange={this.handleTripAttrsChange}
+                name="name"
+                value={this.state.name}
+              />
+              <Form.TextArea label='Description' placeholder='The trip with family...'
+                onChange={this.handleTripAttrsChange}
+                name="description"
+                value={this.state.description}
+              />
+              <Form.Button onClick={()=>this.setState({openSaveModal: false})} >Cancel</Form.Button>
+              <Form.Button>Submit</Form.Button>
+            </Form>
           </Modal.Description>
         </Modal>
       </div>)

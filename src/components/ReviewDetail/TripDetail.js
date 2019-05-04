@@ -3,7 +3,7 @@ import RouteDetail from './RouteDetail'
 import NavBar from '../common/NavBar'
 import {Divider, Dropdown, Label} from 'semantic-ui-react'
 import '../../style/ReviewTrip.scss'
-import {DUMMY_TRIP} from '../common/dummy-trip.js'
+import { getTripById } from '../../api/trip'
 import {getCurrentUser} from '../../api/firebaseAuth'
 /*global google*/
 
@@ -18,11 +18,11 @@ export class TripDetailBody extends Component {
 	}
 
 	componentDidMount() {
-		if(!getCurrentUser()) return this.props.history.push('/trip-planner')
+		// if(!getCurrentUser()) return this.props.history.push('/trip-planner')
 		let trip = this.state.trip
 		let mapElement = document.getElementById('map')
 		this.map = new google.maps.Map(mapElement, {
-			center: trip.cityLocation,
+			center: trip.city.location,
 			zoom: 10
 		});
 		this.service = new google.maps.places.PlacesService(this.map);
@@ -33,7 +33,7 @@ export class TripDetailBody extends Component {
 	}
 
 	getListOfMarkers = (trip) => {
-		return trip.route.map((dateRoute, idx)=> dateRoute.activities.filter(activity=>activity.geometry).map(
+		return trip.routes.map((dateRoute, idx)=> dateRoute.activities.filter(activity=>activity.geometry).map(
 			activity=> {
 				let marker = new window.google.maps.Marker({
 					position: activity.geometry.location,
@@ -85,7 +85,7 @@ export class TripDetailBody extends Component {
 	render() {
 			let dayOptions = [{ key: 'all',  text: 'All dates', value: -1}]
 			var i;
-			for(i=0; i < this.state.trip.route.length; i++) {
+			for(i=0; i < this.state.trip.routes.length; i++) {
 				let realDay = i+1
 				dayOptions.push({ key: `${i}`,  text: `Day ${realDay}`, value: i})
 			}
@@ -113,12 +113,6 @@ export class TripDetailBody extends Component {
 
 export default class TripDetail extends Component {
 
-	getTrip = (id) => {
-			//TODO: call api function to get trip by id
-			console.log('DUMMY_TRIP is ')
-			console.log(DUMMY_TRIP)
-			return DUMMY_TRIP
-		}
 	constructor(props){
 		super(props)
 		this.state = {
@@ -128,11 +122,14 @@ export default class TripDetail extends Component {
 
 	componentDidMount() {
 		let { id } = this.props.match.params
-		let trip = this.getTrip(id)
-		this.setState({
-			trip,
-			ready: true
-		})
+		getTripById(id)
+			.then((trip) => {
+				this.setState({
+					trip,
+					ready: true
+				})
+			})
+
 	}
 
 
@@ -148,7 +145,7 @@ export default class TripDetail extends Component {
 			        <div className='title'>
 			          <h2> {trip.name} </h2>
 			          <span> {`${startDate.toLocaleDateString()}-${endDate.toLocaleDateString()}`} </span>
-			          <span> {`${trip.location}`}</span>
+			          <span> {`${trip.city.name}`}</span>
 			          <h6><i>{trip.description}</i></h6>
 			        </div>
 						</div>

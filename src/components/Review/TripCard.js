@@ -18,7 +18,7 @@ export default class TripCard extends Component {
   }
 
   componentDidMount(){
-    this.setState({location: this.props.location, startDate: this.props.startDate, description: this.props.description, 
+    this.setState({location: this.props.city.name, startDate: this.props.startDate, description: this.props.description, 
       isDeleting: this.props.isDeleting, detailViewLink: this.props.detailViewLink, name: this.props.name,
       duration: this.props.duration
     })
@@ -26,7 +26,7 @@ export default class TripCard extends Component {
 
   componentDidUpdate(prevProps) {
     if(prevProps != this.props){
-      this.setState({location: this.props.location, startDate: this.props.startDate, description: this.props.description, 
+      this.setState({location: this.props.city.name, startDate: this.props.startDate, description: this.props.description, 
       isDeleting: this.props.isDeleting, detailViewLink: this.props.detailViewLink, name: this.props.name,
       duration: this.props.duration
     })
@@ -60,7 +60,10 @@ export default class TripCard extends Component {
 }
 
 TripCard.propTypes = {
-  location: PropTypes.string.isRequired,
+  city: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    location: PropTypes.object.isRequired,
+  }).isRequired,
   startDate: PropTypes.string.isRequired,
   description: PropTypes.string,
   detailViewLink: PropTypes.string,
