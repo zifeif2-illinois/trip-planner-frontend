@@ -3,6 +3,7 @@ import { Menu, Modal, Button, Input, Dropdown} from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import * as firebaseApi from '../../api/firebaseAuth'
 import '../../style/NavBar.scss'
+import axios from 'axios';
 
 export default class NavBar extends Component {
   constructor(props) {
@@ -16,12 +17,13 @@ export default class NavBar extends Component {
   componentDidMount() {
     let currentUser = firebaseApi.getCurrentUser()
     if(currentUser) {
-      this.setState({currentUser: {...currentUser, name:'Zifei'}})
+      this.setState({currentUser: {...currentUser, name: currentUser.email}})
     }
   }
 
   hasLogin = () => {
-    this.setState({currentUser: {...firebaseApi.getCurrentUser(), name: 'Zifei'}}) // TODO: call backend api to get user basic information
+    let currentUser = firebaseApi.getCurrentUser()
+    this.setState({currentUser: {...currentUser, name: currentUser.email}}) // TODO: call backend api to get user basic information
   }
 
   logout = () => {
@@ -84,6 +86,12 @@ class ModelLoginAndRegister extends Component {
   register = () => {
     firebaseApi.register(this.state.email, this.state.registerPassword).then(result=> {
       if(result.user) {
+        axios.post('https://us-central1-cs498rk-239014.cloudfunctions.net/user/', {
+          name: this.state.registerName,
+          email: this.state.email
+        }).then(response => {
+          console.log(response.data);
+        });
         this.setState({error: '', status: 'Login'})
       }
       else {
