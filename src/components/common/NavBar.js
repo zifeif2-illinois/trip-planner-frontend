@@ -3,7 +3,6 @@ import { Menu, Modal, Button, Input, Dropdown} from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import * as firebaseApi from '../../api/firebaseAuth'
 import '../../style/NavBar.scss'
-import axios from 'axios';
 
 export default class NavBar extends Component {
   constructor(props) {
@@ -42,9 +41,9 @@ export default class NavBar extends Component {
         <Menu.Menu position='right'>
           <Dropdown text={`Hi, ${this.state.currentUser.name}`}item>
             <Dropdown.Menu>
-              <Dropdown.Item><Link to='/trip-planner/review'>My Trips</Link></Dropdown.Item>
-              <Dropdown.Item><Link to='/trip-planner/profile'>Profile</Link></Dropdown.Item>
-              <Dropdown.Item onClick={this.logout}>Logout</Dropdown.Item>
+              <Dropdown.Item><Link to='/trip-planner/review' className='dropdown-link'>My Trips</Link></Dropdown.Item>
+              <Dropdown.Item><Link to='/trip-planner/profile' className='dropdown-link'>Profile</Link></Dropdown.Item>
+              <Dropdown.Item onClick={this.logout} className='dropdown-link'>Logout</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </Menu.Menu>
@@ -83,14 +82,8 @@ class ModelLoginAndRegister extends Component {
   }
 
   register = () => {
-    firebaseApi.register(this.state.email, this.state.registerPassword).then(result=> {
+    firebaseApi.register(this.state.email, this.state.registerPassword, this.state.registerName).then(result=> {
       if(result.user) {
-        axios.post('https://us-central1-cs498rk-239014.cloudfunctions.net/user/', {
-          name: this.state.registerName,
-          email: this.state.email
-        }).then(response => {
-          console.log(response.data);
-        });
         this.setState({error: '', status: 'Login'})
       }
       else {

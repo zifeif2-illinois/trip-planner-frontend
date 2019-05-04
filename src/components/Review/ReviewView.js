@@ -16,15 +16,17 @@ export default class ReviewView extends Component {
 	render() {
 		const upcomingTrips = this.props.trips.filter((trip) => (this.hasDatePast(trip.startDate)))
 		const pastTrips = this.props.trips.filter((trip) => (!this.hasDatePast(trip.startDate)))
+		const upcomingSharedTrips = this.props.tripsSharedWithMe.filter((trip) => (this.hasDatePast(trip.startDate)))
+		const pastSharedTrips = this.props.tripsSharedWithMe.filter((trip) => (!this.hasDatePast(trip.startDate)))
 		return (
 			<div>
 				<div className="review-trip-list">
 				<Header as='h2' content= 'Upcoming Trips' className="subheader" />
-					<TripList trips={upcomingTrips} />
+					<TripList trips={upcomingTrips.concat(upcomingSharedTrips)} />
 				</div>
 				<div className="review-trip-list">
-				<Header as='h2' content= 'Past Trips' className="subheader" />
-					<TripList trips={pastTrips} detailViewType="other" />
+				<Header as='h2' content= 'Previous Trips' className="subheader" />
+					<TripList trips={pastTrips.concat(pastSharedTrips)} detailViewType="other" />
 				</div>
 			</div>
 			)

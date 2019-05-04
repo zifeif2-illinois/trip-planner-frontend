@@ -14,7 +14,3 @@ export function getAllUsers() {
 			return data.data.data
 		})
 }
-
-export function shareTrip(tripId, listOfUserEmails) {
-
-}

@@ -4,8 +4,8 @@ import NavBar from '../common/NavBar'
 import ReviewView from './ReviewView'
 import '../../style/ReviewTrip.scss'
 import { getCurrentUser } from '../../api/firebaseAuth'
-import { getTripsByUserId } from '../../api/trip'
 import { getCurrentUserId } from '../../api/user'
+import { getTrips, getSharedTrips } from '../../api/trip'
 /*global google*/
 
 // This component only contains route planner and search view
@@ -14,16 +14,22 @@ class ReviewTripBody extends Component {
     super(props)
     this.state = {
       trips: [],
+      tripsSharedWithMe: [],
       ready: false,
     }
   }
 
 
   componentDidMount() {
-    getTripsByUserId(getCurrentUserId())
+    Promise.all([getTrips(), getSharedTrips()])
     .then((trips) => {
+
+      console.log(trips)
+      let tripsSharedWithMe= trips[1].map(trip=>Object.assign(trip, {isShared: true}))
+      console.log(trips[0])
        this.setState({
-        trips,
+        trips: trips[0],
+        tripsSharedWithMe,
         ready: true
       })
     })
@@ -34,7 +40,7 @@ class ReviewTripBody extends Component {
   render() {
     return (
       <div className='review-trip-body'>
-        <ReviewView trips={this.state.trips}/>
+        <ReviewView trips={this.state.trips} tripsSharedWithMe={this.state.tripsSharedWithMe}/>
       </div>
     )
   }
@@ -42,9 +48,9 @@ class ReviewTripBody extends Component {
 
 // This is the whole screen of adding trip including navbar and background
 export default class ReviewTrip extends Component {
-  componentDidMount() {
-    if(!getCurrentUser()) return this.props.history.push('/trip-planner')
-  }
+  // componentDidMount() {
+  //   if(!getCurrentUser()) return this.props.history.push('/trip-planner')
+  // }
   render() {
     return (
       <div className='review-trip-container'>
