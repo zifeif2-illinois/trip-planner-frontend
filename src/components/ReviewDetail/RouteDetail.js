@@ -49,10 +49,12 @@ export default class RouteDetail extends Component {
         <div className="route-planner">
         <div className="title">
           <h1> Route Details </h1>
-          <div className="icon-group">
-            <Icon className="icon" name="edit" color='teal' size="large" onClick={this.jumpEdit}/>
-           <ShareWidget trigger={shareIcon} tripId={this.props.trip.id}/>
-          </div>
+          {this.props.trip.isShared? null:
+            <div className="icon-group">
+              <Icon className="icon" name="edit" color='teal' size="large" onClick={this.jumpEdit}/>
+              <ShareWidget trigger={shareIcon} tripId={this.props.trip.id}/>
+            </div>
+          }
         </div>
           <div className='review-route-planner-container'>
             <Card.Group>
@@ -60,7 +62,7 @@ export default class RouteDetail extends Component {
             </Card.Group>
           </div>
           <Modal open={this.state.openShareModal} onClose={()=>this.setState({openShareModal: false})}closeIcon>
-           
+
             <Modal.Description>
               <div className='model-content'>Login before you share!</div>
             </Modal.Description>

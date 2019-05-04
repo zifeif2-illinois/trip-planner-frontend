@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {sharedDummyTrip} from './dummy-for-shared'
 
 const tripUrl = "https://us-central1-cs498rk-239014.cloudfunctions.net/trip/"
 export function createNewTrip(trip) {
@@ -26,6 +27,12 @@ export function getTrips(){
 	})
 }
 
+export function getSharedTrips() {
+	return new Promise((resolve) => {
+		resolve(sharedDummyTrip)
+	})
+}
+
 
 export function getTripById(tripId) {
        return axios.get(`${tripUrl}${tripId}`)
@@ -33,6 +40,9 @@ export function getTripById(tripId) {
                      console.log(data.data.data)
                      return JSON.parse(data.data.data.description)
               })
+			//  return new Promise((resolve) => {
+		 	// 	resolve(sharedDummyTrip[tripId])
+		 	// })
 
 }
 
@@ -257,7 +267,7 @@ var dummyTrips = [
        		       hotel: {
        		       	name: 'union',
        		             isPublicHotel: false,
-                                  // 
+                                  //
                             }
 	       		}
        ],

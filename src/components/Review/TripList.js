@@ -14,7 +14,7 @@ export default class TripList extends Component {
 	}
 
 	componentDidUpdate(prevProps, prevState) {
-		if(prevProps.trips != this.props.trips)
+		if(prevProps.trips !== this.props.trips)
 		this.setState({
 			trips: this.props.trips,
 			ready: true
@@ -22,7 +22,7 @@ export default class TripList extends Component {
 	}
 
 	deleteTrip = (id) => {
-		let trips = this.state.trips.filter((trip) => (trip['id'] != id))
+		let trips = this.state.trips.filter((trip) => (trip['id'] !== id))
 		this.setState({
 			trips
 		})
@@ -32,8 +32,8 @@ export default class TripList extends Component {
 		if(this.state.ready){
 			let detailViewLink = `/trip-planner/review`
 			let tripCards = this.state.trips.map((trip) => (
-				<TripCard 
-				key={trip.id}
+				<TripCard
+				key={`${trip.id}-${trip.isShared}`}
 				{...trip}
 				detailViewLink={`${detailViewLink}/${trip.id}`}
 				onDeleteTrip={()=>{this.deleteTrip(trip.id)}}
@@ -49,7 +49,7 @@ export default class TripList extends Component {
 
 				)
 		}
-		
+
 	}
 }
 
