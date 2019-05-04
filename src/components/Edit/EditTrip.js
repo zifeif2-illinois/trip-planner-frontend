@@ -87,7 +87,7 @@ class EditTripBody extends Component {
       owner: getCurrentUserId(),
       shared: []
     })
-    updateTrip(this.props.trip.id, updatedTrip)
+    updateTrip(this.props.id, updatedTrip)
   }
 
   render() {
@@ -121,10 +121,13 @@ export default class EditTrip extends Component {
 
 
   componentDidMount() {
-    if(!getCurrentUser()) return this.props.history.push('/trip-planner')
+    // if(!getCurrentUser()) return this.props.history.push('/trip-planner')
     let tripId = this.props.match.params.id
     getTripById(tripId).then(trip => {
-      this.setState({trip})
+      this.setState({
+        trip,
+        id: tripId
+      })
     })
   }
 
@@ -141,14 +144,15 @@ export default class EditTrip extends Component {
         <div className='title'>
             <h2> {trip.name} </h2>
             <span> {`${startDate.toLocaleDateString()}-${endDate.toLocaleDateString()}`} </span>
-            <span> {`${trip.location}`}</span>
+            <span> {`${trip.city.name}`}</span>
             <h6><i>{trip.description}</i></h6>
         </div>
       </div>
       <EditTripBody trip={trip} jumpReview={this.jumpReview}
         duration={this.state.trip.duration}
-        city={this.state.trip.location || 'Chicago'}
-        cityLocation={this.state.trip.cityLocation}
+        city={this.state.trip.city.name || 'Chicago'}
+        cityLocation={this.state.trip.city.location}
+        id={this.state.id}
       />
     </div>)
   }

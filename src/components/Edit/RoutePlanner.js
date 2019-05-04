@@ -52,7 +52,7 @@ export default class RoutePlanner extends Component {
   saveTrip = () => {
     console.log(this.state.routes)
     console.log(this.state.hotels)
-    let dailyRoutes = this.state.route.map((route, index) => (
+    let dailyRoutes = this.state.routes.map((route, index) => (
         {
           day: index,
           hotel: this.state.hotels[index],

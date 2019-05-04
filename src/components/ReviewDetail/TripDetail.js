@@ -91,7 +91,7 @@ export class TripDetailBody extends Component {
 			}
 			return (
 	        	<div className='trip-detail-body'>
-	        		<RouteDetail className='trip-detail-component' trip={this.state.trip}
+	        		<RouteDetail className='trip-detail-component' id={this.props.id} trip={this.state.trip}
 							editTrip={() => this.props.history.push(`/trip-planner/edit/${this.state.trip.id}`)}/>
 							<Divider vertical/>
 							<div className='map-container'>
@@ -112,7 +112,6 @@ export class TripDetailBody extends Component {
 
 
 export default class TripDetail extends Component {
-
 	constructor(props){
 		super(props)
 		this.state = {
@@ -124,7 +123,9 @@ export default class TripDetail extends Component {
 		let { id } = this.props.match.params
 		getTripById(id)
 			.then((trip) => {
+				trip = Object.assign(trip, {id: id})
 				this.setState({
+					id,
 					trip,
 					ready: true
 				})
@@ -149,7 +150,7 @@ export default class TripDetail extends Component {
 			          <h6><i>{trip.description}</i></h6>
 			        </div>
 						</div>
-	        	<TripDetailBody trip={this.state.trip} history={this.props.history}/>
+	        	<TripDetailBody id={this.state.id} trip={this.state.trip} history={this.props.history}/>
 	     </div>
 			)
 		} else {

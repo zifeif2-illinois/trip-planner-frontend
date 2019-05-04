@@ -23,7 +23,7 @@ export default class RouteDetail extends Component {
   // }
 
   jumpEdit = () => {
-    this.props.editTrip()
+    this.props.editTrip(this.state.id)
   }
 
   openShare = () => {
