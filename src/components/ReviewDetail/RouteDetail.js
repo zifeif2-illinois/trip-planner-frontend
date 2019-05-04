@@ -23,7 +23,7 @@ export default class RouteDetail extends Component {
   // }
 
   jumpEdit = () => {
-
+    this.props.editTrip()
   }
 
   openShare = () => {
@@ -32,6 +32,8 @@ export default class RouteDetail extends Component {
 
   componentDidMount() {
     let trip = this.props.trip;
+    console.log('In component did mount ')
+    console.log(this.props.trip)
     this.setState({
       ...trip,
       ready: true
@@ -65,7 +67,7 @@ export default class RouteDetail extends Component {
         </div>
       )
     }
-     
+
     else {
       return (<div>Loading...</div>)
     }

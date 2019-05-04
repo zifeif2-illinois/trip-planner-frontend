@@ -36,7 +36,6 @@ export default class DateCard extends Component {
       if(!this.state.ready){
         return (<div>Loading...</div>)
       }
-      console.log(this.state.activities)
       let listOfActivities = this.state.activities.map(activity => <ActivityCard key={activity.name} {...activity} />)
       return (
         <Card className='day-container'>
