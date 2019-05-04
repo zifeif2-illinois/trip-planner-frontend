@@ -4,6 +4,7 @@ import DateCard from './DateCard'
 import '../../style/RoutePlanner.scss'
 import * as firebaseApi from '../../api/firebaseAuth'
 import ShareWidget from '../common/ShareWidget'
+import { getCurrentUserId } from '../../api/user'
 
 export default class RouteDetail extends Component {
   constructor(props) {
@@ -32,6 +33,7 @@ export default class RouteDetail extends Component {
 
   componentDidMount() {
     let trip = this.props.trip;
+    console.log(trip)
     this.setState({
       ...trip,
       ready: true
@@ -45,11 +47,12 @@ export default class RouteDetail extends Component {
       let listOfSharedUsers = this.props.trip.shared.map(user=><List.Item key={user} content={user}/>)
       let dateCards = this.state.routes.map((day, idx) => (<DateCard activities={day.activities} key={idx} index={day.day} hotel={day.hotel}/>))
       let shareIcon =  (<Icon className="icon" name="share square" color='teal' size="large" />)
+      console.log(this.props.trip.owner, getCurrentUserId())
       return (
         <div className="route-planner">
         <div className="title">
           <h1> Route Details </h1>
-          {this.props.trip.isShared? <Popup trigger={<Icon name='address book outline' color='teal' size="large"/>}>
+          {(this.props.trip.owner != getCurrentUserId())? <Popup trigger={<Icon name='address book outline' color='teal' size="large"/>}>
                       <Popup.Header> Shared with... </Popup.Header>
                       <Popup.Content>
                         <List>{listOfSharedUsers}</List>

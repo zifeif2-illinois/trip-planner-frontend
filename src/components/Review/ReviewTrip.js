@@ -52,6 +52,7 @@ export default class ReviewTrip extends Component {
   //   if(!getCurrentUser()) return this.props.history.push('/trip-planner')
   // }
   render() {
+    console.log(this.props.history)
     return (
       <div className='review-trip-container'>
         <NavBar/>

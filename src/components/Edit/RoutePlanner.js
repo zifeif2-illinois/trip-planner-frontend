@@ -50,8 +50,6 @@ export default class RoutePlanner extends Component {
   }
 
   saveTrip = () => {
-    console.log(this.state.routes)
-    console.log(this.state.hotels)
     let dailyRoutes = this.state.routes.map((route, index) => (
         {
           day: index,
@@ -62,8 +60,10 @@ export default class RoutePlanner extends Component {
     let newTrip = {
       routes: dailyRoutes,
     }
-    this.props.updateTrip(newTrip);
-    this.props.jumpReview();
+    this.props.updateTrip(newTrip).then(()=>
+      setTimeout(()=>this.props.jumpReview(), 2000)
+    )
+    
 
     // TODO: call api function to save the trip. Before saving the trip, transform the trip structure to the backend one
   }

@@ -20,6 +20,7 @@ export class TripDetailBody extends Component {
 
 	componentDidMount() {
 		// if(!getCurrentUser()) return this.props.history.push('/trip-planner')
+		console.log("trip detail body didmount")
 		let trip = this.state.trip
 		let mapElement = document.getElementById('map')
 		this.map = new google.maps.Map(mapElement, {
@@ -31,6 +32,12 @@ export class TripDetailBody extends Component {
 		this.setState({markers})
 		let allMarkers = [].concat(...markers);
 		this.putMarkersOnMap(allMarkers)
+	}
+
+	componentDidUpdate(prevProp){
+		console.log('trip detail body componentDidUpdate is callled')
+		if (this.props !== prevProp)
+			this.setState({trip: this.props.trip})
 	}
 
 	getListOfMarkers = (trip) => {
@@ -125,7 +132,8 @@ export default class TripDetail extends Component {
 		getTripById(id)
 			.then((trip) => {
 				trip = Object.assign(trip, {id: id, isShared: trip.owner === getCurrentUserId()})
-				console.log(trip.owner)
+				console.log('in componentDidMount')
+				console.log(trip)
 				this.setState({
 					id,
 					trip,
@@ -136,6 +144,22 @@ export default class TripDetail extends Component {
 
 	}
 
+	_updateTrip() {
+		if(!this.state) return;
+		let { id } = this.state
+		getTripById(id)
+			.then((trip) => {
+				trip = Object.assign(trip, {id: id, isShared: trip.owner === getCurrentUserId()})
+				console.log('In _updateTrip')
+				console.log(trip)
+				this.setState({
+					id,
+					trip,
+					ready: true
+				})
+			})
+			.catch((error) => console.log(error))
+	}
 
 	render() {
 		if(this.state.ready){
@@ -144,7 +168,7 @@ export default class TripDetail extends Component {
     	let endDate = new Date(startDate.setDate(startDate.getDate() + trip.duration));
 			return (
 			<div className='container'>
-	        	<NavBar/>
+	        	<NavBar history={this.props.history}/>
 	        	<div className='background'>
 			        <div className='title'>
 			          <h2> {trip.name} </h2>
@@ -153,7 +177,7 @@ export default class TripDetail extends Component {
 			          <h6><i>{trip.description}</i></h6>
 			        </div>
 						</div>
-	        	<TripDetailBody id={this.state.id} trip={this.state.trip} history={this.props.history}/>
+	        	<TripDetailBody updateTrip={this._updateTrip} id={this.state.id} trip={this.state.trip} history={this.props.history}/>
 	     </div>
 			)
 		} else {
