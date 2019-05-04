@@ -12,6 +12,14 @@ export function createNewTrip(trip) {
 
 }
 
+export function updateTrip(tripId, updatedTrip) {
+	return axios.put(`${tripUrl}${tripId}`,{description: JSON.stringify(updatedTrip)})
+              .then((data) => {
+                     console.log(data.data)
+                     return data.data.id
+              })
+}
+
 export function getTrips(){
 	return new Promise((resolve) => {
 		resolve(dummyTrips)
@@ -46,7 +54,7 @@ var dummyTrips = [
        		       		name: 'walk',
        		       		location: 'quad',
        		       		isPopularActivity: true,
-						geometry:{location: {lat: 40.107677, lng: -88.227220}}
+										geometry:{location: {lat: 40.107677, lng: -88.227220}}
        		       	},
        		       ],
        		       hotel: {
@@ -83,7 +91,7 @@ var dummyTrips = [
        		lat: 40.1164204,
        		lng: -88.24338290000003
        	}
-       }, 
+       },
        description: "A trip with family and dogs and cats and birds and bananas!!!",
        name: 'Thanksgiving Trip'
       },

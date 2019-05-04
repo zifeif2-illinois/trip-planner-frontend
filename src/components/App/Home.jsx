@@ -13,7 +13,7 @@ export default class Home extends Component {
 
     this.state = {
       startDate: new Date(),
-      duration: 0,
+      duration: 1,
       city: '',
       cityQuery: '',
       cityLocation: {lat: 41.8781, lng: -87.6298}

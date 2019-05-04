@@ -8,6 +8,7 @@ import CreateTrip from '../Create/CreateTrip.js'
 import ReviewTrip from '../Review/ReviewTrip.js'
 import TripDetail from '../ReviewDetail/TripDetail.js'
 import Profile from '../Profile/Profile.js'
+import EditTrip from '../Edit/EditTrip.js'
 
 import '../../style/App.module.scss'
 
@@ -21,6 +22,7 @@ class App extends Component {
               <Route exact path="/trip-planner/review" component={ReviewTrip} />
               <Route exact path="/trip-planner/review/:id" component={TripDetail} />
               <Route exact path="/trip-planner/profile" component={Profile} />
+              <Route exact path="/trip-planner/edit/:id" component={EditTrip} />
           </Switch>
         </Router>
     );

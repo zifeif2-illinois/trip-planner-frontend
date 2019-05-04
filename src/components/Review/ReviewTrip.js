@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import NavBar from '../common/NavBar'
 import ReviewView from './ReviewView'
 import '../../style/ReviewTrip.scss'
+import {getCurrentUser} from '../../api/firebaseAuth'
 import { getTrips } from '../../api/trip'
 /*global google*/
 
@@ -25,7 +26,7 @@ class ReviewTripBody extends Component {
         ready: true
       })
     })
-   
+
   }
 //
 
@@ -40,6 +41,9 @@ class ReviewTripBody extends Component {
 
 // This is the whole screen of adding trip including navbar and background
 export default class ReviewTrip extends Component {
+  componentDidMount() {
+    if(!getCurrentUser()) return this.props.history.push('/trip-planner')
+  }
   render() {
     return (
       <div className='review-trip-container'>

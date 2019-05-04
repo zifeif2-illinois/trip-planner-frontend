@@ -4,6 +4,7 @@ import NavBar from '../common/NavBar'
 import {Divider, Dropdown, Label} from 'semantic-ui-react'
 import '../../style/ReviewTrip.scss'
 import { getTripById } from '../../api/trip'
+import {getCurrentUser} from '../../api/firebaseAuth'
 /*global google*/
 
 export class TripDetailBody extends Component {
@@ -17,6 +18,7 @@ export class TripDetailBody extends Component {
 	}
 
 	componentDidMount() {
+		// if(!getCurrentUser()) return this.props.history.push('/trip-planner')
 		let trip = this.state.trip
 		let mapElement = document.getElementById('map')
 		this.map = new google.maps.Map(mapElement, {
@@ -31,7 +33,7 @@ export class TripDetailBody extends Component {
 	}
 
 	getListOfMarkers = (trip) => {
-		return trip.routes.map((dateRoute, idx)=> dateRoute.activities.map(
+		return trip.routes.map((dateRoute, idx)=> dateRoute.activities.filter(activity=>activity.geometry).map(
 			activity=> {
 				let marker = new window.google.maps.Marker({
 					position: activity.geometry.location,
@@ -61,7 +63,6 @@ export class TripDetailBody extends Component {
 	}
 
 	onChangeSelectedDay = (e, data) => {
-		console.log(data.value)
 		let selectedDate = data.value
 		let markers = [...this.state.markers]
 		if(selectedDate < 0) {
@@ -90,7 +91,8 @@ export class TripDetailBody extends Component {
 			}
 			return (
 	        	<div className='trip-detail-body'>
-	        		<RouteDetail className='trip-detail-component' trip={this.state.trip} />
+	        		<RouteDetail className='trip-detail-component' id={this.props.id} trip={this.state.trip}
+							editTrip={() => this.props.history.push(`/trip-planner/edit/${this.state.trip.id}`)}/>
 							<Divider vertical/>
 							<div className='map-container'>
 								<div id='map'></div>
@@ -105,6 +107,10 @@ export class TripDetailBody extends Component {
 }
 
 
+
+
+
+
 export default class TripDetail extends Component {
 	constructor(props){
 		super(props)
@@ -117,12 +123,14 @@ export default class TripDetail extends Component {
 		let { id } = this.props.match.params
 		getTripById(id)
 			.then((trip) => {
+				trip = Object.assign(trip, {id: id})
 				this.setState({
+					id,
 					trip,
 					ready: true
 				})
 			})
-		
+
 	}
 
 
@@ -142,7 +150,7 @@ export default class TripDetail extends Component {
 			          <h6><i>{trip.description}</i></h6>
 			        </div>
 						</div>
-	        	<TripDetailBody trip={this.state.trip}/>
+	        	<TripDetailBody id={this.state.id} trip={this.state.trip} history={this.props.history}/>
 	     </div>
 			)
 		} else {

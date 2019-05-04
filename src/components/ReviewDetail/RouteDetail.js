@@ -23,7 +23,7 @@ export default class RouteDetail extends Component {
   // }
 
   jumpEdit = () => {
-
+    this.props.editTrip(this.state.id)
   }
 
   openShare = () => {
@@ -32,6 +32,8 @@ export default class RouteDetail extends Component {
 
   componentDidMount() {
     let trip = this.props.trip;
+    console.log('In component did mount ')
+    console.log(this.props.trip)
     this.setState({
       ...trip,
       ready: true
@@ -49,7 +51,7 @@ export default class RouteDetail extends Component {
           <h1> Route Details </h1>
           <div className="icon-group">
             <Icon className="icon" name="edit" color='teal' size="large" onClick={this.jumpEdit}/>
-           <ShareWidget trigger={shareIcon}/>
+           <ShareWidget trigger={shareIcon} tripId={this.props.trip.id}/>
           </div>
         </div>
           <div className='review-route-planner-container'>
@@ -66,7 +68,7 @@ export default class RouteDetail extends Component {
         </div>
       )
     }
-     
+
     else {
       return (<div>Loading...</div>)
     }

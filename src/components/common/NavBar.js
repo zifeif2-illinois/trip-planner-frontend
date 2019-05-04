@@ -21,7 +21,8 @@ export default class NavBar extends Component {
   }
 
   hasLogin = () => {
-    this.setState({currentUser: {...firebaseApi.getCurrentUser(), name: 'Zifei'}}) // TODO: call backend api to get user basic information
+    this.setState({currentUser: {...firebaseApi.getCurrentUser(), name: 'Zifei'}})
+    // TODO: call backend api to get user basic information
   }
 
   logout = () => {
@@ -32,7 +33,6 @@ export default class NavBar extends Component {
   }
 
   render() {
-    // TODO: add link to dropdown.item
     return (
       <Menu className='navbar' fixed='top'>
         <Menu.Item link position='left'> <Link to='/trip-planner'>Trip Planner</Link></Menu.Item>
@@ -41,7 +41,7 @@ export default class NavBar extends Component {
         <Menu.Menu position='right'>
           <Dropdown text={`Hi, ${this.state.currentUser.name}`}item>
             <Dropdown.Menu>
-              <Dropdown.Item>My Trips</Dropdown.Item>
+              <Dropdown.Item><Link to='/trip-planner/review'>My Trips</Link></Dropdown.Item>
               <Dropdown.Item><Link to='/trip-planner/profile'>Profile</Link></Dropdown.Item>
               <Dropdown.Item onClick={this.logout}>Logout</Dropdown.Item>
             </Dropdown.Menu>
