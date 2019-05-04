@@ -135,7 +135,7 @@ export default class RoutePlanner extends Component {
      deleteActivity={this.deleteActivity} updateMap={this.updateMap}/>)
 
     return (
-      <div className='routes-planner-container'>
+      <div className='route-planner-container'>
         <Card.Group>
           {dateCards}
         </Card.Group>
