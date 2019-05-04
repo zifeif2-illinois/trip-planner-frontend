@@ -22,7 +22,7 @@ export default class ReviewView extends Component {
 			<div>
 				<div className="review-trip-list">
 				<Header as='h2' content= 'Upcoming Trips' className="subheader" />
-					<TripList trips={upcomingTrips.concat(upcomingSharedTrips)} />
+					<TripList trips={upcomingTrips.concat(upcomingSharedTrips)} history={this.props.history}/>
 				</div>
 				<div className="review-trip-list">
 				<Header as='h2' content= 'Previous Trips' className="subheader" />

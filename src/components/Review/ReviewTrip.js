@@ -40,7 +40,7 @@ class ReviewTripBody extends Component {
   render() {
     return (
       <div className='review-trip-body'>
-        <ReviewView trips={this.state.trips} tripsSharedWithMe={this.state.tripsSharedWithMe}/>
+        <ReviewView history={this.props.history} trips={this.state.trips} tripsSharedWithMe={this.state.tripsSharedWithMe}/>
       </div>
     )
   }
@@ -55,7 +55,7 @@ export default class ReviewTrip extends Component {
     return (
       <div className='review-trip-container'>
         <NavBar/>
-        <ReviewTripBody/>
+        <ReviewTripBody history={this.props.history}/>
       </div>
     )
   }

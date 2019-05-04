@@ -1,20 +1,22 @@
-import { fbAuth} from '../firebase.js'
+import { fbAuth, firebase} from '../firebase.js'
 import axios from 'axios';
 // const USER_URL = 'https://us-central1-cs498rk-239014.cloudfunctions.net/user/'
 const USER_URL = "http://localhost:5000/cs498rk-239014/us-central1/user"
 
 
 export function getCurrentUser() {
+  console.log(fbAuth.currentUser)
   return fbAuth.currentUser;
 }
 
 export function login(userEmail, userPassword) {
-    return fbAuth.signInWithEmailAndPassword(userEmail, userPassword)
+    return fbAuth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    .then(()=> fbAuth.signInWithEmailAndPassword(userEmail, userPassword)
       .then((data) => ({user: data['user']}))
       .catch(function(error) {
       	console.log(error)
        	return {error: error.toString()};
-    });
+    }));
 }
 
 

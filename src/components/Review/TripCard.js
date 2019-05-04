@@ -37,12 +37,13 @@ export default class TripCard extends Component {
     this.props.onDeleteTrip()
   }
 
+
   render() {
     let startDate = new Date(Date.parse(this.state.startDate));
     let endDate = new Date(startDate.setDate(startDate.getDate() + this.state.duration));
 
     return (
-          <Card className='trip-card-container' href={this.state.detailViewLink}>
+          <Card className='trip-card-container' onClick={this.props.onClick}>
             <Card.Content>
               {this.state.isShared? <Popup trigger={<Button icon='registered' basic color='teal'className='shared-icon' />} content={`Shared by ${this.state.owner}`} />:null}
               <Card.Header>{this.state.location}</Card.Header>
@@ -55,7 +56,6 @@ export default class TripCard extends Component {
               </Card.Content> :
               null
              }
-
           </Card>
     )
   }
