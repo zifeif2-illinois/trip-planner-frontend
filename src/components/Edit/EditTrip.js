@@ -6,7 +6,8 @@ import SearchView from '../Create/SearchView'
 import '../../style/EditTrip.scss'
 import { Redirect, Link } from 'react-router-dom'
 import {getCurrentUser} from '../../api/firebaseAuth'
-import {getTripById} from '../../api/trip.js'
+import {getTripById, updateTrip} from '../../api/trip.js'
+import {getCurrentUserId} from '../../api/user'
 
 /*global google*/
 
@@ -50,7 +51,6 @@ class EditTripBody extends Component {
   }
 
   searchThings = (searchKeyword, type, day) => {
-      // TODO: make api call to do search, and set searchResult with results from api
       this.setState({day, type, searchKeyword})
       const city = this.state.city.toLowerCase();
       let searchType = ''
@@ -77,10 +77,24 @@ class EditTripBody extends Component {
     this.setState({isModalOpen: true})
   }
 
+  updateTrip = (tripWithHotelAndRoute) => {
+    let updatedTrip = Object.assign(tripWithHotelAndRoute, {
+      startDate: this.props.startDate,
+      name: this.props.name,
+      description: this.props.description,
+      duration: this.props.duration,
+      city: {name: this.props.city, location: this.props.cityLocation},
+      owner: getCurrentUserId(),
+      shared: []
+    })
+    updateTrip(this.props.trip.id, updatedTrip)
+  }
+
   render() {
     return (
       <div className='edit-trip-planner'>
         <RoutePlanner searchThings={this.searchThings} newAddedThing={this.state.newAddedThing} trip={this.props.trip}
+        updateTrip = {this.updateTrip}
           duration={this.props.duration} map={this.map} openModal={this.openModal} jumpReview={this.props.jumpReview}/>
         <SearchView addToBoard={this.addToBoard} searchResult={this.state.searchResult} service={this.service}
           keyword={this.state.searchKeyword} day={this.state.day} type={this.state.type}/>
@@ -107,8 +121,6 @@ export default class EditTrip extends Component {
 
 
   componentDidMount() {
-    // TODO: get trip by ID using API call
-
     if(!getCurrentUser()) return this.props.history.push('/trip-planner')
     let tripId = this.props.match.params.id
     getTripById(tripId).then(trip => {

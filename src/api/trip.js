@@ -9,6 +9,10 @@ export function createNewTrip(trip) {
 	})
 }
 
+export function updateTrip(tripId, updatedTrip) {
+	
+}
+
 export function getTrips(){
 	return new Promise((resolve) => {
 		resolve(dummyTrips)

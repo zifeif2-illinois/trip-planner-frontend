@@ -51,7 +51,7 @@ export default class RouteDetail extends Component {
           <h1> Route Details </h1>
           <div className="icon-group">
             <Icon className="icon" name="edit" color='teal' size="large" onClick={this.jumpEdit}/>
-           <ShareWidget trigger={shareIcon}/>
+           <ShareWidget trigger={shareIcon} tripId={this.props.trip.id}/>
           </div>
         </div>
           <div className='review-route-planner-container'>
