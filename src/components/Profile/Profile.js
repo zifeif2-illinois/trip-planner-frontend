@@ -19,7 +19,7 @@ export default class Profile extends Component {
   componentDidMount() {
     let user = getCurrentUser()
     let name = 'Zifei' //TODO: getUserNameByUID
-    if(!user) return this.props.history.push('/trip-planner')
+    if(!user) return this.props.history.push('/')
     this.setState({editName: name, email: user.email })
   }
 
