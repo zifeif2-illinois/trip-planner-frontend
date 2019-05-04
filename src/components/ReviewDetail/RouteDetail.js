@@ -58,6 +58,7 @@ export default class RouteDetail extends Component {
             </Card.Group>
           </div>
           <Modal open={this.state.openShareModal} onClose={()=>this.setState({openShareModal: false})}closeIcon>
+           
             <Modal.Description>
               <div className='model-content'>Login before you share!</div>
             </Modal.Description>

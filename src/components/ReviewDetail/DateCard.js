@@ -24,19 +24,11 @@ export default class DateCard extends Component {
       })
     }
 
-    // componentDidUpdate(prevProps, prevState) {
-    //   if(prevProps.hotel.name !== this.props.hotel.name) {
-    //     this.setState({hotel: this.props.hotel})
-    //   } else if(this.state.isAddingNewActivity && this.props.activities.length !== prevProps.activities.length) {
-    //     this.setState({isAddingNewActivity: false, activities: this.props.activities})
-    //   }
-    // }
 
     render() {
       if(!this.state.ready){
         return (<div>Loading...</div>)
       }
-      console.log(this.state.activities)
       let listOfActivities = this.state.activities.map(activity => <ActivityCard key={activity.name} {...activity} />)
       return (
         <Card className='day-container'>
