@@ -49,7 +49,6 @@ class CreateTripBody extends Component {
   }
 
   searchThings = (searchKeyword, type, day) => {
-      // TODO: make api call to do search, and set searchResult with results from api
       this.setState({day, type, searchKeyword})
       const city = this.state.city.toLowerCase();
       let searchType = ''
@@ -89,7 +88,7 @@ class CreateTripBody extends Component {
       .then((newTripId) => {
         this.props.jumpReview(newTripId)
       })
-    
+
   }
 
   render() {
