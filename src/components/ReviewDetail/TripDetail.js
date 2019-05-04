@@ -132,6 +132,7 @@ export default class TripDetail extends Component {
 					ready: true
 				})
 			})
+			.catch((error) => console.log(error))
 
 	}
 
