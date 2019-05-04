@@ -1,9 +1,16 @@
-var currentUserId = 1; // need to populate from data base
+import { getCurrentUser } from './firebaseAuth.js'
+import axios from 'axios'
+
+const userUrl = "http://localhost:5000/cs498rk-239014/us-central1/user"
 
 export function getCurrentUserId() {
-	return currentUserId;
+	return getCurrentUser().email;
 }
 const dummyUsers = [{name: 'Jack', email: 'jacky@example.com'},{name: 'Mary', email: 'mary@example.com'},{name: 'Amy', email: 'amy@example.com'}]
 export function getAllUsers() {
-	return new Promise((resolve, reject) => resolve(dummyUsers))
+	// return new Promise((resolve, reject) => resolve(dummyUsers))
+	return axios.get(`${userUrl}/`)
+		.then((data) => {
+			return data.data.data
+		})
 }

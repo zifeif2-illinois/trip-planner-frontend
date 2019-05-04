@@ -3,7 +3,8 @@ import React, { Component } from 'react'
 import NavBar from '../common/NavBar'
 import ReviewView from './ReviewView'
 import '../../style/ReviewTrip.scss'
-import {getCurrentUser} from '../../api/firebaseAuth'
+import { getCurrentUser } from '../../api/firebaseAuth'
+import { getCurrentUserId } from '../../api/user'
 import { getTrips, getSharedTrips } from '../../api/trip'
 /*global google*/
 
