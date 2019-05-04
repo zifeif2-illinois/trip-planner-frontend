@@ -1,11 +1,12 @@
 {
-  "name": "mp2",
+  "name": "project",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://zifeif2-illinois.github.io/sp19-cs498rk-mp2",
+  "homepage": "https://zifeif2-illinois.github.io/trip-planner-frontend",
   "dependencies": {
     "axios": "^0.18.0",
     "firebase": "^5.11.1",
+    "gh-pages": "^2.0.1",
     "lodash": "^4.17.11",
     "node-sass": "^4.12.0",
     "react": "^16.8.3",
