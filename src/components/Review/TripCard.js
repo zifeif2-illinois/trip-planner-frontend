@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Button} from 'semantic-ui-react'
+import { Card, Button, Popup} from 'semantic-ui-react'
 import '../../style/TripCard.scss'
 import PropTypes from 'prop-types';
 
@@ -44,7 +44,8 @@ export default class TripCard extends Component {
     return (
           <Card className='trip-card-container' href={this.state.detailViewLink}>
             <Card.Content>
-              <Card.Header>{this.state.location}{this.state.isShared? ' - shared by'+this.state.owner: ''}</Card.Header>
+              {this.state.isShared? <Popup trigger={<Button icon='registered' basic color='teal'className='shared-icon' />} content={`Shared by ${this.state.owner}`} />:null}
+              <Card.Header>{this.state.location}</Card.Header>
               <Card.Meta>{`${startDate.toLocaleDateString()}-${endDate.toLocaleDateString()}\t\t${this.state.duration} days in total`}</Card.Meta>
               <Card.Description>{this.state.description}</Card.Description>
              </Card.Content>

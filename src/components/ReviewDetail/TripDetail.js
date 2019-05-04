@@ -125,6 +125,7 @@ export default class TripDetail extends Component {
 		getTripById(id)
 			.then((trip) => {
 				trip = Object.assign(trip, {id: id, isShared: trip.owner === getCurrentUserId()})
+				console.log(trip.owner)
 				this.setState({
 					id,
 					trip,

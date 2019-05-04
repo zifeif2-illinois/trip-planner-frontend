@@ -87,7 +87,7 @@ class EditTripBody extends Component {
       owner: getCurrentUserId(),
       shared: []
     })
-    updateTrip(this.props.id, updatedTrip)
+    updateTrip(this.props.trip.id, updatedTrip)
   }
 
   render() {
@@ -124,14 +124,11 @@ export default class EditTrip extends Component {
     // if(!getCurrentUser()) return this.props.history.push('/trip-planner')
     let tripId = this.props.match.params.id
     getTripById(tripId).then(trip => {
-      this.setState({
-        trip,
-        id: tripId
-      })
+      this.setState({trip})
     })
   }
 
-  jumpReview = () => this.props.history.push(`/trip-planner/review/${this.props.match.params.id}`)
+  jumpReview = () => this.props.history.push(`/trip-planner/review/${this.props.match.params.id}`, {saved:true})
 
   render() {
     if(!this.state.trip) return <div> Loading... </div>
@@ -144,15 +141,14 @@ export default class EditTrip extends Component {
         <div className='title'>
             <h2> {trip.name} </h2>
             <span> {`${startDate.toLocaleDateString()}-${endDate.toLocaleDateString()}`} </span>
-            <span> {`${trip.city.name}`}</span>
+            <span> {`${trip.location}`}</span>
             <h6><i>{trip.description}</i></h6>
         </div>
       </div>
       <EditTripBody trip={trip} jumpReview={this.jumpReview}
         duration={this.state.trip.duration}
-        city={this.state.trip.city.name || 'Chicago'}
-        cityLocation={this.state.trip.city.location}
-        id={this.state.id}
+        city={this.state.trip.location || 'Chicago'}
+        cityLocation={this.state.trip.cityLocation}
       />
     </div>)
   }

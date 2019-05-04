@@ -7,7 +7,3 @@ const dummyUsers = [{name: 'Jack', email: 'jacky@example.com'},{name: 'Mary', em
 export function getAllUsers() {
 	return new Promise((resolve, reject) => resolve(dummyUsers))
 }
-
-export function shareTrip(tripId, listOfUserEmails) {
-
-}
