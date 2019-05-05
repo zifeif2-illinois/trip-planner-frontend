@@ -3,7 +3,7 @@ import { Button, Input, Header} from 'semantic-ui-react'
 import NavBar from '../common/NavBar'
 import {resetPassword, getCurrentUser} from '../../api/firebaseAuth.js'
 import '../../style/Profile.scss'
-
+import { updateUser, getUserById, getCurrentUserId } from '../../api/user.js'
 
 export default class Profile extends Component {
   constructor(props) {
@@ -18,9 +18,12 @@ export default class Profile extends Component {
 
   componentDidMount() {
     let user = getCurrentUser()
-    let name = 'Zifei' //TODO: getUserNameByUID
     if(!user) return this.props.history.push('/')
-    this.setState({editName: name, email: user.email })
+    getUserById(getCurrentUserId())
+      .then((user) => {
+        this.setState({editName: user.name, email: user.email })
+      })
+    
   }
 
 
@@ -38,6 +41,14 @@ export default class Profile extends Component {
     })
   }
 
+
+  saveChange = () => {
+    updateUser(getCurrentUserId(), { name: this.state.editName})
+      .then(() => {
+        this.setState({isEditing: false})
+      })
+  }
+
   render() {
     return (<div>
       <NavBar history={this.props.history}/>
@@ -49,6 +60,7 @@ export default class Profile extends Component {
       <div> Email </div>
       <Input value={this.state.email} disabled={true}/>
       <Button onClick={this.resetPassword} color='teal'>Reset Password</Button>
+      <Button onClick={this.saveChange} color='teal'>Save Changes</Button>
       </div>
     </div>)
   }

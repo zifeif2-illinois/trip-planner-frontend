@@ -14,3 +14,15 @@ export function getAllUsers() {
 			return data.data.data
 		})
 }
+
+export function getUserById(userId) {
+	return axios.get(`${userUrl}/${userId}`)
+			.then((data) => {
+				return data.data.data
+			})
+}
+
+export function updateUser(userId, newAttrs) {
+	console.log(newAttrs)
+	return axios.put(`${userUrl}/${userId}`, newAttrs)
+}
