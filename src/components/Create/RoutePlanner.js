@@ -183,9 +183,9 @@ export default class RoutePlanner extends Component {
             <div className='model-content'>Login before you share!</div>
           </Modal.Description>
         </Modal>
-        <Modal  open={this.state.openSaveModal} onClose={()=>this.setState({openSaveModal: false})} closeIcon>
+        <Modal  className="save-modal" open={this.state.openSaveModal} onClose={()=>this.setState({openSaveModal: false})} closeIcon>
           <Modal.Header content="Complete the information before saving the trip!"/>
-          <Modal.Description className="save-modal">
+          <Modal.Description className='save-modal-description' >
             <Form onSubmit={this.saveTrip}>
               <Form.Input required fluid label='Trip name' placeholder='My Awesome Trip'
                 onChange={this.handleTripAttrsChange}
