@@ -22,6 +22,7 @@ export default class ActivityCard extends Component {
 
   toggleEditView = () => {
     this.setState({isEditing: !this.state.isEditing})
+    this.props.updateActivity(this.state.name)
   }
   deleteActivity=()=>{
     this.props.deleteActivity(this.props.name) //use the name as teh id

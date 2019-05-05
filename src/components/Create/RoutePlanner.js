@@ -116,6 +116,12 @@ export default class RoutePlanner extends Component {
     }
   }
 
+  updateActivity = (name, activityIdx, day) => {
+    let route = [...this.state.route]
+    route[day][activityIdx]['name'] = name
+    this.setState({route})
+  }
+
   updateMap = (day) => {
     let newMarkers = this.refreshMarkers(this.state.route[day], this.state.hotels[day]);
     this.setState({markers: newMarkers, mapDay: day});
@@ -165,7 +171,7 @@ export default class RoutePlanner extends Component {
     let dateCards = this.state.route.map((activities, idx) =>
     <DateCard activities={activities} key={idx} index={idx} hotel={this.state.hotels[idx]}
      searchThings={this.props.searchThings} setHotel={this.setHotel} addCustomActicity={this.addCustomActicity}
-     deleteActivity={this.deleteActivity} updateMap={this.updateMap}/>)
+     deleteActivity={this.deleteActivity} updateMap={this.updateMap} updateActivity={this.updateActivity}/>)
 
     let triggerButton = (<Button content='Share Your Trip' className='share-button' color='teal'/>);
 

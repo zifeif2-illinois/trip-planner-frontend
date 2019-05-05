@@ -63,7 +63,7 @@ export default class RoutePlanner extends Component {
     this.props.updateTrip(newTrip).then(()=>
       setTimeout(()=>this.props.jumpReview(), 2000)
     )
-    
+
 
     // TODO: call api function to save the trip. Before saving the trip, transform the trip structure to the backend one
   }
@@ -100,6 +100,13 @@ export default class RoutePlanner extends Component {
     let newMarkers = this.refreshMarkers(this.state.routes[day], this.state.hotels[day]);
     this.setState({markers: newMarkers, mapDay: day});
     this.props.openModal()
+  }
+
+  updateActivity = (name, activityIdx, day) => {
+    let routes = [...this.state.routes]
+    let routeOfTargetDay = [...routes[day]]
+    routes[day][activityIdx]['name'] = name
+    this.setState({routes})
   }
 
   refreshMarkers = (activities, hotel) => {
@@ -144,7 +151,7 @@ export default class RoutePlanner extends Component {
     let dateCards = this.state.routes.map((activities, idx) =>
     <DateCard activities={activities} key={`${idx}-edit`} index={idx} hotel={this.state.hotels[idx]}
      searchThings={this.props.searchThings} setHotel={this.setHotel} addCustomActicity={this.addCustomActicity}
-     deleteActivity={this.deleteActivity} updateMap={this.updateMap}/>)
+     deleteActivity={this.deleteActivity} updateMap={this.updateMap} updateActivity={this.updateActivity}/>)
 
     return (
       <div className='route-planner-container'>

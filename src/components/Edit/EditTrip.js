@@ -121,9 +121,13 @@ export default class EditTrip extends Component {
 
 
   componentDidMount() {
-    // if(!getCurrentUser()) return this.props.history.push('/trip-planner')
+    if(!getCurrentUser()) return this.props.history.push('/')
     let tripId = this.props.match.params.id
     getTripById(tripId).then(trip => {
+      let userID = getCurrentUserId()
+      if(trip.owner !== userID && !trip.shared.includes(userID)) {
+        return this.props.history.push('/')
+      }
       this.setState({trip})
     })
   }
