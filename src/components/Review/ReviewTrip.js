@@ -23,10 +23,7 @@ class ReviewTripBody extends Component {
   componentDidMount() {
     Promise.all([getTrips(), getSharedTrips()])
     .then((trips) => {
-
-      console.log(trips)
       let tripsSharedWithMe= trips[1].map(trip=>Object.assign(trip, {isShared: true}))
-      console.log(trips[0])
        this.setState({
         trips: trips[0],
         tripsSharedWithMe,
@@ -48,9 +45,9 @@ class ReviewTripBody extends Component {
 
 // This is the whole screen of adding trip including navbar and background
 export default class ReviewTrip extends Component {
-  // componentDidMount() {
-  //   if(!getCurrentUser()) return this.props.history.push('/trip-planner')
-  // }
+  componentDidMount() {
+    if(!getCurrentUser()) return this.props.history.push('/')
+  }
   render() {
     console.log(this.props.history)
     return (

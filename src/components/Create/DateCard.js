@@ -71,8 +71,12 @@ export default class DateCard extends Component {
       this.props.updateMap(this.props.index);
     }
 
+    updateActivity = (name, idx) => {
+      this.props.updateActivity(name, idx, this.props.index)
+    }
+
     render() {
-      let listOfActivities = this.state.activities.map(activity => <ActivityCard deleteActivity={this.deleteActivity} key={activity.name} {...activity} />)
+      let listOfActivities = this.state.activities.map((activity, idx) => <ActivityCard deleteActivity={this.deleteActivity} updateActivity={(name)=>this.updateActivity(name, idx)} key={activity.name} {...activity} />)
       return (<Card className='day-container'>
         <Card.Content>
           <Card.Header>Day {this.props.index+1}</Card.Header>

@@ -19,7 +19,6 @@ export class TripDetailBody extends Component {
 	}
 
 	componentDidMount() {
-		// if(!getCurrentUser()) return this.props.history.push('/trip-planner')
 		console.log("trip detail body didmount")
 		let trip = this.state.trip
 		let mapElement = document.getElementById('map')
@@ -128,12 +127,15 @@ export default class TripDetail extends Component {
 	}
 
 	componentDidMount() {
+		if(!getCurrentUser()) return this.props.history.push('/')
 		let { id } = this.props.match.params
 		getTripById(id)
 			.then((trip) => {
-				trip = Object.assign(trip, {id: id, isShared: trip.owner === getCurrentUserId()})
-				console.log('in componentDidMount')
-				console.log(trip)
+				let userID = getCurrentUserId()
+				if(trip.owner !== userID && !trip.shared.includes(userID)) {
+					return this.props.history.push('/')
+				}
+				trip = Object.assign(trip, {id: id, isShared: trip.owner === userID})
 				this.setState({
 					id,
 					trip,
